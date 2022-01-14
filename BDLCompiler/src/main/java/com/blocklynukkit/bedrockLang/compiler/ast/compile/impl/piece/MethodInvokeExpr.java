@@ -13,6 +13,20 @@ import org.objectweb.asm.Type;
 
 import java.util.Arrays;
 
+/**
+ * MethodInvokeExpr是针对多级方法调用的表达式，与MethodCallExpr相似，都允许以命令的形式调用方法。
+ * 明显不同的是，Invoke针对多级嵌套的调用，而Call只能针对当前类中声明的静态方法和导入的静态方法。
+ * <br/>
+ * MethodInvokeExpr的用例主要如下：<br/>
+ * 1. 用于调用某个对象的成员函数 <code>$person.say "I'm sb.";</code> <br/>
+ * 2. 用于调用某个类的静态字段的方法 <code>System.$out.println "hi bdl";</code> <br/>
+ * 3. 用于多级调用 <code>$a.$b.$c.foo ;</code> <br/>
+ * 4. 用于链式地调用没有参数有返回值的方法 <code>$a.setATrue.setBTrue</code> <br/>
+ * <br/>
+ * 提示：MethodInvokeExpr不能用于调用在同一{@link Unit}中定义的命令，不能调用{@link ImportStat}导入的静态方法
+ * @see MethodInvokeExprGenerator
+ * @see MethodCallExpr
+ */
 public final class MethodInvokeExpr extends ExprBase {
     @NonNull
     @Getter
