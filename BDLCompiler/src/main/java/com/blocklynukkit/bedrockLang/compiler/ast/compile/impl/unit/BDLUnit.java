@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.objectweb.asm.ClassWriter.COMPUTE_FRAMES;
 import static org.objectweb.asm.ClassWriter.COMPUTE_MAXS;
 
 public class BDLUnit implements Unit, GenerateWithASM, Opcodes {
@@ -32,7 +33,7 @@ public class BDLUnit implements Unit, GenerateWithASM, Opcodes {
     public BDLUnit(String name, String sourceName) {
         this.name = name;
         this.sourceName = sourceName;
-        this.bdlClassWriter = new ClassWriter(COMPUTE_MAXS);
+        this.bdlClassWriter = new ClassWriter(COMPUTE_FRAMES); //让asm自动计算方法栈帧和操作数栈大小
         this.variableMap = new LinkedHashMap<>();
         this.commandMap = new LinkedHashMap<>();
         this.codePieces = new ArrayList<>();

@@ -34,4 +34,14 @@ public class InvokeTest {
         val bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testParseMethodInvoke.class"));
     }
+
+    public static int test(int a) {
+        int x;
+        if(a > 33){
+            x = 1;
+        }else {
+            x = 0;
+        }
+        return x;
+    }
 }
