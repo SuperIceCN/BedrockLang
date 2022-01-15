@@ -35,13 +35,16 @@ public class InvokeTest {
         saveTo(bytes, new File("test/testParseMethodInvoke.class"));
     }
 
-    public static int test(int a) {
+    public static void test(int a) {
         int x;
         if(a > 33){
-            x = 1;
+            if(a > 44) {
+                x = 1;
+            }else {
+                x = 2;
+            }
         }else {
             x = 0;
         }
-        return x;
     }
 }
