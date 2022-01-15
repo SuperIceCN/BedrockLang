@@ -38,10 +38,12 @@ public class InvokeTest {
     public static void test(int a) {
         int x;
         if(a > 33){
-            if(a > 44) {
+            if(a > 55) {
                 x = 1;
-            }else {
+            } else if(a > 44) {
                 x = 2;
+            } else {
+                x = 3;
             }
         }else {
             x = 0;

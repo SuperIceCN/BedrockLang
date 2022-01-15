@@ -38,6 +38,9 @@ public final class UnitCommandGenerator implements StatCodeGenerator {
 
         var returned = false;
         for(val each : defineCommandBlock.getCodePieces()){
+            val tmpLabel = new Label();
+            mv.visitLabel(tmpLabel);
+            mv.visitLineNumber(each.getSourcePos().getLine(), tmpLabel);
             if(each instanceof ReturnStat) {
                 if(((ReturnStat)each).getExpr().getReturnType().equals(this.defineCommandBlock.getReturnType())){
                     returned = true;
