@@ -33,11 +33,6 @@ public final class UnitCommand implements Command {
         this.getSourcePos = getSourcePos;
         this.localVariablesIdMap = new Object2IntLinkedOpenHashMap<>();
         this.localVariableObjMap = new Int2ObjectLinkedOpenHashMap<>();
-//        for (val each : cmdArgs) {
-//            if (each.hasValueType()) {
-//                this.addLocalVariable(new CmdArgVariable(each.getName(), each.getValueType(), each.getSourcePos()));
-//            }
-//        }
     }
 
     @Override

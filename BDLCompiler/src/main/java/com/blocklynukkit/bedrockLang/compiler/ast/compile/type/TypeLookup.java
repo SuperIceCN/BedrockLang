@@ -16,10 +16,11 @@ import java.util.*;
 
 /**
  * 用于查找ASM类型的工具类，被每个{@link BDLUnit}实例化。
- * <p>
+ * <br/>
  * 该类持有一个哈希表作为类池，类池记录所有已经导入过的类型。
+ * TODO: 2022/1/15 抽象化类型查找器
  */
-public final class TypeLookup {
+public class TypeLookup {
     @Getter
     private final BDLUnit unit;
     /**
@@ -33,16 +34,28 @@ public final class TypeLookup {
     private final WeakHashMap<ValueType, ClassInfo> classInfoStore = new WeakHashMap<>();
     private final Map<String, List<MethodInfo>> staticMethodImported = new HashMap<>();
 
-
+    /**
+     * 初始化一个类型查找器
+     * @param unit 持有该类型查找器的BDL编译单元
+     */
     public TypeLookup(BDLUnit unit) {
         this.unit = unit;
         this.classLoader = Thread.currentThread().getContextClassLoader();
     }
 
+    /**
+     * 导入一个包，后续在查找的时候会尝试在导入的包下查找<br/>
+     * 请注意：java.lang不默认导入
+     * @param packageName 包名
+     */
     public void importPackage(String packageName) {
         packagesImported.add(packageName);
     }
 
+    /**
+     * 导入一个静态方法
+     * @param staticMethod 静态方法描述
+     */
     public void importStaticMethod(MethodInfo staticMethod) {
         if (!staticMethod.isStatic()) {
             throw new InvalidStaticMethodException(staticMethod);
@@ -55,6 +68,12 @@ public final class TypeLookup {
         staticMethodImported.put(staticMethod.getSimpleName(), tmp);
     }
 
+    /**
+     * 模糊查找已经导入的静态方法
+     * @param simpleName 静态方法简易名，即完整方法名$前面的部分，若不含$则等同于完整方法名
+     * @param argTypes 参数类型
+     * @return 找到的所有静态方法的描述
+     */
     public MethodInfo[] findStaticMethodFuzzy(@NonNull String simpleName, ValueType... argTypes) {
         val methods = staticMethodImported.get(simpleName);
         if (methods != null) {
@@ -74,6 +93,12 @@ public final class TypeLookup {
         }
     }
 
+    /**
+     * 精确查找已经导入的静态方法
+     * @param fullName 静态方法简易名，即完整方法名$前面的部分，若不含$则等同于完整方法名
+     * @param argTypes 参数类型
+     * @return 找到的所有静态方法的描述
+     */
     public MethodInfo findStaticMethodExact(@NonNull String fullName, ValueType... argTypes) {
         val simpleName = fullName.contains("$") ? fullName.substring(0, fullName.indexOf('$')) : fullName;
         for (val each : findStaticMethodFuzzy(simpleName, argTypes)) {
@@ -84,10 +109,19 @@ public final class TypeLookup {
         return null;
     }
 
+    /**
+     * 将一个BDL编译单元添加到该查找器中
+     * @param unit bdl编译单元
+     */
     public void addBDLClass(BDLUnit unit) {
         bdlClasses.put(unit.getName(), new BDLClassInfo(unit));
     }
 
+    /**
+     * 根据类名查找ASM类型
+     * @param typeName 类名（基本类型，数组，其他java类，bdl编译单元名）
+     * @return ASM类型
+     */
     public Type lookup(String typeName) {
         var clazz = lookupBasic(typeName);
         if (clazz != null) return clazz;
@@ -97,6 +131,11 @@ public final class TypeLookup {
         return clazz;
     }
 
+    /**
+     * 查找值类型描述符的ASM类型
+     * @param valueType 值类型描述符
+     * @return ASM类型
+     */
     public Type lookup(ValueType valueType) {
         if (typeStore.containsKey(valueType)) {
             return typeStore.get(valueType);
@@ -123,6 +162,11 @@ public final class TypeLookup {
         throw new InvalidValueTypeException(valueType);
     }
 
+    /**
+     * 将编译单元转为ASM类型
+     * @param unit 编译单元
+     * @return ASM类型
+     */
     public Type lookup(Unit unit) {
         return bdlClasses.get(unit.getName()).toASMType();
     }
@@ -197,10 +241,11 @@ public final class TypeLookup {
         return null;
     }
 
-    public ClassInfo findFromClassPool(String className) {
-        return classPool.get(className);
-    }
-
+    /**
+     * 根据类名查找类信息
+     * @param typeName 类名（基本类型，数组，其他java类，bdl编译单元名）
+     * @return 类信息
+     */
     public ClassInfo lookupClass(String typeName) {
         var clazz = lookupBasicClass(typeName);
         if (clazz != null) return clazz;
@@ -210,6 +255,11 @@ public final class TypeLookup {
         return clazz;
     }
 
+    /**
+     * 查找值类型描述符的类信息
+     * @param valueType 值类型描述符
+     * @return 类信息
+     */
     public ClassInfo lookupClass(ValueType valueType) {
         if (classInfoStore.containsKey(valueType)) {
             return classInfoStore.get(valueType);

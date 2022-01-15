@@ -8,7 +8,6 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariabl
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
@@ -30,7 +29,6 @@ public final class ReadVariableExprGenerator implements ExprCodeGenerator {
                     , asmUnit.getTypeLookup().lookup(variable.getVariable().getType()).getDescriptor());
         }else {
             // TODO: 2022/1/3 完成外部域导入
-            throw new NotImplementedException();
         }
         return variable.getVariable().getType();
     }

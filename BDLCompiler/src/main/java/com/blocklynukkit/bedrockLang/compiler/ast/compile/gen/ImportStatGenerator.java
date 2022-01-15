@@ -22,7 +22,7 @@ public final class ImportStatGenerator implements StatCodeGenerator {
             val type = lookup.lookup(stat.getPkgOrClazzName());
             if(methods.length == 0){ //此时应当为导入所有静态方法
                 if(type.getSort() == Type.OBJECT){
-                    val classInfo = lookup.findFromClassPool(type.getClassName());
+                    val classInfo = lookup.lookupClass(type.getClassName());
                     for(val each:classInfo.getMethods()){
                         if(each.isStatic()){
                             lookup.importStaticMethod(each);
@@ -35,7 +35,7 @@ public final class ImportStatGenerator implements StatCodeGenerator {
             }else {
                 // 此时应当为导入指定静态方法
                 if(type.getSort() == Type.OBJECT){
-                    val classInfo = lookup.findFromClassPool(type.getClassName());
+                    val classInfo = lookup.lookupClass(type.getClassName());
                     for(val me : methods){
                         for(val each:classInfo.getMethodFuzzy(me)){
                             if(each.isStatic()){

@@ -4,12 +4,10 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.VariableRecord;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariableExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.WriteVariableExpr;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
@@ -34,7 +32,6 @@ public final class WriteVariableExprGenerator implements ExprCodeGenerator {
                     , asmUnit.getTypeLookup().lookup(variable.getVariable().getType()).getDescriptor());
         } else {
             // TODO: 2022/1/3 完成外部域静态变量修改
-            throw new NotImplementedException();
         }
         return variable.getVariable().getType();
     }

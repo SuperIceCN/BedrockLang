@@ -65,7 +65,7 @@ public abstract class BlockBase implements Block {
             variableRecordCache.put(var, tmp);
             return tmp;
         } else if (variableStoreParent != null) {
-            return variableStoreParent.findVariable(name);
+            return getVariableStoreParent().findVariable(name);
         } else {
             return null;
         }
