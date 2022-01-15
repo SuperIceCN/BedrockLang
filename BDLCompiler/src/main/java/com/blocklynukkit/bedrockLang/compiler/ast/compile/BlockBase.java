@@ -72,7 +72,8 @@ public abstract class BlockBase implements Block {
     }
 
     /**
-     * 返回变量记录，包含变量及其类型，若为局部变量则包含id
+     * 返回变量记录，包含变量及其类型，若为局部变量则包含id<br/>
+     * 该方法只会在变量在当前block中被成功查找到是调用，父变量域查找会调用父变量域的makeVariableRecord
      *
      * @param variable 变量
      * @return 变量记录
@@ -90,5 +91,10 @@ public abstract class BlockBase implements Block {
             throw new VariableAlreadyExistException(variable);
         }
         this.variableMap.put(variable.getName(), variable);
+    }
+
+    @Override
+    public VariableStore getVariableStoreParent() {
+        return this.variableStoreParent;
     }
 }
