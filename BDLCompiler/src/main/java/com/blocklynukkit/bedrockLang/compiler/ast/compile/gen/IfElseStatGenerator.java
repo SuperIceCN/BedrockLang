@@ -35,6 +35,7 @@ public final class IfElseStatGenerator implements ControlFlowCodeGenerator<Label
             if (i < length - 1) {
                 val expr = exprs[i];
                 if (expr.getReturnType().equals(BasicValueType.BOOLEAN)) {
+                    mv.visitLineNumber(expr.getSourcePos().getLine(), labels[i]); //if条件应该被单独记录行号
                     expr.getCodeGenerator().generate(unit);
                     mv.visitJumpInsn(IFEQ, labels[i + 1]);
                 } else {
