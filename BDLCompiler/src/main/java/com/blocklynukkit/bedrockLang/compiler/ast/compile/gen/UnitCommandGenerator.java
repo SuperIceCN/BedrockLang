@@ -2,6 +2,7 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.IfElseUnfinishedGoto;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.WhileUnfinishedJump;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReturnStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.DefineCommandBlock;
@@ -38,7 +39,7 @@ public final class UnitCommandGenerator implements StatCodeGenerator {
         mv.visitLineNumber(defineCommandBlock.getSourcePos().getLine(), label0);
 
         var returned = false;
-        //上一次生成未完成的跳转标签，目前用于ifelse执行完毕后的终末跳转
+        //上一次生成未完成的跳转标签，目前用于ifelse和while执行完毕后的终末跳转
         UnfinishedGen<Label, ?> unfinishedLabel = null;
         for (val each : defineCommandBlock.getCodePieces()) {
             val tmpLabel = new Label();
@@ -58,6 +59,8 @@ public final class UnitCommandGenerator implements StatCodeGenerator {
             if (genResult != null) {
                 if (genResult instanceof IfElseUnfinishedGoto) {
                     unfinishedLabel = (IfElseUnfinishedGoto) genResult;
+                } else if (genResult instanceof WhileUnfinishedJump) {
+                    unfinishedLabel = (WhileUnfinishedJump) genResult;
                 }
             }
         }

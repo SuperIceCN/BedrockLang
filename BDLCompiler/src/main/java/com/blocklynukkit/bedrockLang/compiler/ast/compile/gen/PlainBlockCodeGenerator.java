@@ -4,6 +4,7 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.StatCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.UnfinishedGen;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.IfElseUnfinishedGoto;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.WhileUnfinishedJump;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.PlainBlock;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReturnStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidReturnTypeException;
@@ -40,6 +41,8 @@ public final class PlainBlockCodeGenerator implements StatCodeGenerator {
             if (genResult != null) {
                 if (genResult instanceof IfElseUnfinishedGoto) {
                     unfinishedLabel = (IfElseUnfinishedGoto) genResult;
+                } else if (genResult instanceof WhileUnfinishedJump) {
+                    unfinishedLabel = (WhileUnfinishedJump) genResult;
                 }
             }
         }
