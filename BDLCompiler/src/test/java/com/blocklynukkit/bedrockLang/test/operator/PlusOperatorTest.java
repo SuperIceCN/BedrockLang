@@ -47,6 +47,32 @@ public class PlusOperatorTest {
 
     @Test
     @SneakyThrows
+    public void testPlusIntShort() {
+        val unit = new BDLUnit("testPlusIntShort", "testPlusIntShort.bdl");
+        SourcePos.defaultSourceName = "testPlusIntShort";
+
+        val addInt = new DefineCommandBlock(auto(), unit, "getInt", ValueType.from("int"));
+
+        val returnStat = new ReturnStat(auto(), addInt);
+        val plusExpr = new PlusExpr(auto(), returnStat);
+        val num1 = new LiteralExpr(auto(), plusExpr, (short) 222, ValueType.from("short"));
+        val num2 = new LiteralExpr(auto(), plusExpr, 333, ValueType.from("int"));
+        plusExpr.setLeft(num1);
+        plusExpr.setRight(num2);
+        returnStat.setExpr(plusExpr);
+        addInt.addCodePiece(returnStat);
+
+        unit.addCodePiece(addInt);
+
+        val bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testPlusIntShort.class"));
+        val cls = loadClass("testPlusIntShort", bytes);
+        val method = cls.getMethod("getInt");
+        Assertions.assertEquals(method.invoke(method), 555);
+    }
+
+    @Test
+    @SneakyThrows
     public void testPlusByte() {
         val unit = new BDLUnit("testPlusByte", "testPlusByte.bdl");
         SourcePos.defaultSourceName = "testPlusByte";
@@ -68,7 +94,7 @@ public class PlusOperatorTest {
         saveTo(bytes, new File("test/testPlusByte.class"));
         val cls = loadClass("testPlusByte", bytes);
         val method = cls.getMethod("getByte");
-        Assertions.assertEquals(method.invoke(method), (byte)77);
+        Assertions.assertEquals(method.invoke(method), (byte) 77);
     }
 
     @Test
@@ -121,5 +147,31 @@ public class PlusOperatorTest {
         val cls = loadClass("testPlusDouble", bytes);
         val method = cls.getMethod("getDouble");
         Assertions.assertEquals(method.invoke(method), 77.77d);
+    }
+
+    @Test
+    @SneakyThrows
+    public void testPlusFloatDouble() {
+        val unit = new BDLUnit("testPlusFloatDouble", "testPlusFloatDouble.bdl");
+        SourcePos.defaultSourceName = "testPlusFloatDouble";
+
+        val add = new DefineCommandBlock(auto(), unit, "getDouble", ValueType.from("double"));
+
+        val returnStat = new ReturnStat(auto(), add);
+        val plusExpr = new PlusExpr(auto(), returnStat);
+        val num1 = new LiteralExpr(auto(), plusExpr, 11.11f, ValueType.from("float"));
+        val num2 = new LiteralExpr(auto(), plusExpr, 66.66d, ValueType.from("double"));
+        plusExpr.setLeft(num1);
+        plusExpr.setRight(num2);
+        returnStat.setExpr(plusExpr);
+        add.addCodePiece(returnStat);
+
+        unit.addCodePiece(add);
+
+        val bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testPlusFloatDouble.class"));
+        val cls = loadClass("testPlusFloatDouble", bytes);
+        val method = cls.getMethod("getDouble");
+        Assertions.assertEquals(77.77d, (double) method.invoke(method));
     }
 }

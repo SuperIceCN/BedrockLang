@@ -10,6 +10,9 @@ import lombok.val;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
+/**
+ * 基本类型转换生成器，转换操作栈上最顶层的一个值
+ */
 @RequiredArgsConstructor
 public final class BasicCastGenerator implements ExprCodeGenerator {
     private final ValueType from;
