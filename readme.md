@@ -1,7 +1,7 @@
 ![BedrockLang](docs/image/BDLBanner.png)  
 
-### <center>基岩版开发专用编程语言</center>
-<center>由BlocklyNukkit项目组开发</center>  
+<h3 align="center">基岩版开发专用编程语言</h3>  
+<p align="center">由BlocklyNukkit项目组开发</p>  
 
 -----------  
 
