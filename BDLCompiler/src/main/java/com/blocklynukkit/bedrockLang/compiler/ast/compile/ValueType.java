@@ -174,5 +174,26 @@ public abstract class ValueType {
             throw new InvalidValueTypeException(a);
         }
     }
+
+    /**
+     * 检测是否为装箱类
+     * @param a 要检测的类
+     * @return 是否为装箱类
+     */
+    public static boolean isBoxType(ValueType a) {
+        switch (a.getName()) {
+            case "java.lang.Boolean":
+            case "java.lang.Byte":
+            case "java.lang.Short":
+            case "java.lang.Integer":
+            case "java.lang.Long":
+            case "java.lang.Character":
+            case "java.lang.Float":
+            case "java.lang.Double":
+                return true;
+            default:
+                return false;
+        }
+    }
 }
 
