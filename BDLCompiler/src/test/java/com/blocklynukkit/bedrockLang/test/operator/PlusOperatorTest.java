@@ -172,6 +172,6 @@ public class PlusOperatorTest {
         saveTo(bytes, new File("test/testPlusFloatDouble.class"));
         val cls = loadClass("testPlusFloatDouble", bytes);
         val method = cls.getMethod("getDouble");
-        Assertions.assertEquals(77.77d, (double) method.invoke(method));
+        Assertions.assertEquals(77.77d, (double) method.invoke(method), 0.0001);
     }
 }
