@@ -18,6 +18,7 @@ public abstract class ValueType {
 
     /**
      * 获取值的类型特征
+     *
      * @return 基本类，数组类或其他对象类
      */
     public abstract ValueTrait getTrait();
@@ -50,6 +51,7 @@ public abstract class ValueType {
 
     /**
      * 根据名称创建类型描述符
+     *
      * @param clazz 类名，可以为基本类，数组类（类名+[]），其他Java类的全名（包名+类名）
      * @return 类型
      */
@@ -86,6 +88,7 @@ public abstract class ValueType {
 
     /**
      * 将ASM类型描述符转为BDL类型描述符
+     *
      * @param value ASM类型描述
      * @return BDL类型描述
      */
@@ -95,6 +98,7 @@ public abstract class ValueType {
 
     /**
      * 获取对象的值的类型
+     *
      * @param value 要获取类型的对象
      * @return 对象的类型
      */
@@ -142,6 +146,7 @@ public abstract class ValueType {
 
     /**
      * 检测是否为基本类，后续可能检测其他类，如BigInteger，尚未实现
+     *
      * @param type 值类型
      * @return 是基本类为true
      */
@@ -152,6 +157,7 @@ public abstract class ValueType {
 
     /**
      * 比较两个基本类哪个占用空间更大，通常用于检查基本类的相互转换关系，如int+long=long
+     *
      * @param a 一个基本类
      * @param b 另一个基本类
      * @return a和b中更大的
@@ -177,6 +183,7 @@ public abstract class ValueType {
 
     /**
      * 检测是否为装箱类
+     *
      * @param a 要检测的类
      * @return 是否为装箱类
      */

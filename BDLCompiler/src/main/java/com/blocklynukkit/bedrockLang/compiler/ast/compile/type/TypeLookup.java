@@ -36,6 +36,7 @@ public class TypeLookup {
 
     /**
      * 初始化一个类型查找器
+     *
      * @param unit 持有该类型查找器的BDL编译单元
      */
     public TypeLookup(BDLUnit unit) {
@@ -46,6 +47,7 @@ public class TypeLookup {
     /**
      * 导入一个包，后续在查找的时候会尝试在导入的包下查找<br/>
      * 请注意：java.lang不默认导入
+     *
      * @param packageName 包名
      */
     public void importPackage(String packageName) {
@@ -54,6 +56,7 @@ public class TypeLookup {
 
     /**
      * 导入一个静态方法
+     *
      * @param staticMethod 静态方法描述
      */
     public void importStaticMethod(MethodInfo staticMethod) {
@@ -70,8 +73,9 @@ public class TypeLookup {
 
     /**
      * 模糊查找已经导入的静态方法
+     *
      * @param simpleName 静态方法简易名，即完整方法名$前面的部分，若不含$则等同于完整方法名
-     * @param argTypes 参数类型
+     * @param argTypes   参数类型
      * @return 找到的所有静态方法的描述
      */
     public MethodInfo[] findStaticMethodFuzzy(@NonNull String simpleName, ValueType... argTypes) {
@@ -95,6 +99,7 @@ public class TypeLookup {
 
     /**
      * 精确查找已经导入的静态方法
+     *
      * @param fullName 静态方法简易名，即完整方法名$前面的部分，若不含$则等同于完整方法名
      * @param argTypes 参数类型
      * @return 找到的所有静态方法的描述
@@ -111,6 +116,7 @@ public class TypeLookup {
 
     /**
      * 将一个BDL编译单元添加到该查找器中
+     *
      * @param unit bdl编译单元
      */
     public void addBDLClass(BDLUnit unit) {
@@ -119,6 +125,7 @@ public class TypeLookup {
 
     /**
      * 根据类名查找ASM类型
+     *
      * @param typeName 类名（基本类型，数组，其他java类，bdl编译单元名）
      * @return ASM类型
      */
@@ -133,6 +140,7 @@ public class TypeLookup {
 
     /**
      * 查找值类型描述符的ASM类型
+     *
      * @param valueType 值类型描述符
      * @return ASM类型
      */
@@ -164,6 +172,7 @@ public class TypeLookup {
 
     /**
      * 将编译单元转为ASM类型
+     *
      * @param unit 编译单元
      * @return ASM类型
      */
@@ -243,6 +252,7 @@ public class TypeLookup {
 
     /**
      * 根据类名查找类信息
+     *
      * @param typeName 类名（基本类型，数组，其他java类，bdl编译单元名）
      * @return 类信息
      */
@@ -257,6 +267,7 @@ public class TypeLookup {
 
     /**
      * 查找值类型描述符的类信息
+     *
      * @param valueType 值类型描述符
      * @return 类信息
      */

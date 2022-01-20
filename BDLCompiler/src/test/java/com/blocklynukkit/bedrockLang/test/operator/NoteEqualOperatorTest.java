@@ -5,7 +5,6 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.command.VariableC
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.DefineCommandBlock;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariableExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReturnStat;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator.EqualExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator.NotEqualExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.unit.BDLUnit;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
