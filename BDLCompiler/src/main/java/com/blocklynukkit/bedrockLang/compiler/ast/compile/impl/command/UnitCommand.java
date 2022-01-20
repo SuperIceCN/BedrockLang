@@ -4,7 +4,7 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.CmdArg;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Command;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Variable;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.variable.CmdArgVariable;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntObjectImmutablePair;
@@ -23,6 +23,7 @@ public final class UnitCommand implements Command {
     /*
      * 这里的设计是为了防止特殊情况下有不可及变量被删除后导致id顺序错乱，所以用双重映射而不用列表
      */
+    private int currentMaxIndex = 0;
     private final Object2IntLinkedOpenHashMap<String> localVariablesIdMap;
     private final Int2ObjectLinkedOpenHashMap<Variable> localVariableObjMap;
 
@@ -65,7 +66,9 @@ public final class UnitCommand implements Command {
         if (localVariableObjMap.containsValue(variable)) {
             return localVariablesIdMap.getInt(variable.getName());
         }
-        val newId = localVariablesIdMap.size();
+        //long和double占两个变量槽位
+        val newId = currentMaxIndex;
+        currentMaxIndex += ((variable.getType() == BasicValueType.LONG || variable.getType() == BasicValueType.DOUBLE) ? 2 : 1);
         localVariablesIdMap.put(variable.getName(), newId);
         localVariableObjMap.put(newId, variable);
         return newId;

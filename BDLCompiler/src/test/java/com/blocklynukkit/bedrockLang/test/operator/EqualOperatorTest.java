@@ -123,4 +123,30 @@ public class EqualOperatorTest {
         val method = cls.getMethod("equal", float.class, int.class);
         Assertions.assertTrue((Boolean) method.invoke(method, 222f, 222));
     }
+
+    @Test
+    @SneakyThrows
+    public void testEqualDoubleInt() {
+        val unit = new BDLUnit("testEqualDoubleInt", "testEqualDoubleInt.bdl");
+        SourcePos.defaultSourceName = "testEqualDoubleInt";
+
+        val addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
+                new VariableCmdArg("a", ValueType.from("double"), auto()),
+                new VariableCmdArg("b", ValueType.from("int"), auto()));
+
+        val returnStat = new ReturnStat(auto(), addInt);
+        val equalExpr = new EqualExpr(auto(), returnStat);
+        equalExpr.setLeft(new ReadVariableExpr(auto(), equalExpr, "a"));
+        equalExpr.setRight(new ReadVariableExpr(auto(), equalExpr, "b"));
+        returnStat.setExpr(equalExpr);
+        addInt.addCodePiece(returnStat);
+
+        unit.addCodePiece(addInt);
+
+        val bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testEqualDoubleInt.class"));
+        val cls = loadClass("testEqualDoubleInt", bytes);
+        val method = cls.getMethod("equal", double.class, int.class);
+        Assertions.assertTrue((Boolean) method.invoke(method, 222d, 222));
+    }
 }
