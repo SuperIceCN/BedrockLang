@@ -13,3 +13,8 @@ BDL是简单、专一、强类型、高性能的，采取与mc命令类似的语
 # 如何获取  
 
 此项目正在处于开发中，尚未具备生产实践能力，感谢您关注本项目。 
+
+# 教程与文档  
+
+请前往[BDLDoc](https://github.com/BlocklyNukkit/BDLDoc)  
+
