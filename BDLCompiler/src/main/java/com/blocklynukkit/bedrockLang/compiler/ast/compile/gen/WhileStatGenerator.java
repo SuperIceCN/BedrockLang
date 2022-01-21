@@ -20,17 +20,18 @@ public final class WhileStatGenerator implements ControlFlowCodeGenerator<Label>
         val asmUnit = requireASM(unit);
         @NonNull
         val mv = asmUnit.getCurrentMethodVisitor();
+        //结尾标签，用于跳转到下一条语句
+        val endLabel = stat.getExitLoopLabel();
         //生成条件判断表达式
-        val condLabel = new Label();
+        val condLabel = stat.getStartLoopLabel();
         mv.visitLabel(condLabel);
         stat.getCondition().getCodeGenerator().generate(unit);
         //判断条件是否为false (0)
-        val defaultGotoEndLabel = new Label();
-        mv.visitLabel(defaultGotoEndLabel);
+        mv.visitJumpInsn(IFEQ, endLabel);
         //生成body
         stat.getBlock().getCodeGenerator().generate(unit);
         //body执行完毕后从头再来
         mv.visitJumpInsn(GOTO, condLabel);
-        return new WhileUnfinishedJump(defaultGotoEndLabel, stat.getAllBreakLabels());
+        return new WhileUnfinishedJump(endLabel);
     }
 }

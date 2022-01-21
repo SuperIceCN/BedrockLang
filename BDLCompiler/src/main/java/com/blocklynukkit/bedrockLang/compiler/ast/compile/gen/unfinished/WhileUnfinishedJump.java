@@ -12,20 +12,15 @@ import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requi
 
 @RequiredArgsConstructor
 public final class WhileUnfinishedJump implements UnfinishedGen<Label, Void> {
-    private final Label conditionJumpLabel;
-    private final List<Label> breakJumpLabel;
+    private final Label exitLoopLabel;
     private Label targetLabel;
 
     @Override
     public Void generate(Unit unit) {
         val asmUnit = requireASM(unit);
         val mv = asmUnit.getCurrentMethodVisitor();
-        mv.visitLabel(conditionJumpLabel);
-        mv.visitJumpInsn(IFEQ, targetLabel);
-        for (val each : breakJumpLabel) {
-            mv.visitLabel(each);
-            mv.visitJumpInsn(GOTO, targetLabel);
-        }
+        mv.visitLabel(exitLoopLabel);
+        mv.visitJumpInsn(GOTO, targetLabel);
         return null;
     }
 

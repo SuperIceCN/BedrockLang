@@ -34,10 +34,10 @@ public final class LocalVariableDeclareStat extends StatBase implements Declarat
 
     public void setInitExpr(Expr initExpr) {
         this.initExpr = initExpr;
-        checkType();
         if (initExpr.hasReturnType()) {
             this.type = initExpr.getReturnType();
         }
+        checkType();
     }
 
     @Override

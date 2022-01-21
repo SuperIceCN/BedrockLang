@@ -20,7 +20,16 @@ public final class WhileStat extends StatBase {
     @Setter
     @NonNull
     private Block block;
-    private final List<Label> breakLabels = new ArrayList<>(1); //乐观地我们估计不会有break语句
+    /**
+     * 最后用于退出循环的标签，循环中不满足条件或者遇到break就应该跳转到这个标签
+     */
+    @Getter
+    private final Label exitLoopLabel = new Label();
+    /**
+     * 循环开始标签，包括判断条件和执行内容，循环一开始或者遇到continue就应该跳转到这个标签
+     */
+    @Getter
+    private final Label startLoopLabel = new Label();
 
     public WhileStat(@NonNull SourcePos sourcePos, @NonNull Piece parent) {
         super(sourcePos, parent);
@@ -29,17 +38,5 @@ public final class WhileStat extends StatBase {
     @Override
     public WhileStatGenerator getCodeGenerator() {
         return new WhileStatGenerator(this);
-    }
-
-    /**
-     * 添加一个循环中断标签，生成器需要将这些标签跳转到循环结束处
-     * @param label 循环中断或结束处的跳转到循环下一个语句的标签，此标签不应当包含任何字节码
-     */
-    public void addBreakLabel(Label label) {
-        this.breakLabels.add(label);
-    }
-
-    public List<Label> getAllBreakLabels() {
-        return this.breakLabels;
     }
 }
