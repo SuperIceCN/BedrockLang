@@ -13,6 +13,9 @@ import java.util.List;
 
 public final class WhileStat extends StatBase {
     @Getter
+    @NonNull
+    private final String name;
+    @Getter
     @Setter
     @NonNull
     private Expr condition;
@@ -33,6 +36,12 @@ public final class WhileStat extends StatBase {
 
     public WhileStat(@NonNull SourcePos sourcePos, @NonNull Piece parent) {
         super(sourcePos, parent);
+        this.name = "";
+    }
+
+    public WhileStat(@NonNull SourcePos sourcePos, @NonNull Piece parent, @NonNull String name) {
+        super(sourcePos, parent);
+        this.name = name;
     }
 
     @Override
