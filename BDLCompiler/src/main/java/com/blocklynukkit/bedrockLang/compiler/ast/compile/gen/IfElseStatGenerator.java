@@ -1,8 +1,7 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ControlFlowCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.StatCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.IfElseUnfinishedGoto;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.IfElseStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidIfElseConditionException;
@@ -15,11 +14,11 @@ import org.objectweb.asm.Label;
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
 @RequiredArgsConstructor
-public final class IfElseStatGenerator implements ControlFlowCodeGenerator<Label> {
+public final class IfElseStatGenerator implements StatCodeGenerator {
     private final IfElseStat stat;
 
     @Override
-    public IfElseUnfinishedGoto generate(Unit unit) {
+    public Void generate(Unit unit) {
         val asmUnit = requireASM(unit);
         @NonNull
         val mv = asmUnit.getCurrentMethodVisitor();
@@ -45,6 +44,8 @@ public final class IfElseStatGenerator implements ControlFlowCodeGenerator<Label
             blocks[i].getCodeGenerator().generate(unit);
             mv.visitJumpInsn(GOTO, labels[length]);
         }
-        return new IfElseUnfinishedGoto(labels[length]);
+        mv.visitLabel(labels[length]);
+        mv.visitInsn(NOP);
+        return null;
     }
 }

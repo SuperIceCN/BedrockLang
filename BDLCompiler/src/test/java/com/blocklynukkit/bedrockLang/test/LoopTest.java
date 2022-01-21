@@ -189,12 +189,7 @@ public class LoopTest {
         print.setArgs(new Expr[]{new ReadVariableExpr(auto(), print, "b")});
         body.addCodePiece(print);
 
-        val iPP = new WriteVariableExpr(auto(), body, "i");
-        body.addCodePiece(iPP);
-        val plusExpr2 = new PlusExpr(auto(), iPP);
-        iPP.setValueExpr(plusExpr2);
-        plusExpr2.setLeft(new ReadVariableExpr(auto(), plusExpr2, "i"));
-        plusExpr2.setRight(new LiteralExpr(auto(), plusExpr2, 1, ValueType.from("int")));
+
 
         val ifStat = new IfElseStat(auto(), body);
         body.addCodePiece(ifStat);
@@ -205,6 +200,13 @@ public class LoopTest {
         breakBlock.addCodePiece(new BreakLoopStat(auto(), breakBlock));
         ifStat.setExprs(new Expr[]{condExpr});
         ifStat.setBlocks(new Block[]{breakBlock});
+
+        val iPP = new WriteVariableExpr(auto(), body, "i");
+        body.addCodePiece(iPP);
+        val plusExpr2 = new PlusExpr(auto(), iPP);
+        iPP.setValueExpr(plusExpr2);
+        plusExpr2.setLeft(new ReadVariableExpr(auto(), plusExpr2, "i"));
+        plusExpr2.setRight(new LiteralExpr(auto(), plusExpr2, 1, ValueType.from("int")));
 
         val bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testFibonacciWhile.class"));

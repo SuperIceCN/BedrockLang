@@ -1,8 +1,6 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.IfElseUnfinishedGoto;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.WhileUnfinishedJump;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReturnStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.DefineCommandBlock;
@@ -39,13 +37,8 @@ public final class UnitCommandGenerator implements StatCodeGenerator {
         mv.visitLineNumber(defineCommandBlock.getSourcePos().getLine(), label0);
 
         var returned = false;
-        //上一次生成未完成的跳转标签，目前用于ifelse和while执行完毕后的终末跳转
-        UnfinishedGen<Label, ?> unfinishedLabel = null;
         for (val each : defineCommandBlock.getCodePieces()) {
             val tmpLabel = new Label();
-            if (unfinishedLabel != null) { //如果上一次代码最后坠着一个悬空goto，就让他跳转到当前label
-                unfinishedLabel.offer(tmpLabel).generate(unit);
-            }
             mv.visitLabel(tmpLabel);
             mv.visitLineNumber(each.getSourcePos().getLine(), tmpLabel);
             if (each instanceof ReturnStat) {
@@ -55,21 +48,11 @@ public final class UnitCommandGenerator implements StatCodeGenerator {
                     throw new InvalidReturnTypeException(defineCommandBlock.getSourcePos(), defineCommandBlock.declare().getName(), defineCommandBlock.getReturnType().getName(), ((ReturnStat) each).getExpr().getReturnType().getName());
                 }
             }
-            val genResult = each.getCodeGenerator().generate(unit);
-            if (genResult != null) {
-                if (genResult instanceof IfElseUnfinishedGoto) {
-                    unfinishedLabel = (IfElseUnfinishedGoto) genResult;
-                } else if (genResult instanceof WhileUnfinishedJump) {
-                    unfinishedLabel = (WhileUnfinishedJump) genResult;
-                }
-            }
+            each.getCodeGenerator().generate(unit);
         }
 
         if (!returned) {
             val tmpLabel = new Label();
-            if (unfinishedLabel != null) { //如果上一次代码最后坠着一个悬空goto，就让他跳转到函数末尾自动添加的返回
-                unfinishedLabel.offer(tmpLabel).generate(unit);
-            }
             mv.visitLabel(tmpLabel);
             if (rt != BasicValueType.VOID) {
                 if (rt.isBasic()) {

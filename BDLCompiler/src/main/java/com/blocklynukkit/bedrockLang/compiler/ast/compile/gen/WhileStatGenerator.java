@@ -1,22 +1,20 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ControlFlowCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.StatCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.unfinished.WhileUnfinishedJump;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.WhileStat;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.objectweb.asm.Label;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
 @RequiredArgsConstructor
-public final class WhileStatGenerator implements ControlFlowCodeGenerator<Label> {
+public final class WhileStatGenerator implements StatCodeGenerator {
     private final WhileStat stat;
 
     @Override
-    public WhileUnfinishedJump generate(Unit unit) {
+    public Void generate(Unit unit) {
         val asmUnit = requireASM(unit);
         @NonNull
         val mv = asmUnit.getCurrentMethodVisitor();
@@ -25,6 +23,7 @@ public final class WhileStatGenerator implements ControlFlowCodeGenerator<Label>
         //生成条件判断表达式
         val condLabel = stat.getStartLoopLabel();
         mv.visitLabel(condLabel);
+        mv.visitLineNumber(stat.getCondition().getSourcePos().getLine(), condLabel);
         stat.getCondition().getCodeGenerator().generate(unit);
         //判断条件是否为false (0)
         mv.visitJumpInsn(IFEQ, endLabel);
@@ -32,6 +31,9 @@ public final class WhileStatGenerator implements ControlFlowCodeGenerator<Label>
         stat.getBlock().getCodeGenerator().generate(unit);
         //body执行完毕后从头再来
         mv.visitJumpInsn(GOTO, condLabel);
-        return new WhileUnfinishedJump(endLabel);
+        //生成结尾标签
+        mv.visitLabel(endLabel);
+        mv.visitInsn(NOP);
+        return null;
     }
 }
