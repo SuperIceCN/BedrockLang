@@ -109,7 +109,7 @@ public interface Piece {
      * @param <T>     clazz
      * @return 父piece
      */
-    default <T extends Piece> T findParent(Function<Piece, T> handler) {
+    default <T> T findParent(Function<Piece, T> handler) {
         var parent = this;
         while (parent != null) {
             val tmp = handler.apply(parent);

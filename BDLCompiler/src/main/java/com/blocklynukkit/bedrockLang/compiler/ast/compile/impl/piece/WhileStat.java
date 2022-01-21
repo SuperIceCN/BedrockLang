@@ -2,6 +2,7 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.WhileStatGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.LoopStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,7 +12,7 @@ import org.objectweb.asm.Label;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class WhileStat extends StatBase {
+public final class WhileStat extends StatBase implements LoopStat {
     @Getter
     @NonNull
     private final String name;
@@ -47,5 +48,20 @@ public final class WhileStat extends StatBase {
     @Override
     public WhileStatGenerator getCodeGenerator() {
         return new WhileStatGenerator(this);
+    }
+
+    @Override
+    public Label getLoopStartLabel() {
+        return startLoopLabel;
+    }
+
+    @Override
+    public Label getLoopExitLabel() {
+        return exitLoopLabel;
+    }
+
+    @Override
+    public String getLoopName() {
+        return name;
     }
 }
