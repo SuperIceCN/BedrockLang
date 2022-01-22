@@ -35,6 +35,8 @@ public abstract class ClassInfo {
 
     public abstract ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass);
 
+    public abstract boolean canCastFrom(ClassInfo classInfo);
+
     public boolean isInterface() {
         return Modifier.isInterface(getModifier());
     }

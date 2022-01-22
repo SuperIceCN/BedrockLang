@@ -143,6 +143,11 @@ public final class BDLClassInfo extends ClassInfo {
         return null;
     }
 
+    @Override
+    public boolean canCastFrom(ClassInfo classInfo) {
+        return classInfo.getFullName().equals(this.getFullName());
+    }
+
     private static String before$(@NonNull String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
     }

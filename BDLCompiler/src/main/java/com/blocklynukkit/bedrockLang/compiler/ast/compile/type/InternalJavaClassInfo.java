@@ -137,6 +137,23 @@ public final class InternalJavaClassInfo extends ClassInfo {
         return null;
     }
 
+    @Override
+    public boolean canCastFrom(ClassInfo classInfo) {
+        var superClass = clazz;
+        while (superClass != null) {
+            if (superClass.getName().equals(classInfo.getFullName())) {
+                return true;
+            }
+            for (val each : superClass.getInterfaces()) {
+                if (each.getName().equals(classInfo.getFullName())) {
+                    return true;
+                }
+            }
+            superClass = superClass.getSuperclass();
+        }
+        return false;
+    }
+
     private static String before$(@NonNull String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
     }
