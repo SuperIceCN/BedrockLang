@@ -105,6 +105,38 @@ public final class InternalJavaClassInfo extends ClassInfo {
         return clazz.getModifiers();
     }
 
+    @Override
+    public boolean hasImplementInterface(ClassInfo interfaceClass) {
+        if (interfaceClass.isInterface()) {
+            var superClass = clazz;
+            while (superClass != null) {
+                for (val each : superClass.getInterfaces()) {
+                    if (each.getName().equals(interfaceClass.getFullName())) {
+                        return true;
+                    }
+                }
+                superClass = superClass.getSuperclass();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass) {
+        if (interfaceClass.isInterface()) {
+            var superClass = clazz;
+            while (superClass != null) {
+                for (val each : superClass.getInterfaces()) {
+                    if (each.getName().equals(interfaceClass.getFullName())) {
+                        return new InternalJavaClassInfo(superClass);
+                    }
+                }
+                superClass = superClass.getSuperclass();
+            }
+        }
+        return null;
+    }
+
     private static String before$(@NonNull String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
     }

@@ -31,6 +31,10 @@ public abstract class ClassInfo {
 
     public abstract int getModifier();
 
+    public abstract boolean hasImplementInterface(ClassInfo interfaceClass);
+
+    public abstract ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass);
+
     public boolean isInterface() {
         return Modifier.isInterface(getModifier());
     }

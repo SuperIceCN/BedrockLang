@@ -189,8 +189,6 @@ public class LoopTest {
         print.setArgs(new Expr[]{new ReadVariableExpr(auto(), print, "b")});
         body.addCodePiece(print);
 
-
-
         val ifStat = new IfElseStat(auto(), body);
         body.addCodePiece(ifStat);
         val condExpr = new EqualExpr(auto(), ifStat);

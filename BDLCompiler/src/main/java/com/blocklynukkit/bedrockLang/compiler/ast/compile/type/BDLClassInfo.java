@@ -127,6 +127,22 @@ public final class BDLClassInfo extends ClassInfo {
         return Modifier.PUBLIC;
     }
 
+    /*
+     * 目前bdl类不会实现任何接口
+     */
+    @Override
+    public boolean hasImplementInterface(ClassInfo interfaceClass) {
+        return false;
+    }
+
+    /*
+     * 目前bdl类不会实现任何接口
+     */
+    @Override
+    public ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass) {
+        return null;
+    }
+
     private static String before$(@NonNull String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
     }
