@@ -1,4 +1,4 @@
-package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl;
+package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 
 import org.objectweb.asm.Label;
 

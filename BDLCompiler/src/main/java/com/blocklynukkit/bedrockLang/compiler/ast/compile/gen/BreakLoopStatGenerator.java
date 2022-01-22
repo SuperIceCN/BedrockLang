@@ -2,7 +2,7 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.StatCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.LoopStat;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.LoopStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.BreakLoopStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.BreakIsNotInLoopException;
 import lombok.RequiredArgsConstructor;

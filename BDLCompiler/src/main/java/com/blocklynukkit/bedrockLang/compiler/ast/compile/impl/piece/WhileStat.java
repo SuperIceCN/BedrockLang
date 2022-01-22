@@ -2,15 +2,12 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.WhileStatGenerator;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.LoopStat;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.LoopStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.objectweb.asm.Label;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class WhileStat extends StatBase implements LoopStat {
     @Getter
