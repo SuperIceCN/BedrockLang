@@ -52,42 +52,6 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarExpr(BedrockLangParser.VarExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVarExpr(BedrockLangParser.VarExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSetVarExpr(BedrockLangParser.SetVarExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSetVarExpr(BedrockLangParser.SetVarExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDevideExpr(BedrockLangParser.DevideExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDevideExpr(BedrockLangParser.DevideExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterBracketExpr(BedrockLangParser.BracketExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -100,18 +64,6 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLiteralExpr(BedrockLangParser.LiteralExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLiteralExpr(BedrockLangParser.LiteralExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNegativeExpr(BedrockLangParser.NegativeExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,18 +71,6 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNegativeExpr(BedrockLangParser.NegativeExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPositiveExpr(BedrockLangParser.PositiveExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPositiveExpr(BedrockLangParser.PositiveExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -184,6 +124,90 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVarExpr(BedrockLangParser.VarExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarExpr(BedrockLangParser.VarExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSetVarExpr(BedrockLangParser.SetVarExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSetVarExpr(BedrockLangParser.SetVarExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDevideExpr(BedrockLangParser.DevideExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDevideExpr(BedrockLangParser.DevideExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLiteralExpr(BedrockLangParser.LiteralExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLiteralExpr(BedrockLangParser.LiteralExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterChainVirtualFieldExpr(BedrockLangParser.ChainVirtualFieldExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChainVirtualFieldExpr(BedrockLangParser.ChainVirtualFieldExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPositiveExpr(BedrockLangParser.PositiveExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPositiveExpr(BedrockLangParser.PositiveExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterImportSingleStatic(BedrockLangParser.ImportSingleStaticContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -232,6 +256,30 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIfElseStat(BedrockLangParser.IfElseStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfElseStat(BedrockLangParser.IfElseStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhileStat(BedrockLangParser.WhileStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileStat(BedrockLangParser.WhileStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDefineCmdStat(BedrockLangParser.DefineCmdStatContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -263,18 +311,6 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDefineSignatureWordSingle(BedrockLangParser.DefineSignatureWordSingleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDefineSignatureWordMultiple(BedrockLangParser.DefineSignatureWordMultipleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDefineSignatureWordMultiple(BedrockLangParser.DefineSignatureWordMultipleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -328,6 +364,30 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBreakStat(BedrockLangParser.BreakStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBreakStat(BedrockLangParser.BreakStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterContinueStat(BedrockLangParser.ContinueStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitContinueStat(BedrockLangParser.ContinueStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCommand(BedrockLangParser.CommandContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -371,6 +431,42 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVarid(BedrockLangParser.VaridContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInvokeCommand(BedrockLangParser.InvokeCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInvokeCommand(BedrockLangParser.InvokeCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallCommand(BedrockLangParser.CallCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallCommand(BedrockLangParser.CallCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVirtualCommand(BedrockLangParser.VirtualCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVirtualCommand(BedrockLangParser.VirtualCommandContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

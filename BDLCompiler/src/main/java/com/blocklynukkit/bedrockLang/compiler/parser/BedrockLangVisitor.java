@@ -30,27 +30,6 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCommandExpr(BedrockLangParser.CommandExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code varExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVarExpr(BedrockLangParser.VarExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code setVarExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code devideExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDevideExpr(BedrockLangParser.DevideExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code bracketExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -58,26 +37,12 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBracketExpr(BedrockLangParser.BracketExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code literalExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLiteralExpr(BedrockLangParser.LiteralExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code negativeExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNegativeExpr(BedrockLangParser.NegativeExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code positiveExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPositiveExpr(BedrockLangParser.PositiveExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code multiplyExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
@@ -107,6 +72,55 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPlusExpr(BedrockLangParser.PlusExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code varExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarExpr(BedrockLangParser.VarExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code setVarExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code devideExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDevideExpr(BedrockLangParser.DevideExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code literalExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLiteralExpr(BedrockLangParser.LiteralExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code chainVirtualFieldExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChainVirtualFieldExpr(BedrockLangParser.ChainVirtualFieldExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code positiveExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPositiveExpr(BedrockLangParser.PositiveExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code chainStaticFieldExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code importSingleStatic}
 	 * labeled alternative in {@link BedrockLangParser#importStat}.
 	 * @param ctx the parse tree
@@ -134,6 +148,18 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhenStat(BedrockLangParser.WhenStatContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link BedrockLangParser#ifElseStat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElseStat(BedrockLangParser.IfElseStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BedrockLangParser#whileStat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStat(BedrockLangParser.WhileStatContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link BedrockLangParser#defineCmdStat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -151,12 +177,6 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDefineSignatureWordSingle(BedrockLangParser.DefineSignatureWordSingleContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BedrockLangParser#defineSignatureWordMultiple}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDefineSignatureWordMultiple(BedrockLangParser.DefineSignatureWordMultipleContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BedrockLangParser#defineSignatureVariable}.
 	 * @param ctx the parse tree
@@ -184,6 +204,18 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnStat(BedrockLangParser.ReturnStatContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link BedrockLangParser#breakStat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBreakStat(BedrockLangParser.BreakStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BedrockLangParser#continueStat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContinueStat(BedrockLangParser.ContinueStatContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link BedrockLangParser#command}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -207,4 +239,25 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVarid(BedrockLangParser.VaridContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code invokeCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInvokeCommand(BedrockLangParser.InvokeCommandContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code callCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallCommand(BedrockLangParser.CallCommandContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code virtualCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVirtualCommand(BedrockLangParser.VirtualCommandContext ctx);
 }

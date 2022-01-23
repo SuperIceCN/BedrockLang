@@ -40,42 +40,6 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitCommandExpr(BedrockLangParser.CommandExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code varExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterVarExpr(BedrockLangParser.VarExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code varExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitVarExpr(BedrockLangParser.VarExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code setVarExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code setVarExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code devideExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterDevideExpr(BedrockLangParser.DevideExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code devideExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitDevideExpr(BedrockLangParser.DevideExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code bracketExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -88,18 +52,6 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitBracketExpr(BedrockLangParser.BracketExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code literalExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterLiteralExpr(BedrockLangParser.LiteralExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code literalExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitLiteralExpr(BedrockLangParser.LiteralExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code negativeExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -111,18 +63,6 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNegativeExpr(BedrockLangParser.NegativeExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code positiveExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterPositiveExpr(BedrockLangParser.PositiveExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code positiveExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitPositiveExpr(BedrockLangParser.PositiveExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code multiplyExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
@@ -172,6 +112,90 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitPlusExpr(BedrockLangParser.PlusExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code varExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarExpr(BedrockLangParser.VarExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code varExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarExpr(BedrockLangParser.VarExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code setVarExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code setVarExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code devideExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterDevideExpr(BedrockLangParser.DevideExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code devideExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitDevideExpr(BedrockLangParser.DevideExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code literalExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteralExpr(BedrockLangParser.LiteralExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code literalExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteralExpr(BedrockLangParser.LiteralExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code chainVirtualFieldExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterChainVirtualFieldExpr(BedrockLangParser.ChainVirtualFieldExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code chainVirtualFieldExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitChainVirtualFieldExpr(BedrockLangParser.ChainVirtualFieldExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code positiveExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPositiveExpr(BedrockLangParser.PositiveExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code positiveExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPositiveExpr(BedrockLangParser.PositiveExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code chainStaticFieldExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code chainStaticFieldExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code importSingleStatic}
 	 * labeled alternative in {@link BedrockLangParser#importStat}.
 	 * @param ctx the parse tree
@@ -218,6 +242,26 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitWhenStat(BedrockLangParser.WhenStatContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BedrockLangParser#ifElseStat}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfElseStat(BedrockLangParser.IfElseStatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BedrockLangParser#ifElseStat}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfElseStat(BedrockLangParser.IfElseStatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BedrockLangParser#whileStat}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStat(BedrockLangParser.WhileStatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BedrockLangParser#whileStat}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStat(BedrockLangParser.WhileStatContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BedrockLangParser#defineCmdStat}.
 	 * @param ctx the parse tree
 	 */
@@ -247,16 +291,6 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDefineSignatureWordSingle(BedrockLangParser.DefineSignatureWordSingleContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BedrockLangParser#defineSignatureWordMultiple}.
-	 * @param ctx the parse tree
-	 */
-	void enterDefineSignatureWordMultiple(BedrockLangParser.DefineSignatureWordMultipleContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BedrockLangParser#defineSignatureWordMultiple}.
-	 * @param ctx the parse tree
-	 */
-	void exitDefineSignatureWordMultiple(BedrockLangParser.DefineSignatureWordMultipleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BedrockLangParser#defineSignatureVariable}.
 	 * @param ctx the parse tree
@@ -302,6 +336,26 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitReturnStat(BedrockLangParser.ReturnStatContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BedrockLangParser#breakStat}.
+	 * @param ctx the parse tree
+	 */
+	void enterBreakStat(BedrockLangParser.BreakStatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BedrockLangParser#breakStat}.
+	 * @param ctx the parse tree
+	 */
+	void exitBreakStat(BedrockLangParser.BreakStatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BedrockLangParser#continueStat}.
+	 * @param ctx the parse tree
+	 */
+	void enterContinueStat(BedrockLangParser.ContinueStatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BedrockLangParser#continueStat}.
+	 * @param ctx the parse tree
+	 */
+	void exitContinueStat(BedrockLangParser.ContinueStatContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BedrockLangParser#command}.
 	 * @param ctx the parse tree
 	 */
@@ -341,4 +395,40 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVarid(BedrockLangParser.VaridContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code invokeCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 */
+	void enterInvokeCommand(BedrockLangParser.InvokeCommandContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code invokeCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 */
+	void exitInvokeCommand(BedrockLangParser.InvokeCommandContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code callCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallCommand(BedrockLangParser.CallCommandContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code callCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallCommand(BedrockLangParser.CallCommandContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code virtualCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 */
+	void enterVirtualCommand(BedrockLangParser.VirtualCommandContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code virtualCommand}
+	 * labeled alternative in {@link BedrockLangParser#commandId}.
+	 * @param ctx the parse tree
+	 */
+	void exitVirtualCommand(BedrockLangParser.VirtualCommandContext ctx);
 }

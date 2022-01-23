@@ -1,7 +1,7 @@
 grammar BedrockLang;
 
 program: (importStat SEMICOLON?)* (declareVarStat SEMICOLON | defineCmdStat | whenStat)*;
-stat: defineCmdStat | whenStat | declareVarStat | returnStat;
+stat: ifElseStat | whileStat | declareVarStat SEMICOLON | returnStat SEMICOLON | breakStat SEMICOLON | continueStat SEMICOLON;
 expr: command #commandExpr
     | (INT | DEC | BOOL | NULL | STRING) #literalExpr
     | varid #varExpr
@@ -23,6 +23,8 @@ importStat: IMPORT (ID COMMA?)+ FROM id #importSingleStatic
     | IMPORT id #importClass
     ;
 whenStat: WHEN ID block;
+ifElseStat: IF expr block (ELIF expr block)* (ELSE block)?;
+whileStat: WHILE (LA ID RA)? expr block;
 defineCmdStat: DEF defineSignature block;
 defineSignature: ID (COLON ID)? (defineSignatureWordSingle | defineSignatureVariable)*;
 defineSignatureWordSingle: ID;
@@ -31,10 +33,11 @@ declareVarStat: VAR varid COLON ID (SET expr)? #hasTypeVarDeclare
     | VAR varid SET expr #inferTypeVarDeclare
     ;
 returnStat: RETURN expr;
+breakStat: BREAK ID?;
+continueStat: CONTINUE ID?;
 
 command: commandId (ID | expr)*;
-block: START (expr | stat) END
-    | START ((expr | stat) SEMICOLON)* END;
+block: START (expr SEMICOLON | stat)* END;
 
 id: ID (DOT ID | DOT varid)*;
 varid: DOLLAR id;
@@ -81,6 +84,12 @@ RETURN: 'return';
 IMPORT: 'import';
 FROM: 'from';
 AS: 'as';
+IF: 'if';
+ELSE: 'else';
+ELIF: 'elif';
+WHILE: 'while';
+BREAK: 'break';
+CONTINUE: 'continue';
 
 fragment STRCHAR: ~["] | '\\"';
 fragment INTEGER: [0-9]+;
