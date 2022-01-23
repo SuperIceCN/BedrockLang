@@ -14,6 +14,8 @@ expr: command #commandExpr
     | expr DIVIDE expr #devideExpr
     | expr REMAIN expr #remainExpr
     | varid SET expr #setVarExpr
+    | ID (DOT ID | DOT varid)* DOT varid #chainStaticFieldExpr
+    | varid (DOT ID | DOT varid)* DOT varid #chainVirtualFieldExpr
     ;
 
 importStat: IMPORT (ID COMMA?)+ FROM id #importSingleStatic
@@ -22,9 +24,8 @@ importStat: IMPORT (ID COMMA?)+ FROM id #importSingleStatic
     ;
 whenStat: WHEN ID block;
 defineCmdStat: DEF defineSignature block;
-defineSignature: ID (varid COLON ID)? (defineSignatureWordSingle | defineSignatureWordMultiple | defineSignatureVariable)*;
+defineSignature: ID (COLON ID)? (defineSignatureWordSingle | defineSignatureVariable)*;
 defineSignatureWordSingle: ID;
-defineSignatureWordMultiple: LWR (ID COMMA?)+ GTR;
 defineSignatureVariable: varid COLON ID;
 declareVarStat: VAR varid COLON ID (SET expr)? #hasTypeVarDeclare
     | VAR varid SET expr #inferTypeVarDeclare
@@ -37,7 +38,10 @@ block: START (expr | stat) END
 
 id: ID (DOT ID | DOT varid)*;
 varid: DOLLAR id;
-commandId: ID (DOT ID | DOT varid)* DOT ID | ID;
+commandId: ID (DOT ID | DOT varid)* DOT ID #invokeCommand
+    | ID #callCommand
+    | varid (DOT ID | DOT varid)* DOT ID #virtualCommand
+    ;
 
 WS: [ \n\r\t] -> channel(HIDDEN);
 COMMENT: '//'~[\n]* -> channel(HIDDEN);
