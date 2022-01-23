@@ -10,6 +10,15 @@ import lombok.*;
 
 import java.util.Arrays;
 
+/**
+ * MethodCallExpr是针对静态方法调用的表达式，与MethodInvokeExpr相似，都允许以命令的形式调用方法。
+ * 明显不同的是，Call针对当前类中声明的静态方法和导入的静态方法的调用。
+ * <br/>
+ * <br/>
+ * 提示：MethodInvokeExpr不能用于调用在同一{@link Unit}中定义的命令，不能调用{@link ImportStat}导入的静态方法
+ * @see MethodCallExprGenerator
+ * @see MethodInvokeExpr
+ */
 public final class MethodCallExpr extends ExprBase {
     @NonNull
     @Getter
