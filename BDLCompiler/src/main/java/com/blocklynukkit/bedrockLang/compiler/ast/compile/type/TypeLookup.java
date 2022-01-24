@@ -134,6 +134,9 @@ public class TypeLookup {
         if (clazz != null) return clazz;
         clazz = lookupBDL(typeName);
         if (clazz != null) return clazz;
+        if(typeName.endsWith("[]")){
+            typeName = "[L" + typeName.substring(0, typeName.length() - 2) + ";";
+        }
         clazz = lookupOther(typeName);
         return clazz;
     }
@@ -159,7 +162,7 @@ public class TypeLookup {
             typeStore.put(valueType, res);
             return res;
         } else if (valueType.isArray()) {
-            res = lookupOther(valueType.getName() + "[]");
+            res = lookupOther("[L"+valueType.getName()+";");
             typeStore.put(valueType, res);
             return res;
         } else if (valueType.isClass()) {
@@ -232,14 +235,14 @@ public class TypeLookup {
         }
         val lastDotPos = className.lastIndexOf('.');
         try {
-            var info = new InternalJavaClassInfo(classLoader.loadClass(className));
+            var info = new InternalJavaClassInfo(Class.forName(className, false, classLoader));
             classPool.put(className, info);
             return info;
         } catch (ClassNotFoundException e) {
             if (className.contains(".")) {
                 InternalJavaClassInfo info;
                 try {
-                    info = new InternalJavaClassInfo(classLoader.loadClass(className.substring(0, lastDotPos) + "$" + className.substring(lastDotPos + 1)));
+                    info = new InternalJavaClassInfo(Class.forName(className.substring(0, lastDotPos) + "$" + className.substring(lastDotPos + 1), false, classLoader));
                 } catch (ClassNotFoundException ex) {
                     return null;
                 }
@@ -286,7 +289,7 @@ public class TypeLookup {
             classInfoStore.put(valueType, res);
             return res;
         } else if (valueType.isArray()) {
-            res = lookupOtherClass(valueType.getName() + "[]");
+            res = lookupOtherClass("[L" + valueType.getName() + ";");
             classInfoStore.put(valueType, res);
             return res;
         } else if (valueType.isClass()) {
