@@ -40,6 +40,18 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitCommandExpr(BedrockLangParser.CommandExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code divideExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivideExpr(BedrockLangParser.DivideExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code divideExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivideExpr(BedrockLangParser.DivideExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code bracketExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -135,18 +147,6 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code devideExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterDevideExpr(BedrockLangParser.DevideExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code devideExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitDevideExpr(BedrockLangParser.DevideExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code literalExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.

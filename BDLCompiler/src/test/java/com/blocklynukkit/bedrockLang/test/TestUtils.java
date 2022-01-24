@@ -5,7 +5,9 @@ import lombok.var;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Objects;
 
 public final class TestUtils {
     @SneakyThrows
@@ -35,5 +37,10 @@ public final class TestUtils {
             System.exit(1);
         }
         return clazz;
+    }
+
+    @SneakyThrows
+    public static String getCode(String codeName) {
+        return new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(TestUtils.class.getResource(codeName)).toURI())));
     }
 }

@@ -11,7 +11,7 @@ expr: command #commandExpr
     | expr PLUS expr #plusExpr
     | expr MINUS expr #minusExpr
     | expr MULTIPLY expr #multiplyExpr
-    | expr DIVIDE expr #devideExpr
+    | expr DIVIDE expr #divideExpr
     | expr REMAIN expr #remainExpr
     | varid SET expr #setVarExpr
     | ID (DOT ID | DOT varid)* DOT varid #chainStaticFieldExpr

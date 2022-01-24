@@ -1,13 +1,17 @@
 // Generated from D:/ideaProject/BedrockLang/BDLCompiler/src/main/antlr\BedrockLang.g4 by ANTLR 4.9.1
 package com.blocklynukkit.bedrockLang.compiler.parser;
-import org.antlr.v4.runtime.atn.*;
-import org.antlr.v4.runtime.dfa.DFA;
+
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class BedrockLangParser extends Parser {
@@ -380,6 +384,29 @@ public class BedrockLangParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class DivideExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode DIVIDE() { return getToken(BedrockLangParser.DIVIDE, 0); }
+		public DivideExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BedrockLangListener ) ((BedrockLangListener)listener).enterDivideExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BedrockLangListener ) ((BedrockLangListener)listener).exitDivideExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BedrockLangVisitor ) return ((BedrockLangVisitor<? extends T>)visitor).visitDivideExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class BracketExprContext extends ExprContext {
 		public TerminalNode LB() { return getToken(BedrockLangParser.LB, 0); }
 		public ExprContext expr() {
@@ -552,29 +579,6 @@ public class BedrockLangParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof BedrockLangVisitor ) return ((BedrockLangVisitor<? extends T>)visitor).visitSetVarExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class DevideExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode DIVIDE() { return getToken(BedrockLangParser.DIVIDE, 0); }
-		public DevideExprContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BedrockLangListener ) ((BedrockLangListener)listener).enterDevideExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BedrockLangListener ) ((BedrockLangListener)listener).exitDevideExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BedrockLangVisitor ) return ((BedrockLangVisitor<? extends T>)visitor).visitDevideExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -924,7 +928,7 @@ public class BedrockLangParser extends Parser {
 						break;
 					case 4:
 						{
-						_localctx = new DevideExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new DivideExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(127);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");

@@ -30,6 +30,13 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCommandExpr(BedrockLangParser.CommandExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code divideExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivideExpr(BedrockLangParser.DivideExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code bracketExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -85,13 +92,6 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code devideExpr}
-	 * labeled alternative in {@link BedrockLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDevideExpr(BedrockLangParser.DevideExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code literalExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
