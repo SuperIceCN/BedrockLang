@@ -34,7 +34,7 @@ public final class BDLMethodInfo extends MethodInfo {
     @Override
     public ClassInfo[] getArgumentClassTypes() {
         return Arrays.stream(command.getArgs()).filter(CmdArg::hasValueType)
-                .map(cmdArg -> getReturnClassType()).toArray(ClassInfo[]::new);
+                .map(cmdArg -> lookup.lookupClass(cmdArg.getValueType())).toArray(ClassInfo[]::new);
     }
 
     @Override
@@ -45,7 +45,7 @@ public final class BDLMethodInfo extends MethodInfo {
     @Override
     public Type[] getArgumentASMTypes() {
         return Arrays.stream(command.getArgs()).filter(CmdArg::hasValueType)
-                .map(cmdArg -> getReturnASMType()).toArray(Type[]::new);
+                .map(cmdArg -> lookup.lookup(cmdArg.getValueType())).toArray(Type[]::new);
     }
 
     @Override

@@ -49,4 +49,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main");
         main.invoke(cls);
     }
+
+    @Test
+    public void test4() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("say.bdl")
+                .sourceCode(getCode("say.bdl")).build().compile();
+        saveTo(bytes, new File("test/say.class"));
+        Class<?> cls = loadClass("say", bytes);
+        Method main = cls.getMethod("main");
+        main.invoke(cls);
+    }
 }

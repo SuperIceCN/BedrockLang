@@ -1,0 +1,7 @@
+def say $message:string {
+    System.$out.println $message;
+}
+
+def main {
+    say "I love China.";
+}
