@@ -27,6 +27,20 @@ public class CompilerSimpleTest {
     }
 
     @Test
+    public void test2Performance() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("fibonacci.bdl")
+                .sourceCode(getCode("fibonacci.bdl")).build().compile();
+        saveTo(bytes, new File("test/fibonacci.class"));
+        Class<?> cls = loadClass("fibonacci", bytes);
+        Method main = cls.getMethod("main");
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000000; i++) {
+            main.invoke(cls);
+        }
+        System.out.println(System.currentTimeMillis() - start);
+    }
+
+    @Test
     public void test3() throws Exception {
         final byte[] bytes = Compiler.builder().sourceName("bigNum.bdl")
                 .sourceCode(getCode("bigNum.bdl")).build().compile();
