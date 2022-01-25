@@ -4,15 +4,25 @@ import com.blocklynukkit.bedrockLang.compiler.app.Compiler;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
-import static com.blocklynukkit.bedrockLang.test.TestUtils.getCode;
-import static com.blocklynukkit.bedrockLang.test.TestUtils.saveTo;
+import static com.blocklynukkit.bedrockLang.test.TestUtils.*;
 
 public class CompilerSimpleTest {
     @Test
     public void test1() {
-        final byte[] bytes = Compiler.builder().sourceName("testCompiler1")
-                .sourceCode(getCode("helloworld.bdl")).build().compile();
-        saveTo(bytes, new File("test/helloworld.class"));
+        final byte[] bytes = Compiler.builder().sourceName("helloWorld")
+                .sourceCode(getCode("helloWorld.bdl")).build().compile();
+        saveTo(bytes, new File("test/helloWorld.class"));
+    }
+
+    @Test
+    public void test2() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("fibonacci")
+                .sourceCode(getCode("fibonacci.bdl")).build().compile();
+        saveTo(bytes, new File("test/fibonacci.class"));
+        Class<?> cls = loadClass("fibonacci", bytes);
+        Method main = cls.getMethod("main");
+        main.invoke(cls);
     }
 }

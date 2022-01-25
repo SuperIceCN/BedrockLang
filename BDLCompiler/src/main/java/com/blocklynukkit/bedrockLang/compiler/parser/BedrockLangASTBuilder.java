@@ -15,7 +15,9 @@ import com.blocklynukkit.bedrockLang.compiler.parser.BedrockLangParser.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.blocklynukkit.bedrockLang.compiler.parser.VisitResult.from;
@@ -101,9 +103,31 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
                         }).toArray(CmdArg[]::new));
         //遍历命令内部内容
         for (final ParseTree each : ctx.block().children) {
-            defineCommandBlock.addCodePiece(visit(each, defineCommandBlock).getPiece());
+            VisitResult<?, ?> tmp = visit(each, defineCommandBlock);
+            if (tmp != null) {
+                defineCommandBlock.addCodePiece(tmp.getPiece());
+            }
         }
         return of(defineCommandBlock);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitHasTypeVarDeclare(HasTypeVarDeclareContext ctx) {
+        final LocalVariableDeclareStat stat = new LocalVariableDeclareStat(pos(ctx), parent(ctx).findParent(Block.class), no$(ctx.varid().getText()));
+        stat.setType(ValueType.from(ctx.ID().getText()));
+        if (ctx.expr() != null) {
+            stat.setInitExpr((Expr) visit(ctx.expr(), stat).getPiece());
+        }
+        return of(stat);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitInferTypeVarDeclare(InferTypeVarDeclareContext ctx) {
+        final LocalVariableDeclareStat stat = new LocalVariableDeclareStat(pos(ctx),
+                parent(ctx).findParent(Block.class),
+                no$(ctx.varid().getText()));
+        stat.setInitExpr((Expr) visit(ctx.expr(), stat).getPiece());
+        return of(stat);
     }
 
     @Override
@@ -158,7 +182,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitVarExpr(VarExprContext ctx) {
-        return of(new ReadVariableExpr(pos(ctx), parent(ctx), ctx.varid().getText()));
+        return of(new ReadVariableExpr(pos(ctx), parent(ctx), no$(ctx.varid().getText())));
     }
 
     @Override
@@ -207,7 +231,8 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         } else if (ctx.NULL() != null) {
             return of(new LiteralExpr(pos(ctx), parent(ctx), null, ValueType.from("java.lang.Object")));
         } else {
-            return of(new LiteralExpr(pos(ctx), parent(ctx), ctx.STRING().getText(), BasicValueType.STRING));
+            final String str = ctx.STRING().getText();
+            return of(new LiteralExpr(pos(ctx), parent(ctx), str.substring(1, str.length() - 1), BasicValueType.STRING));
         }
     }
 
@@ -273,7 +298,8 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     @Override
     public VisitResult<?, ?> visitCommand(CommandContext ctx) {
         final Expr[] argExprs = new Expr[ctx.children.size() - 1];
-        final List<ParseTree> children = ctx.children;
+        final List<ParseTree> children = new ArrayList<>(ctx.children);
+        children.remove(0);
 
         final CommandIdContext commandIdCtx = ctx.commandId();
         if (commandIdCtx instanceof CallCommandContext) {
@@ -315,6 +341,49 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitVirtualCommand(VirtualCommandContext ctx) {
+        throw new ShouldNotReachHereException(pos(ctx), "");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitStat(StatContext ctx) {
+        Piece parent = parent(ctx);
+        ctx.children.removeIf(tree -> tree instanceof TerminalNode && tree.getText().equals(";"));
+        ctx.children.forEach(tree -> parentMap.put(tree, parent));
+        return super.visitStat(ctx);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitWhenStat(WhenStatContext ctx) {
+        throw new NotImplementedException(pos(ctx), "When grammar is not available now. ");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitDefineSignature(DefineSignatureContext ctx) {
+        throw new ShouldNotReachHereException(pos(ctx), "");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitDefineSignatureWordSingle(DefineSignatureWordSingleContext ctx) {
+        throw new ShouldNotReachHereException(pos(ctx), "");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitDefineSignatureVariable(DefineSignatureVariableContext ctx) {
+        throw new ShouldNotReachHereException(pos(ctx), "");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitBlock(BlockContext ctx) {
+        throw new ShouldNotReachHereException(pos(ctx), "");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitId(IdContext ctx) {
+        throw new ShouldNotReachHereException(pos(ctx), "");
+    }
+
+    @Override
+    public VisitResult<?, ?> visitVarid(VaridContext ctx) {
         throw new ShouldNotReachHereException(pos(ctx), "");
     }
 

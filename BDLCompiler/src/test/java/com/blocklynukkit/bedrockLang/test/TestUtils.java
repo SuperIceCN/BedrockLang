@@ -43,7 +43,7 @@ public final class TestUtils {
 
     public static String getCode(String codeName) {
         try {
-            return new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(TestUtils.class.getResource(codeName)).toURI())));
+            return new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(TestUtils.class.getResource("/" + codeName)).toURI())));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
             return null;
