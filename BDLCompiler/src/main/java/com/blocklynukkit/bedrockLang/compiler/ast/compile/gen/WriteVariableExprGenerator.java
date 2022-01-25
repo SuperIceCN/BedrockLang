@@ -19,6 +19,10 @@ public final class WriteVariableExprGenerator implements ExprCodeGenerator {
         final GenerateWithASM asmUnit = requireASM(unit);
         //先生成值的表达式
         expr.getValueExpr().getCodeGenerator().generate(unit);
+        //转换基本值的类型
+        if(expr.getReturnType().isBasic()){
+            new BasicCastGenerator(expr.getValueExpr().getReturnType(), expr.getReturnType()).generate(unit);
+        }
         //此时值应该位于栈顶
         final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
         final TypeLookup lookup = asmUnit.getTypeLookup();

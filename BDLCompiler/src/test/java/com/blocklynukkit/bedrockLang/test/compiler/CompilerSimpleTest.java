@@ -25,4 +25,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main");
         main.invoke(cls);
     }
+
+    @Test
+    public void test3() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("bigNum")
+                .sourceCode(getCode("bigNum.bdl")).build().compile();
+        saveTo(bytes, new File("test/bigNum.class"));
+        Class<?> cls = loadClass("bigNum", bytes);
+        Method main = cls.getMethod("main");
+        main.invoke(cls);
+    }
 }

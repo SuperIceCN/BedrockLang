@@ -114,10 +114,10 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     @Override
     public VisitResult<?, ?> visitHasTypeVarDeclare(HasTypeVarDeclareContext ctx) {
         final LocalVariableDeclareStat stat = new LocalVariableDeclareStat(pos(ctx), parent(ctx).findParent(Block.class), no$(ctx.varid().getText()));
-        stat.setType(ValueType.from(ctx.ID().getText()));
         if (ctx.expr() != null) {
             stat.setInitExpr((Expr) visit(ctx.expr(), stat).getPiece());
         }
+        stat.setType(ValueType.from(ctx.ID().getText()));
         return of(stat);
     }
 
