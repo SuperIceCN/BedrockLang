@@ -2,3 +2,6 @@
 /BDLCompiler/test/
 /target/
 /.idea/
+*.iml
+/BDLauncher/BDLauncher.iml
+/BDLauncher/target/
