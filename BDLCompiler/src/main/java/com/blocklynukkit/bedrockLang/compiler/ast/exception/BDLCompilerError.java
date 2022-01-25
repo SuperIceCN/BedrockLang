@@ -1,15 +1,15 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.exception;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public abstract class BDLCompilerError extends BDLCompilerException {
-    @NonNull
     public final SourcePos sourcePos;
-    @NonNull
     public final String message;
+
+    public BDLCompilerError(SourcePos sourcePos, String message) {
+        this.sourcePos = sourcePos;
+        this.message = message;
+    }
 
     @Override
     public String getMessage() {

@@ -1,30 +1,28 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.VariableRecord;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.WriteVariableExpr;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
+import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
-@RequiredArgsConstructor
 public final class WriteVariableExprGenerator implements ExprCodeGenerator {
     private final WriteVariableExpr expr;
 
+    public WriteVariableExprGenerator(WriteVariableExpr expr) {
+        this.expr = expr;
+    }
+
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
+        final GenerateWithASM asmUnit = requireASM(unit);
         //先生成值的表达式
         expr.getValueExpr().getCodeGenerator().generate(unit);
         //此时值应该位于栈顶
-        @NonNull
-        val mv = asmUnit.getCurrentMethodVisitor();
-        val lookup = asmUnit.getTypeLookup();
-        val variable = expr.getVariable();
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
+        final TypeLookup lookup = asmUnit.getTypeLookup();
+        final VariableRecord variable = expr.getVariable();
         if (variable.getType() == VariableRecord.VariableType.LOCAL) {
             mv.visitVarInsn(lookup.lookup(variable.getVariable().getType()).getOpcode(ISTORE), variable.getIndex());
         } else if (variable.getType() == VariableRecord.VariableType.UNIT_GLOBAL) {

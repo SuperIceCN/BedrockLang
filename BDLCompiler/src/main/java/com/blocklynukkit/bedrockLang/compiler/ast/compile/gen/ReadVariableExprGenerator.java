@@ -1,27 +1,25 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.VariableRecord;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariableExpr;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
+import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
-@RequiredArgsConstructor
 public final class ReadVariableExprGenerator implements ExprCodeGenerator {
     private final ReadVariableExpr expr;
 
+    public ReadVariableExprGenerator(ReadVariableExpr expr) {
+        this.expr = expr;
+    }
+
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
-        @NonNull
-        val mv = asmUnit.getCurrentMethodVisitor();
-        val lookup = asmUnit.getTypeLookup();
-        val variable = expr.getVariable();
+        final GenerateWithASM asmUnit = requireASM(unit);
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
+        final TypeLookup lookup = asmUnit.getTypeLookup();
+        final VariableRecord variable = expr.getVariable();
         if(variable.getType() == VariableRecord.VariableType.LOCAL){
             mv.visitVarInsn(lookup.lookup(variable.getVariable().getType()).getOpcode(ILOAD), variable.getIndex());
         }else if(variable.getType() == VariableRecord.VariableType.UNIT_GLOBAL){

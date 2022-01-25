@@ -1,15 +1,19 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.Expr;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.Piece;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public final class CommandArgWordExpr implements Expr {
     private final SourcePos sourcePos;
-    @Getter
     private final String word;
+
+    public CommandArgWordExpr(SourcePos sourcePos, String word) {
+        this.sourcePos = sourcePos;
+        this.word = word;
+    }
 
     @Override
     public SourcePos getSourcePos() {
@@ -34,5 +38,9 @@ public final class CommandArgWordExpr implements Expr {
     @Override
     public ExprCodeGenerator getCodeGenerator() {
         throw new UnsupportedOperationException();
+    }
+
+    public String getWord() {
+        return this.word;
     }
 }

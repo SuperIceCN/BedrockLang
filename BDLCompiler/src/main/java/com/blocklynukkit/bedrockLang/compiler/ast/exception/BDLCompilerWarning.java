@@ -1,18 +1,21 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.exception;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public abstract class BDLCompilerWarning extends BDLCompilerException {
     public final SourcePos sourcePos;
-    @NonNull
+
     public final String message;
+
+    public BDLCompilerWarning(SourcePos sourcePos, String message) {
+        this.sourcePos = sourcePos;
+        this.message = message;
+    }
 
     @Override
     public String getMessage() {
-        if(sourcePos != null) return message + String.format("at [%d, %d] (%s)", sourcePos.getLine(), sourcePos.getColumn(), sourcePos.getSourceName());
+        if (sourcePos != null)
+            return message + String.format("at [%d, %d] (%s)", sourcePos.getLine(), sourcePos.getColumn(), sourcePos.getSourceName());
         else return message;
     }
 

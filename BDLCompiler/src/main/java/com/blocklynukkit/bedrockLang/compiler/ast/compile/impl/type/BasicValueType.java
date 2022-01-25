@@ -2,13 +2,13 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueTrait;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
-@RequiredArgsConstructor
-@ToString
 public final class BasicValueType extends ValueType {
     private final String name;
+
+    public BasicValueType(String name) {
+        this.name = name;
+    }
 
     @Override
     public String getName() {
@@ -31,4 +31,7 @@ public final class BasicValueType extends ValueType {
     public static BasicValueType STRING = new BasicValueType("java.lang.String");
     public static BasicValueType BOOLEAN = new BasicValueType("boolean");
 
+    public String toString() {
+        return "BasicValueType(name=" + this.getName() + ")";
+    }
 }

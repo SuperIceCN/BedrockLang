@@ -6,10 +6,8 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.Piece;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.LiteralExprGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.Getter;
 
 public final class LiteralExpr extends ExprBase {
-    @Getter
     private final Object value;
     private final ValueType valueType;
 
@@ -30,5 +28,9 @@ public final class LiteralExpr extends ExprBase {
     @Override
     public ExprCodeGenerator getCodeGenerator() {
         return new LiteralExprGenerator(this);
+    }
+
+    public Object getValue() {
+        return this.value;
     }
 }

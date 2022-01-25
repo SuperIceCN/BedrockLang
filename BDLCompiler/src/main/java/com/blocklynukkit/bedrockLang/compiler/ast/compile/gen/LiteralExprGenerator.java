@@ -1,25 +1,26 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.GenerateWithASM;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.LiteralExpr;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
-@RequiredArgsConstructor
 public final class LiteralExprGenerator implements ExprCodeGenerator {
     private final LiteralExpr expr;
 
+    public LiteralExprGenerator(LiteralExpr expr) {
+        this.expr = expr;
+    }
+
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
-        val type = expr.getReturnType();
-        @NonNull
-        val mv = asmUnit.getCurrentMethodVisitor();
+        final GenerateWithASM asmUnit = requireASM(unit);
+        final ValueType type = expr.getReturnType();
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
         if (expr.getValue() == null) {
             mv.visitInsn(ACONST_NULL);
         } else {

@@ -1,16 +1,10 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.operator;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.BoxHelper;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.BasicCastGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator.NotEqualExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
-import lombok.var;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
@@ -18,29 +12,30 @@ import static com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType.isBox
 import static com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType.isNumberType;
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
-@RequiredArgsConstructor
 public final class NotEqualExprGenerator implements ExprCodeGenerator, BoxHelper {
     private final NotEqualExpr expr;
+
+    public NotEqualExprGenerator(NotEqualExpr expr) {
+        this.expr = expr;
+    }
 
     @SuppressWarnings("DuplicatedCode")
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
-        @NonNull
-        val mv = asmUnit.getCurrentMethodVisitor();
-        @NonNull
-        val lookup = asmUnit.getTypeLookup();
-        val left = expr.getLeft();
-        val right = expr.getRight();
+        final GenerateWithASM asmUnit = requireASM(unit);
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
+        final TypeLookup lookup = asmUnit.getTypeLookup();
+        final Expr left = expr.getLeft();
+        final Expr right = expr.getRight();
         //保证拿到的类型是完整的java类名而是不是部分导入的不完整类名，如Integer=>java.lang.Integer
-        var leftValueType = ValueType.fromASM(lookup.lookup(expr.getLeft().getReturnType()));
-        var rightValueType = ValueType.fromASM(lookup.lookup(expr.getRight().getReturnType()));
-        val startLabel = new Label();
+        ValueType leftValueType = ValueType.fromASM(lookup.lookup(expr.getLeft().getReturnType()));
+        ValueType rightValueType = ValueType.fromASM(lookup.lookup(expr.getRight().getReturnType()));
+        final Label startLabel = new Label();
         mv.visitLabel(startLabel);
         //判断是否都是基本数字类型或布尔型
         if ((isNumberType(leftValueType) && isNumberType(rightValueType)) ||
                 (leftValueType == BasicValueType.BOOLEAN && rightValueType == BasicValueType.BOOLEAN)) {
-            val targetValueType = ValueType.largerNumberType(leftValueType, rightValueType);
+            final ValueType targetValueType = ValueType.largerNumberType(leftValueType, rightValueType);
             //将左表达式生成到操作栈上并转换到目标比较类型
             left.getCodeGenerator().generate(unit);
             new BasicCastGenerator(leftValueType, targetValueType).generate(unit);
@@ -56,8 +51,8 @@ public final class NotEqualExprGenerator implements ExprCodeGenerator, BoxHelper
                     (isBoxType(leftValueType) && isBoxType(rightValueType))) {
                 //先拆箱为敬
                 boolean isLeftBox = false, isRightBox = false;
-                val previousLeftValueType = leftValueType;
-                val previousRightValueType = rightValueType;
+                final ValueType previousLeftValueType = leftValueType;
+                final ValueType previousRightValueType = rightValueType;
                 if (isBoxType(leftValueType)) {
                     leftValueType = unBoxValueType(leftValueType);
                     isLeftBox = true;
@@ -67,7 +62,7 @@ public final class NotEqualExprGenerator implements ExprCodeGenerator, BoxHelper
                     isRightBox = true;
                 }
                 //计算目标比较类型
-                val targetValueType = ValueType.largerNumberType(leftValueType, rightValueType);
+                final ValueType targetValueType = ValueType.largerNumberType(leftValueType, rightValueType);
                 //将左表达式生成到操作栈上并拆箱
                 left.getCodeGenerator().generate(unit);
                 if (isLeftBox) {
@@ -100,8 +95,8 @@ public final class NotEqualExprGenerator implements ExprCodeGenerator, BoxHelper
                 //比较栈上的两个操作对象
                 mv.visitMethodInsn(INVOKESTATIC, "java/util/Objects", "equals", "(Ljava/lang/Object;Ljava/lang/Object;)Z", false);
                 //反转真假
-                val false2trueLabel = new Label();
-                val endLabel = new Label();
+                final Label false2trueLabel = new Label();
+                final Label endLabel = new Label();
                 mv.visitJumpInsn(IFEQ, false2trueLabel);
                 mv.visitInsn(ICONST_0);
                 mv.visitJumpInsn(GOTO, endLabel);
@@ -119,9 +114,9 @@ public final class NotEqualExprGenerator implements ExprCodeGenerator, BoxHelper
      */
     private void compare(MethodVisitor mv, ValueType targetValueType) {
         //生成比较标签和比较后的跳转标签
-        val finishLabel = new Label(); //照例一个NOP trick，把控制流全部放到一个空标签上避免紊乱
-        val falseLabel = new Label();
-        val cmpLabel = new Label();
+        final Label finishLabel = new Label(); //照例一个NOP trick，把控制流全部放到一个空标签上避免紊乱
+        final Label falseLabel = new Label();
+        final Label cmpLabel = new Label();
         mv.visitLabel(cmpLabel);
         //分类进行比较并生成比较标签内容
         if (targetValueType == BasicValueType.BOOLEAN ||

@@ -12,11 +12,11 @@ import com.blocklynukkit.bedrockLang.compiler.ast.exception.NotImplementedExcept
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.ShouldNotReachHereException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 import com.blocklynukkit.bedrockLang.compiler.parser.BedrockLangParser.*;
-import lombok.val;
-import lombok.var;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+
+import java.util.List;
 
 import static com.blocklynukkit.bedrockLang.compiler.parser.VisitResult.from;
 import static com.blocklynukkit.bedrockLang.compiler.parser.VisitResult.of;
@@ -34,7 +34,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<BDLUnit, byte[]> visitProgram(ProgramContext ctx) {
-        for (val each : ctx.children) {
+        for (final ParseTree each : ctx.children) {
             if (each instanceof ImportSingleStaticContext) {
                 bdlUnit.addCodePiece(visitImportSingleStatic((ImportSingleStaticContext) each).getPiece());
             } else if (each instanceof ImportAllStaticContext) {
@@ -57,7 +57,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         if (ctx instanceof InferTypeVarDeclareContext) {
             throw new GlobalVariableCannotInitException(pos(ctx));
         } else {
-            val varDeclare = (HasTypeVarDeclareContext) ctx;
+            final HasTypeVarDeclareContext varDeclare = (HasTypeVarDeclareContext) ctx;
             if (varDeclare.expr() != null) {
                 throw new GlobalVariableCannotInitException(pos(ctx));
             }
@@ -85,22 +85,22 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<DefineCommandBlock, Void> visitDefineCmdStat(DefineCmdStatContext ctx) {
-        val defSig = ctx.defineSignature();
-        val returnType = ValueType.from(defSig.ID().size() > 1 ? defSig.ID(1).getText() : "void");
-        val defineCommandBlock = new DefineCommandBlock(pos(ctx), bdlUnit, defSig.ID(0).getText(), returnType,
+        final DefineSignatureContext defSig = ctx.defineSignature();
+        final ValueType returnType = ValueType.from(defSig.ID().size() > 1 ? defSig.ID(1).getText() : "void");
+        final DefineCommandBlock defineCommandBlock = new DefineCommandBlock(pos(ctx), bdlUnit, defSig.ID(0).getText(), returnType,
                 defSig.children.stream()
                         .filter(tree -> tree instanceof DefineSignatureVariableContext || tree instanceof DefineSignatureWordSingleContext)
                         .map(tree -> {
                             if (tree instanceof DefineSignatureVariableContext) {
-                                val varCtx = (DefineSignatureVariableContext) tree;
+                                final DefineSignatureVariableContext varCtx = (DefineSignatureVariableContext) tree;
                                 return new VariableCmdArg(no$(varCtx.varid().getText()), ValueType.from(varCtx.ID().getText()), pos(varCtx));
                             } else {
-                                val wordCtx = (DefineSignatureWordSingleContext) tree;
+                                final DefineSignatureWordSingleContext wordCtx = (DefineSignatureWordSingleContext) tree;
                                 return new WordCmdArg(wordCtx.ID().getText(), pos(wordCtx));
                             }
                         }).toArray(CmdArg[]::new));
         //遍历命令内部内容
-        for (val each : ctx.block().children) {
+        for (final ParseTree each : ctx.block().children) {
             defineCommandBlock.addCodePiece(visit(each, defineCommandBlock).getPiece());
         }
         return of(defineCommandBlock);
@@ -118,7 +118,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitNegativeExpr(NegativeExprContext ctx) {
-        val expr = new MinusExpr(pos(ctx), parent(ctx));
+        final MinusExpr expr = new MinusExpr(pos(ctx), parent(ctx));
         expr.setLeft(new LiteralExpr(pos(ctx), expr, 0, ValueType.from("byte")));
         expr.setRight((Expr) visit(ctx.expr(), expr).getPiece());
         return of(expr);
@@ -126,7 +126,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitMultiplyExpr(MultiplyExprContext ctx) {
-        val expr = new MultiplyExpr(pos(ctx), parent(ctx));
+        final MultiplyExpr expr = new MultiplyExpr(pos(ctx), parent(ctx));
         expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
         expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
         return of(expr);
@@ -134,7 +134,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitMinusExpr(MinusExprContext ctx) {
-        val expr = new MinusExpr(pos(ctx), parent(ctx));
+        final MinusExpr expr = new MinusExpr(pos(ctx), parent(ctx));
         expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
         expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
         return of(expr);
@@ -142,7 +142,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitRemainExpr(RemainExprContext ctx) {
-        val expr = new ModExpr(pos(ctx), parent(ctx));
+        final ModExpr expr = new ModExpr(pos(ctx), parent(ctx));
         expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
         expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
         return of(expr);
@@ -150,7 +150,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitPlusExpr(PlusExprContext ctx) {
-        val expr = new PlusExpr(pos(ctx), parent(ctx));
+        final PlusExpr expr = new PlusExpr(pos(ctx), parent(ctx));
         expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
         expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
         return of(expr);
@@ -163,14 +163,14 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitSetVarExpr(SetVarExprContext ctx) {
-        val expr = new WriteVariableExpr(pos(ctx), parent(ctx), ctx.varid().getText());
+        final WriteVariableExpr expr = new WriteVariableExpr(pos(ctx), parent(ctx), ctx.varid().getText());
         expr.setValueExpr((Expr) visit(ctx.expr(), expr).getPiece());
         return super.visitSetVarExpr(ctx);
     }
 
     @Override
     public VisitResult<?, ?> visitDivideExpr(DivideExprContext ctx) {
-        val expr = new DivideExpr(pos(ctx), parent(ctx));
+        final DivideExpr expr = new DivideExpr(pos(ctx), parent(ctx));
         expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
         expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
         return of(expr);
@@ -180,8 +180,8 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     public VisitResult<?, ?> visitLiteralExpr(LiteralExprContext ctx) {
         if (ctx.INT() != null) {
             try {
-                val value = Integer.parseInt(ctx.INT().getText());
-                var valueType = BasicValueType.INT;
+                final int value = Integer.parseInt(ctx.INT().getText());
+                BasicValueType valueType = BasicValueType.INT;
                 if (value <= Byte.MAX_VALUE && value >= Byte.MIN_VALUE) {
                     valueType = BasicValueType.BYTE;
                 } else if (value <= Short.MAX_VALUE && value >= Short.MIN_VALUE) {
@@ -192,7 +192,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
                 return of(new LiteralExpr(pos(ctx), parent(ctx), Long.parseLong(ctx.INT().getText()), BasicValueType.LONG));
             }
         } else if (ctx.DEC() != null) {
-            val str = ctx.DEC().getText();
+            final String str = ctx.DEC().getText();
             if (str.length() <= 7) {
                 return of(new LiteralExpr(pos(ctx), parent(ctx), Float.parseFloat(str), BasicValueType.FLOAT));
             } else {
@@ -228,11 +228,11 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitIfElseStat(IfElseStatContext ctx) {
-        val parent = parent(ctx);
-        val ifElseStat = new IfElseStat(pos(ctx), parent);
-        val exprs = ctx.expr().stream().map(each -> (Expr) visit(each, ifElseStat).getPiece()).toArray(Expr[]::new);
-        val blocks = ctx.block().stream().map(each -> {
-            val block = new PlainBlock(pos(each), ifElseStat, ifElseStat.findVariableStoreBelongTo());
+        final Piece parent = parent(ctx);
+        final IfElseStat ifElseStat = new IfElseStat(pos(ctx), parent);
+        final Expr[] exprs = ctx.expr().stream().map(each -> (Expr) visit(each, ifElseStat).getPiece()).toArray(Expr[]::new);
+        final Block[] blocks = ctx.block().stream().map(each -> {
+            final PlainBlock block = new PlainBlock(pos(each), ifElseStat, ifElseStat.findVariableStoreBelongTo());
             each.expr().forEach(exprContext -> block.addCodePiece(visit(exprContext, block).getPiece()));
             return block;
         }).toArray(Block[]::new);
@@ -243,10 +243,10 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitWhileStat(WhileStatContext ctx) {
-        val whileStat = new WhileStat(pos(ctx), parent(ctx), ctx.ID() == null ? "" : ctx.ID().getText());
+        final WhileStat whileStat = new WhileStat(pos(ctx), parent(ctx), ctx.ID() == null ? "" : ctx.ID().getText());
         whileStat.setCondition((Expr) visit(ctx.expr(), whileStat).getPiece());
-        val block = new PlainBlock(pos(ctx.block()), whileStat, whileStat.findVariableStoreBelongTo());
-        for(val each : ctx.block().children){
+        final PlainBlock block = new PlainBlock(pos(ctx.block()), whileStat, whileStat.findVariableStoreBelongTo());
+        for (final ParseTree each : ctx.block().children) {
             block.addCodePiece(visit(each, block).getPiece());
         }
         whileStat.setBlock(block);
@@ -255,7 +255,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitReturnStat(ReturnStatContext ctx) {
-        val retStat = new ReturnStat(pos(ctx), parent(ctx));
+        final ReturnStat retStat = new ReturnStat(pos(ctx), parent(ctx));
         retStat.setExpr((Expr) visit(ctx.expr(), retStat).getPiece());
         return of(retStat);
     }
@@ -272,29 +272,29 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitCommand(CommandContext ctx) {
-        val argExprs = new Expr[ctx.children.size() - 1];
-        val children = ctx.children;
+        final Expr[] argExprs = new Expr[ctx.children.size() - 1];
+        final List<ParseTree> children = ctx.children;
 
-        val commandIdCtx = ctx.commandId();
+        final CommandIdContext commandIdCtx = ctx.commandId();
         if (commandIdCtx instanceof CallCommandContext) {
-            val callCommandContext = (CallCommandContext) commandIdCtx;
-            val expr = new MethodCallExpr(pos(callCommandContext), parent(ctx), callCommandContext.getText());
+            final CallCommandContext callCommandContext = (CallCommandContext) commandIdCtx;
+            final MethodCallExpr expr = new MethodCallExpr(pos(callCommandContext), parent(ctx), callCommandContext.getText());
             for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
                 argExprs[i] = (Expr) visit(children.get(i), expr).getPiece();
             }
             expr.setArgs(argExprs);
             return of(expr);
         } else if (commandIdCtx instanceof InvokeCommandContext) {
-            val invokeCommandContext = (InvokeCommandContext) commandIdCtx;
-            val expr = new MethodInvokeExpr(pos(invokeCommandContext), parent(ctx), invokeCommandContext.getText());
+            final InvokeCommandContext invokeCommandContext = (InvokeCommandContext) commandIdCtx;
+            final MethodInvokeExpr expr = new MethodInvokeExpr(pos(invokeCommandContext), parent(ctx), invokeCommandContext.getText());
             for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
                 argExprs[i] = (Expr) visit(children.get(i), expr).getPiece();
             }
             expr.setArgs(argExprs);
             return of(expr);
         } else {
-            val virtualCommandContext = (VirtualCommandContext) commandIdCtx;
-            val expr = new MethodInvokeExpr(pos(virtualCommandContext), parent(ctx), virtualCommandContext.getText());
+            final VirtualCommandContext virtualCommandContext = (VirtualCommandContext) commandIdCtx;
+            final MethodInvokeExpr expr = new MethodInvokeExpr(pos(virtualCommandContext), parent(ctx), virtualCommandContext.getText());
             for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
                 argExprs[i] = (Expr) visit(children.get(i), expr).getPiece();
             }

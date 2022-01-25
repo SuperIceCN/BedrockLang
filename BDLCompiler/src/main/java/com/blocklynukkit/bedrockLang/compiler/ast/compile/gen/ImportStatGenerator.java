@@ -3,27 +3,31 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.StatCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ImportStat;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.ClassInfo;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.MethodInfo;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidImportException;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.objectweb.asm.Type;
 
-@RequiredArgsConstructor
 public final class ImportStatGenerator implements StatCodeGenerator {
     private final ImportStat stat;
 
+    public ImportStatGenerator(ImportStat stat) {
+        this.stat = stat;
+    }
+
     @Override
     public Void generate(Unit unit) {
-        val methods = stat.getMethods();
-        val lookup = stat.getLookup();
+        final String[] methods = stat.getMethods();
+        final TypeLookup lookup = stat.getLookup();
         if(methods == null){ //此时应当为导入包
             lookup.importPackage(stat.getPkgOrClazzName());
         }else {
-            val type = lookup.lookup(stat.getPkgOrClazzName());
+            final Type type = lookup.lookup(stat.getPkgOrClazzName());
             if(methods.length == 0){ //此时应当为导入所有静态方法
                 if(type.getSort() == Type.OBJECT){
-                    val classInfo = lookup.lookupClass(type.getClassName());
-                    for(val each:classInfo.getMethods()){
+                    final ClassInfo classInfo = lookup.lookupClass(type.getClassName());
+                    for(final MethodInfo each:classInfo.getMethods()){
                         if(each.isStatic()){
                             lookup.importStaticMethod(each);
                         }
@@ -35,9 +39,9 @@ public final class ImportStatGenerator implements StatCodeGenerator {
             }else {
                 // 此时应当为导入指定静态方法
                 if(type.getSort() == Type.OBJECT){
-                    val classInfo = lookup.lookupClass(type.getClassName());
-                    for(val me : methods){
-                        for(val each:classInfo.getMethodFuzzy(me)){
+                    final ClassInfo classInfo = lookup.lookupClass(type.getClassName());
+                    for(final String me : methods){
+                        for(final MethodInfo each:classInfo.getMethodFuzzy(me)){
                             if(each.isStatic()){
                                 lookup.importStaticMethod(each);
                             }

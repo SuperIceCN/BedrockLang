@@ -3,13 +3,17 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.command;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.variable.CmdArgVariable;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public final class VariableCmdArg implements CmdArg, Declaration<Variable> {
     private final String name;
     private final ValueType valueType;
     private final SourcePos sourcePos;
+
+    public VariableCmdArg(String name, ValueType valueType, SourcePos sourcePos) {
+        this.name = name;
+        this.valueType = valueType;
+        this.sourcePos = sourcePos;
+    }
 
     @Override
     public String getName() {

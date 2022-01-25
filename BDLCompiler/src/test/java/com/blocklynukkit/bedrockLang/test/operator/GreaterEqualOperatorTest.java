@@ -8,12 +8,11 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReturnStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator.GreaterEqualExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.unit.BDLUnit;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.SneakyThrows;
-import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos.auto;
 import static com.blocklynukkit.bedrockLang.test.TestUtils.loadClass;
@@ -21,17 +20,16 @@ import static com.blocklynukkit.bedrockLang.test.TestUtils.saveTo;
 
 public class GreaterEqualOperatorTest {
     @Test
-    @SneakyThrows
-    public void testGreaterEqualIntInteger() {
-        val unit = new BDLUnit("testGreaterEqualIntInteger", "testGreaterEqualIntInteger.bdl");
+    public void testGreaterEqualIntInteger() throws Exception {
+        final BDLUnit unit = new BDLUnit("testGreaterEqualIntInteger", "testGreaterEqualIntInteger.bdl");
         SourcePos.defaultSourceName = "testGreaterEqualIntInteger";
 
-        val addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
+        final DefineCommandBlock addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
                 new VariableCmdArg("a", ValueType.from("int"), auto()),
                 new VariableCmdArg("b", ValueType.from("Integer"), auto()));
 
-        val returnStat = new ReturnStat(auto(), addInt);
-        val equalExpr = new GreaterEqualExpr(auto(), returnStat);
+        final ReturnStat returnStat = new ReturnStat(auto(), addInt);
+        final GreaterEqualExpr equalExpr = new GreaterEqualExpr(auto(), returnStat);
         equalExpr.setLeft(new ReadVariableExpr(auto(), equalExpr, "a"));
         equalExpr.setRight(new ReadVariableExpr(auto(), equalExpr, "b"));
         returnStat.setExpr(equalExpr);
@@ -39,25 +37,24 @@ public class GreaterEqualOperatorTest {
 
         unit.addCodePiece(addInt);
 
-        val bytes = unit.getCodeGenerator().generate(unit);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testGreaterEqualIntInteger.class"));
-        val cls = loadClass("testGreaterEqualIntInteger", bytes);
-        val method = cls.getMethod("equal", int.class, Integer.class);
+        final Class<?> cls = loadClass("testGreaterEqualIntInteger", bytes);
+        final Method method = cls.getMethod("equal", int.class, Integer.class);
         Assertions.assertTrue((Boolean) method.invoke(method, 2233, 2233));
     }
 
     @Test
-    @SneakyThrows
-    public void testGreaterEqualIntInt() {
-        val unit = new BDLUnit("testGreaterEqualIntInt", "testGreaterEqualIntInt.bdl");
+    public void testGreaterEqualIntInt() throws Exception {
+        final BDLUnit unit = new BDLUnit("testGreaterEqualIntInt", "testGreaterEqualIntInt.bdl");
         SourcePos.defaultSourceName = "testGreaterEqualIntInt";
 
-        val addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
+        final DefineCommandBlock addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
                 new VariableCmdArg("a", ValueType.from("int"), auto()),
                 new VariableCmdArg("b", ValueType.from("int"), auto()));
 
-        val returnStat = new ReturnStat(auto(), addInt);
-        val equalExpr = new GreaterEqualExpr(auto(), returnStat);
+        final ReturnStat returnStat = new ReturnStat(auto(), addInt);
+        final GreaterEqualExpr equalExpr = new GreaterEqualExpr(auto(), returnStat);
         equalExpr.setLeft(new ReadVariableExpr(auto(), equalExpr, "a"));
         equalExpr.setRight(new ReadVariableExpr(auto(), equalExpr, "b"));
         returnStat.setExpr(equalExpr);
@@ -65,25 +62,24 @@ public class GreaterEqualOperatorTest {
 
         unit.addCodePiece(addInt);
 
-        val bytes = unit.getCodeGenerator().generate(unit);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testGreaterEqualIntInt.class"));
-        val cls = loadClass("testGreaterEqualIntInt", bytes);
-        val method = cls.getMethod("equal", int.class, int.class);
+        final Class<?> cls = loadClass("testGreaterEqualIntInt", bytes);
+        final Method method = cls.getMethod("equal", int.class, int.class);
         Assertions.assertTrue((Boolean) method.invoke(method, 333, 222));
     }
 
     @Test
-    @SneakyThrows
-    public void testGreaterEqualStringString() {
-        val unit = new BDLUnit("testGreaterEqualStringString", "testGreaterEqualStringString.bdl");
+    public void testGreaterEqualStringString() throws Exception {
+        final BDLUnit unit = new BDLUnit("testGreaterEqualStringString", "testGreaterEqualStringString.bdl");
         SourcePos.defaultSourceName = "testGreaterEqualStringString";
 
-        val addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
+        final DefineCommandBlock addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
                 new VariableCmdArg("a", ValueType.from("string"), auto()),
                 new VariableCmdArg("b", ValueType.from("string"), auto()));
 
-        val returnStat = new ReturnStat(auto(), addInt);
-        val equalExpr = new GreaterEqualExpr(auto(), returnStat);
+        final ReturnStat returnStat = new ReturnStat(auto(), addInt);
+        final GreaterEqualExpr equalExpr = new GreaterEqualExpr(auto(), returnStat);
         equalExpr.setLeft(new ReadVariableExpr(auto(), equalExpr, "a"));
         equalExpr.setRight(new ReadVariableExpr(auto(), equalExpr, "b"));
         returnStat.setExpr(equalExpr);
@@ -91,25 +87,24 @@ public class GreaterEqualOperatorTest {
 
         unit.addCodePiece(addInt);
 
-        val bytes = unit.getCodeGenerator().generate(unit);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testGreaterEqualStringString.class"));
-        val cls = loadClass("testGreaterEqualStringString", bytes);
-        val method = cls.getMethod("equal", String.class, String.class);
+        final Class<?> cls = loadClass("testGreaterEqualStringString", bytes);
+        final Method method = cls.getMethod("equal", String.class, String.class);
         Assertions.assertFalse((Boolean) method.invoke(method, "111", "222"));
     }
 
     @Test
-    @SneakyThrows
-    public void testGreaterEqualFloatInt() {
-        val unit = new BDLUnit("testGreaterEqualFloatInt", "testGreaterEqualFloatInt.bdl");
+    public void testGreaterEqualFloatInt() throws Exception {
+        final BDLUnit unit = new BDLUnit("testGreaterEqualFloatInt", "testGreaterEqualFloatInt.bdl");
         SourcePos.defaultSourceName = "testGreaterEqualFloatInt";
 
-        val addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
+        final DefineCommandBlock addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
                 new VariableCmdArg("a", ValueType.from("float"), auto()),
                 new VariableCmdArg("b", ValueType.from("int"), auto()));
 
-        val returnStat = new ReturnStat(auto(), addInt);
-        val equalExpr = new GreaterEqualExpr(auto(), returnStat);
+        final ReturnStat returnStat = new ReturnStat(auto(), addInt);
+        final GreaterEqualExpr equalExpr = new GreaterEqualExpr(auto(), returnStat);
         equalExpr.setLeft(new ReadVariableExpr(auto(), equalExpr, "a"));
         equalExpr.setRight(new ReadVariableExpr(auto(), equalExpr, "b"));
         returnStat.setExpr(equalExpr);
@@ -117,25 +112,24 @@ public class GreaterEqualOperatorTest {
 
         unit.addCodePiece(addInt);
 
-        val bytes = unit.getCodeGenerator().generate(unit);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testGreaterEqualFloatInt.class"));
-        val cls = loadClass("testGreaterEqualFloatInt", bytes);
-        val method = cls.getMethod("equal", float.class, int.class);
+        final Class<?> cls = loadClass("testGreaterEqualFloatInt", bytes);
+        final Method method = cls.getMethod("equal", float.class, int.class);
         Assertions.assertTrue((Boolean) method.invoke(method, 222f, 222));
     }
 
     @Test
-    @SneakyThrows
-    public void testGreaterEqualDoubleInt() {
-        val unit = new BDLUnit("testGreaterEqualDoubleInt", "testGreaterEqualDoubleInt.bdl");
+    public void testGreaterEqualDoubleInt() throws Exception {
+        final BDLUnit unit = new BDLUnit("testGreaterEqualDoubleInt", "testGreaterEqualDoubleInt.bdl");
         SourcePos.defaultSourceName = "testGreaterEqualDoubleInt";
 
-        val addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
+        final DefineCommandBlock addInt = new DefineCommandBlock(auto(), unit, "equal", ValueType.from("boolean"),
                 new VariableCmdArg("a", ValueType.from("double"), auto()),
                 new VariableCmdArg("b", ValueType.from("int"), auto()));
 
-        val returnStat = new ReturnStat(auto(), addInt);
-        val equalExpr = new GreaterEqualExpr(auto(), returnStat);
+        final ReturnStat returnStat = new ReturnStat(auto(), addInt);
+        final GreaterEqualExpr equalExpr = new GreaterEqualExpr(auto(), returnStat);
         equalExpr.setLeft(new ReadVariableExpr(auto(), equalExpr, "a"));
         equalExpr.setRight(new ReadVariableExpr(auto(), equalExpr, "b"));
         returnStat.setExpr(equalExpr);
@@ -143,10 +137,10 @@ public class GreaterEqualOperatorTest {
 
         unit.addCodePiece(addInt);
 
-        val bytes = unit.getCodeGenerator().generate(unit);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
         saveTo(bytes, new File("test/testGreaterEqualDoubleInt.class"));
-        val cls = loadClass("testGreaterEqualDoubleInt", bytes);
-        val method = cls.getMethod("equal", double.class, int.class);
+        final Class<?> cls = loadClass("testGreaterEqualDoubleInt", bytes);
+        final Method method = cls.getMethod("equal", double.class, int.class);
         Assertions.assertTrue((Boolean) method.invoke(method, 222d, 222));
     }
 }

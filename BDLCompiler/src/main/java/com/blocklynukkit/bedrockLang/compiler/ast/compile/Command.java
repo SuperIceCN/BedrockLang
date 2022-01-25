@@ -2,8 +2,6 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 import it.unimi.dsi.fastutil.ints.IntObjectPair;
-import lombok.val;
-import lombok.var;
 
 import java.util.List;
 
@@ -28,9 +26,9 @@ public interface Command {
      * @return 此命令对应的java方法名
      */
     default String getMethodName() {
-        val sb = new StringBuilder(this.getName());
-        var findWordArg = false;
-        for (val each : this.getArgs()) {
+        final StringBuilder sb = new StringBuilder(this.getName());
+        boolean findWordArg = false;
+        for (final CmdArg each : this.getArgs()) {
             if (!each.hasValueType()) {
                 if (!findWordArg) {
                     sb.append("$").append(each.getName());

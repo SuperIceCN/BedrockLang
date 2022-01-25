@@ -3,12 +3,15 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.command;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ArgTrait;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.CmdArg;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public final class WordCmdArg implements CmdArg {
     private final String name;
     private final SourcePos sourcePos;
+
+    public WordCmdArg(String name, SourcePos sourcePos) {
+        this.name = name;
+        this.sourcePos = sourcePos;
+    }
 
     @Override
     public String getName() {

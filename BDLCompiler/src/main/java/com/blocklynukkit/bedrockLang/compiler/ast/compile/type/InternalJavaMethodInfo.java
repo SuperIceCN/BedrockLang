@@ -1,14 +1,16 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
-import lombok.RequiredArgsConstructor;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-@RequiredArgsConstructor
 public final class InternalJavaMethodInfo extends MethodInfo {
     private final Method method;
+
+    public InternalJavaMethodInfo(Method method) {
+        this.method = method;
+    }
 
     @Override
     public String getName() {

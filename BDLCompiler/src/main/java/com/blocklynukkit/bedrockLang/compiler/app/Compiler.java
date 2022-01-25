@@ -3,23 +3,56 @@ package com.blocklynukkit.bedrockLang.compiler.app;
 import com.blocklynukkit.bedrockLang.compiler.parser.BedrockLangASTBuilder;
 import com.blocklynukkit.bedrockLang.compiler.parser.BedrockLangLexer;
 import com.blocklynukkit.bedrockLang.compiler.parser.BedrockLangParser;
-import lombok.Builder;
-import lombok.val;
 import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-@Builder(builderClassName = "CompilerBuilder")
 public final class Compiler {
     private String sourceName;
     private String sourceCode;
 
+    Compiler(String sourceName, String sourceCode) {
+        this.sourceName = sourceName;
+        this.sourceCode = sourceCode;
+    }
+
+    public static CompilerBuilder builder() {
+        return new CompilerBuilder();
+    }
+
     public byte[] compile() {
-        val charStream = CharStreams.fromString(sourceCode, sourceName);
-        val lexer = new BedrockLangLexer(charStream);
-        val tokenStream = new CommonTokenStream(lexer);
-        val parser = new BedrockLangParser(tokenStream);
-        val program = parser.program();
-        val astBuilder = new BedrockLangASTBuilder(sourceName);
+        final CodePointCharStream charStream = CharStreams.fromString(sourceCode, sourceName);
+        final BedrockLangLexer lexer = new BedrockLangLexer(charStream);
+        final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        final BedrockLangParser parser = new BedrockLangParser(tokenStream);
+        final BedrockLangParser.ProgramContext program = parser.program();
+        final BedrockLangASTBuilder astBuilder = new BedrockLangASTBuilder(sourceName);
         return astBuilder.visitProgram(program).getExtra();
+    }
+
+    public static class CompilerBuilder {
+        private String sourceName;
+        private String sourceCode;
+
+        CompilerBuilder() {
+        }
+
+        public CompilerBuilder sourceName(String sourceName) {
+            this.sourceName = sourceName;
+            return this;
+        }
+
+        public CompilerBuilder sourceCode(String sourceCode) {
+            this.sourceCode = sourceCode;
+            return this;
+        }
+
+        public Compiler build() {
+            return new Compiler(sourceName, sourceCode);
+        }
+
+        public String toString() {
+            return "Compiler.CompilerBuilder(sourceName=" + this.sourceName + ", sourceCode=" + this.sourceCode + ")";
+        }
     }
 }

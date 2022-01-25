@@ -1,28 +1,29 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.operator;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.GenerateWithASM;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.BasicCastGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator.PlusExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidOperatorException;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
-@RequiredArgsConstructor
 public final class PlusExprGenerator implements ExprCodeGenerator {
     private final PlusExpr expr;
 
+    public PlusExprGenerator(PlusExpr expr) {
+        this.expr = expr;
+    }
+
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
-        val type = expr.getReturnType();
+        final GenerateWithASM asmUnit = requireASM(unit);
+        final ValueType type = expr.getReturnType();
         //生成求和
-        @NonNull
-        val mv = asmUnit.getCurrentMethodVisitor();
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
         //字符串需要通过StringBuilder完成相接
         if(type.getName().equals("java.lang.String")){
             mv.visitTypeInsn(NEW, "java/lang/StringBuilder");

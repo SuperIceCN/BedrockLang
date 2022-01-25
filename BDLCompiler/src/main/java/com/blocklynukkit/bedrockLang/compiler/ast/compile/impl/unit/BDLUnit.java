@@ -7,8 +7,9 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.CommandAlreadyExistException;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.VariableAlreadyExistException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.val;
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.objectweb.asm.ClassWriter.COMPUTE_FRAMES;
-import static org.objectweb.asm.ClassWriter.COMPUTE_MAXS;
 
 public class BDLUnit implements Unit, GenerateWithASM, Opcodes {
     private final String name;
@@ -72,9 +72,9 @@ public class BDLUnit implements Unit, GenerateWithASM, Opcodes {
 
     @Override
     public void addCommand(Command command) {
-        val list = this.commandMap.get(command.getName());
+        final List<Command> list = this.commandMap.get(command.getName());
         if (list == null) {
-            val newList = new ArrayList<Command>();
+            final ArrayList<Command> newList = new ArrayList<>();
             newList.add(command);
             this.commandMap.put(command.getName(), newList);
         } else {
@@ -134,7 +134,7 @@ public class BDLUnit implements Unit, GenerateWithASM, Opcodes {
     @Override
     public void addCodePiece(Piece piece) {
         if (piece instanceof Declaration<?>) {
-            val res = ((Declaration<?>) piece).declareTo(this);
+            final Object res = ((Declaration<?>) piece).declareTo(this);
             // 如果是命令就直接导入
             if (res instanceof Command) {
                 this.typeLookup.importStaticMethod(new BDLMethodInfo((Command) res, typeLookup));

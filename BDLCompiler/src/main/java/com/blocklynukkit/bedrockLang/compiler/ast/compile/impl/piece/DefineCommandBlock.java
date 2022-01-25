@@ -5,7 +5,6 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.UnitCommandGenerat
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.command.UnitCommand;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.variable.CmdArgVariable;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.val;
 
 import java.util.Objects;
 
@@ -22,7 +21,7 @@ public final class DefineCommandBlock extends BlockBase implements Declaration<C
         this.name = name;
         this.args = args;
         this.returnType = returnType;
-        for (val each : args) {
+        for (final CmdArg each : args) {
             if (each.hasValueType()) {
                 this.addVariable(new CmdArgVariable(each.getName(), each.getValueType(), each.getSourcePos()));
             }
@@ -32,8 +31,8 @@ public final class DefineCommandBlock extends BlockBase implements Declaration<C
     @Override
     public Command declare() {
         this.command = Ok(command, () -> {
-            val cmd = new UnitCommand(name, args, returnType, sourcePos);
-            for (val each : this.getVariables().values()) {
+            final UnitCommand cmd = new UnitCommand(name, args, returnType, sourcePos);
+            for (final Variable each : this.getVariables().values()) {
                 cmd.addLocalVariable(each);
             }
             return cmd;

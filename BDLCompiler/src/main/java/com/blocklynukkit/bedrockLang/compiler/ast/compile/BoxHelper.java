@@ -1,18 +1,17 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidValueTypeException;
-import lombok.NonNull;
 import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType.*;
-import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
 
 /**
  * 拆装箱字节码生成帮助接口
  */
 public interface BoxHelper {
-    @NonNull
+
     default ValueType unBoxValueType(ValueType v) {
         switch (v.getName()) {
             case "java.lang.Boolean":
@@ -35,7 +34,7 @@ public interface BoxHelper {
         throw new InvalidValueTypeException(v);
     }
 
-    @NonNull
+
     default void unBox(MethodVisitor methodVisitor, ValueType v) {
         switch (v.getName()) {
             case "java.lang.Boolean":

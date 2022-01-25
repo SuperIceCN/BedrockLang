@@ -1,13 +1,9 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.operator.EqualExprGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.operator.NotEqualExprGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 /**
  * 判断是否不相等表达式 (==) <br/>
@@ -17,13 +13,11 @@ import lombok.Setter;
  * 特别的，{@code null == null} {@code null != 其他对象} {@code null != 基本类型} <br/> <br/>
  * 警告：这样做会使得{@code a!=b}和{@code b!=a}的结果不一定一致！
  */
-@Getter
-@Setter
 public final class NotEqualExpr extends ExprBase {
     private Expr left;
     private Expr right;
 
-    public NotEqualExpr(@NonNull SourcePos sourcePos, @NonNull Piece parent) {
+    public NotEqualExpr(SourcePos sourcePos, Piece parent) {
         super(sourcePos, parent);
     }
 
@@ -35,5 +29,21 @@ public final class NotEqualExpr extends ExprBase {
     @Override
     public ExprCodeGenerator getCodeGenerator() {
         return new NotEqualExprGenerator(this);
+    }
+
+    public Expr getLeft() {
+        return this.left;
+    }
+
+    public Expr getRight() {
+        return this.right;
+    }
+
+    public void setLeft(Expr left) {
+        this.left = left;
+    }
+
+    public void setRight(Expr right) {
+        this.right = right;
     }
 }

@@ -1,10 +1,6 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import it.unimi.dsi.fastutil.objects.Object2BooleanFunction;
-import it.unimi.dsi.fastutil.objects.Object2IntFunction;
-import lombok.val;
-import lombok.var;
 
 import java.util.function.Function;
 
@@ -53,7 +49,7 @@ public interface Piece {
      * @return 属于的变量域
      */
     default VariableStore findVariableStoreBelongTo() {
-        var parent = this;
+        Piece parent = this;
         while (parent != null) {
             if (parent instanceof VariableStore) {
                 return (VariableStore) parent;
@@ -72,7 +68,7 @@ public interface Piece {
      * @return 属于的变量域
      */
     default <T extends VariableStore> T findVariableStoreBelongTo(Class<T> _interface) {
-        var parent = this;
+        Piece parent = this;
         while (parent != null) {
             if (_interface.isInstance(parent)) {
                 return _interface.cast(parent);
@@ -91,7 +87,7 @@ public interface Piece {
      * @return 父piece
      */
     default <T extends Piece> T findParent(Class<T> clazz) {
-        var parent = this;
+        Piece parent = this;
         while (parent != null) {
             if (clazz.isInstance(parent)) {
                 return clazz.cast(parent);
@@ -110,9 +106,9 @@ public interface Piece {
      * @return 父piece
      */
     default <T> T findParent(Function<Piece, T> handler) {
-        var parent = this;
+        Piece parent = this;
         while (parent != null) {
-            val tmp = handler.apply(parent);
+            final T tmp = handler.apply(parent);
             if (tmp != null) {
                 return tmp;
             } else {

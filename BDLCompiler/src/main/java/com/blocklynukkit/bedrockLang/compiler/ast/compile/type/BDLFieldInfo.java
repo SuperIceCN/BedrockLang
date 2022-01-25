@@ -1,15 +1,18 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.variable.UnitGlobalVariable;
-import lombok.RequiredArgsConstructor;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Modifier;
 
-@RequiredArgsConstructor
 public final class BDLFieldInfo extends FieldInfo{
     private final UnitGlobalVariable variable;
     private final TypeLookup lookup;
+
+    public BDLFieldInfo(UnitGlobalVariable variable, TypeLookup lookup) {
+        this.variable = variable;
+        this.lookup = lookup;
+    }
 
     @Override
     public String getName() {

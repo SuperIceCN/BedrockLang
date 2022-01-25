@@ -1,7 +1,5 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 
-import lombok.var;
-
 /**
  * @param <T> 声明出的类型
  */
@@ -13,7 +11,7 @@ public interface Declaration<T> {
      * @param unit 变量声明单元
      */
     default T declareTo(Unit unit) {
-        var tmp = declare();
+        T tmp = declare();
         if (tmp instanceof Variable) {
             unit.addVariable((Variable) tmp);
         } else if (tmp instanceof Command) {
@@ -27,7 +25,7 @@ public interface Declaration<T> {
      * @param store 变量声明储存
      */
     default T declareTo(VariableStore store) {
-        var tmp = declare();
+        T tmp = declare();
         if (tmp instanceof Variable) {
             store.addVariable((Variable) tmp);
         }

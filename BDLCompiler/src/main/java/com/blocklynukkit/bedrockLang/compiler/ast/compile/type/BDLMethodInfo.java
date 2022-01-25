@@ -2,16 +2,19 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.CmdArg;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Command;
-import lombok.RequiredArgsConstructor;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
-@RequiredArgsConstructor
 public final class BDLMethodInfo extends MethodInfo {
     private final Command command;
     private final TypeLookup lookup;
+
+    public BDLMethodInfo(Command command, TypeLookup lookup) {
+        this.command = command;
+        this.lookup = lookup;
+    }
 
     @Override
     public String getName() {

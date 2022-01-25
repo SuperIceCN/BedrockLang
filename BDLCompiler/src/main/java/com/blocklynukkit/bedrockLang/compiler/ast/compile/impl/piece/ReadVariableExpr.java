@@ -3,15 +3,13 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.ReadVariableExprGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.NonNull;
 
 public final class ReadVariableExpr extends ExprBase {
-    @NonNull
     private final String varName;
     private VariableStore variableStore;
     private VariableRecord variable;
 
-    public ReadVariableExpr(SourcePos sourcePos, Piece parent, @NonNull String varName) {
+    public ReadVariableExpr(SourcePos sourcePos, Piece parent, String varName) {
         super(sourcePos, parent);
         this.varName = varName;
     }

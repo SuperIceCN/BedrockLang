@@ -1,12 +1,14 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.CompilerCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.Piece;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ImportStat;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.unit.BDLUnit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.DefineCommandBlock;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ImportStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.UnitGlobalVariableDeclareStat;
-import lombok.val;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.unit.BDLUnit;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 
 public final class BDLUnitCompiler implements CompilerCodeGenerator {
     @Override
@@ -14,8 +16,8 @@ public final class BDLUnitCompiler implements CompilerCodeGenerator {
         if (!(unit instanceof BDLUnit)) {
             throw new UnsupportedOperationException("This generator can only compile for BDLUnit!");
         }
-        val bdlUnit = (BDLUnit) unit;
-        val cw = bdlUnit.bdlClassWriter;
+        final BDLUnit bdlUnit = (BDLUnit) unit;
+        final ClassWriter cw = bdlUnit.bdlClassWriter;
         cw.visit(V1_8, ACC_PUBLIC | ACC_SUPER, bdlUnit.getName().replace('.', '/')
                 , null
                 , "java/lang/Object"
@@ -31,17 +33,17 @@ public final class BDLUnitCompiler implements CompilerCodeGenerator {
     }
 
     private void makeField(BDLUnit unit) {
-        for (val each : unit.getCodePieces()) {
+        for (final Piece each : unit.getCodePieces()) {
             if (each instanceof UnitGlobalVariableDeclareStat) {
-                val stat = (UnitGlobalVariableDeclareStat) each;
+                final UnitGlobalVariableDeclareStat stat = (UnitGlobalVariableDeclareStat) each;
                 stat.getCodeGenerator().generate(unit);
             }
         }
     }
 
     private void makeDefaultConstructor(BDLUnit unit) {
-        val classWriter = unit.getClassWriter();
-        val methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+        final ClassWriter classWriter = unit.getClassWriter();
+        final MethodVisitor methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
         methodVisitor.visitCode();
         methodVisitor.visitVarInsn(ALOAD, 0);
         methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
@@ -51,18 +53,18 @@ public final class BDLUnitCompiler implements CompilerCodeGenerator {
     }
 
     private void makeCommand(BDLUnit unit) {
-        for (val each : unit.getCodePieces()) {
+        for (final Piece each : unit.getCodePieces()) {
             if (each instanceof DefineCommandBlock) {
-                val block = (DefineCommandBlock) each;
+                final DefineCommandBlock block = (DefineCommandBlock) each;
                 block.getCodeGenerator().generate(unit);
             }
         }
     }
 
     private void makeImport(BDLUnit unit) {
-        for (val each : unit.getCodePieces()) {
+        for (final Piece each : unit.getCodePieces()) {
             if (each instanceof ImportStat) {
-                val block = (ImportStat) each;
+                final ImportStat block = (ImportStat) each;
                 block.getCodeGenerator().generate(unit);
             } else {
                 break;

@@ -1,11 +1,8 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.util;
 
-import lombok.val;
-import lombok.var;
-
 public final class ArrayUtils {
     public static <T> boolean contains(T[] arr, T item) {
-        for (val each : arr) {
+        for (final T each : arr) {
             if (each == item || each.equals(item)) {
                 return true;
             }
@@ -14,8 +11,8 @@ public final class ArrayUtils {
     }
 
     public static <T> int indexOf(T[] arr, T item) {
-        for (var i = 0; i < arr.length; i++) {
-            val each = arr[i];
+        for (int i = 0; i < arr.length; i++) {
+            final T each = arr[i];
             if (each.equals(item)) {
                 return i;
             }
@@ -25,7 +22,7 @@ public final class ArrayUtils {
 
     public static <T> boolean equals(T[] a, T[] b) {
         if (a.length == b.length) {
-            for (var i = 0; i < a.length; i++) {
+            for (int i = 0; i < a.length; i++) {
                 if (!a[i].equals(b[i])) {
                     return false;
                 }

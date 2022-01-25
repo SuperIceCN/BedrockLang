@@ -1,16 +1,15 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
-import lombok.var;
 import org.objectweb.asm.Type;
 
 import java.util.Arrays;
 
-@RequiredArgsConstructor
 public final class InternalJavaClassInfo extends ClassInfo {
     private final Class<?> clazz;
+
+    public InternalJavaClassInfo(Class<?> clazz) {
+        this.clazz = clazz;
+    }
 
     @Override
     public String getQualifiedName() {
@@ -51,11 +50,11 @@ public final class InternalJavaClassInfo extends ClassInfo {
     @Override
     public MethodInfo[] getMethodFuzzy(String methodName, Type... argTypes) {
         return Arrays.stream(getMethodFuzzy(methodName)).filter(methodInfo -> {
-            val args = methodInfo.getArgumentASMTypes();
+            final Type[] args = methodInfo.getArgumentASMTypes();
             if (argTypes.length != args.length) {
                 return false;
             }
-            for (var i = 0; i < args.length; i++) {
+            for (int i = 0; i < args.length; i++) {
                 if (!argTypes[i].equals(args[i])) {
                     return false;
                 }
@@ -73,11 +72,11 @@ public final class InternalJavaClassInfo extends ClassInfo {
     @Override
     public MethodInfo getMethod(String methodName, Type... argTypes) {
         return Arrays.stream(getMethod(methodName)).filter(methodInfo -> {
-            val args = methodInfo.getArgumentASMTypes();
+            final Type[] args = methodInfo.getArgumentASMTypes();
             if (argTypes.length != args.length) {
                 return false;
             }
-            for (var i = 0; i < args.length; i++) {
+            for (int i = 0; i < args.length; i++) {
                 if (!argTypes[i].equals(args[i])) {
                     return false;
                 }
@@ -108,9 +107,9 @@ public final class InternalJavaClassInfo extends ClassInfo {
     @Override
     public boolean hasImplementInterface(ClassInfo interfaceClass) {
         if (interfaceClass.isInterface()) {
-            var superClass = clazz;
+            Class<?> superClass = clazz;
             while (superClass != null) {
-                for (val each : superClass.getInterfaces()) {
+                for (final Class<?> each : superClass.getInterfaces()) {
                     if (each.getName().equals(interfaceClass.getFullName())) {
                         return true;
                     }
@@ -124,9 +123,9 @@ public final class InternalJavaClassInfo extends ClassInfo {
     @Override
     public ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass) {
         if (interfaceClass.isInterface()) {
-            var superClass = clazz;
+            Class<?> superClass = clazz;
             while (superClass != null) {
-                for (val each : superClass.getInterfaces()) {
+                for (final Class<?> each : superClass.getInterfaces()) {
                     if (each.getName().equals(interfaceClass.getFullName())) {
                         return new InternalJavaClassInfo(superClass);
                     }
@@ -139,12 +138,12 @@ public final class InternalJavaClassInfo extends ClassInfo {
 
     @Override
     public boolean canCastFrom(ClassInfo classInfo) {
-        var superClass = clazz;
+        Class<?> superClass = clazz;
         while (superClass != null) {
             if (superClass.getName().equals(classInfo.getFullName())) {
                 return true;
             }
-            for (val each : superClass.getInterfaces()) {
+            for (final Class<?> each : superClass.getInterfaces()) {
                 if (each.getName().equals(classInfo.getFullName())) {
                     return true;
                 }
@@ -154,7 +153,7 @@ public final class InternalJavaClassInfo extends ClassInfo {
         return false;
     }
 
-    private static String before$(@NonNull String str) {
+    private static String before$(String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
     }
 }

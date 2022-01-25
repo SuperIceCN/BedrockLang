@@ -2,7 +2,6 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.VariableAlreadyExistException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.val;
 
 import java.util.*;
 
@@ -57,11 +56,11 @@ public abstract class BlockBase implements Block {
     @Override
     public VariableRecord findVariable(String name) {
         if (this.variableMap.containsKey(name)) {
-            val var = variableMap.get(name);
+            final Variable var = variableMap.get(name);
             if (variableRecordCache.containsKey(var)) {
                 return variableRecordCache.get(var);
             }
-            val tmp = makeVariableRecord(var);
+            final VariableRecord tmp = makeVariableRecord(var);
             variableRecordCache.put(var, tmp);
             return tmp;
         } else if (variableStoreParent != null) {

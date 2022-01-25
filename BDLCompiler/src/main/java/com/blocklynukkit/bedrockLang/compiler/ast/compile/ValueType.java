@@ -5,10 +5,7 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueTy
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.ClassValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidValueTypeException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.ArrayUtils;
-import lombok.val;
 import org.objectweb.asm.Type;
-
-import java.util.Arrays;
 
 /**
  * 用于描述值类型的抽象类
@@ -38,7 +35,7 @@ public abstract class ValueType {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ValueType) {
-            val tmp = (ValueType) obj;
+            final ValueType tmp = (ValueType) obj;
             return tmp.getTrait() == this.getTrait() && tmp.getName().equals(this.getName());
         }
         return false;
@@ -124,7 +121,7 @@ public abstract class ValueType {
         } else if (value instanceof String) {
             return BasicValueType.STRING;
         } else if (value.getClass().isArray()) {
-            val clazz = value.getClass().getName();
+            final String clazz = value.getClass().getName();
             return new ArrayValueType(clazz.substring(0, clazz.length() - 2));
         } else {
             return new ClassValueType(value.getClass().getName());
@@ -170,8 +167,8 @@ public abstract class ValueType {
                 if ((a == BasicValueType.LONG && b == BasicValueType.FLOAT) || (a == BasicValueType.FLOAT && b == BasicValueType.LONG)) {
                     return BasicValueType.DOUBLE;
                 }
-                val ia = ArrayUtils.indexOf(sizeOrder, a);
-                val ib = ArrayUtils.indexOf(sizeOrder, b);
+                final int ia = ArrayUtils.indexOf(sizeOrder, a);
+                final int ib = ArrayUtils.indexOf(sizeOrder, b);
                 return sizeOrder[Math.max(3, Math.max(ia, ib))];
             } else {
                 throw new InvalidValueTypeException(b);

@@ -1,13 +1,15 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
-import lombok.RequiredArgsConstructor;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Field;
 
-@RequiredArgsConstructor
 public final class InternalJavaFieldInfo extends FieldInfo {
     private final Field field;
+
+    public InternalJavaFieldInfo(Field field) {
+        this.field = field;
+    }
 
     @Override
     public String getName() {

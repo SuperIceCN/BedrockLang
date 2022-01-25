@@ -7,10 +7,10 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.Variable;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.IntObjectImmutablePair;
 import it.unimi.dsi.fastutil.ints.IntObjectPair;
 import it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap;
-import lombok.val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public final class UnitCommand implements Command {
             return localVariablesIdMap.getInt(variable.getName());
         }
         //long和double占两个变量槽位
-        val newId = currentMaxIndex;
+        final int newId = currentMaxIndex;
         currentMaxIndex += ((variable.getType() == BasicValueType.LONG || variable.getType() == BasicValueType.DOUBLE) ? 2 : 1);
         localVariablesIdMap.put(variable.getName(), newId);
         localVariableObjMap.put(newId, variable);
@@ -82,7 +82,7 @@ public final class UnitCommand implements Command {
     @Override
     public IntObjectImmutablePair<Variable> findLocalVariable(String name) {
         if (localVariablesIdMap.containsKey(name)) {
-            val id = localVariablesIdMap.getInt(name);
+            final int id = localVariablesIdMap.getInt(name);
             return new IntObjectImmutablePair<>(id, localVariableObjMap.get(id));
         } else {
             return null;
@@ -91,8 +91,8 @@ public final class UnitCommand implements Command {
 
     @Override
     public List<IntObjectPair<Variable>> getAllLocalVariables() {
-        val list = new ArrayList<IntObjectPair<Variable>>(localVariablesIdMap.size());
-        for (val each : localVariableObjMap.int2ObjectEntrySet()) {
+        final ArrayList<IntObjectPair<Variable>> list = new ArrayList<>(localVariablesIdMap.size());
+        for (final Int2ObjectMap.Entry<Variable> each : localVariableObjMap.int2ObjectEntrySet()) {
             list.add(new IntObjectImmutablePair<>(each.getIntKey(), each.getValue()));
         }
         return list;

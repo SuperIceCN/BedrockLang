@@ -1,13 +1,17 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.exception;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public final class InvalidOperatorException extends BDLCompilerException {
     public final String op;
     public final ValueType a;
     public final ValueType b;
+
+    public InvalidOperatorException(String op, ValueType a, ValueType b) {
+        this.op = op;
+        this.a = a;
+        this.b = b;
+    }
 
     @Override
     public String toString() {

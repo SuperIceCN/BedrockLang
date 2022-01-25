@@ -1,28 +1,30 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.GenerateWithASM;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.FieldChainExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariableExpr;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
-import lombok.var;
+import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
-@RequiredArgsConstructor
 public final class FieldChainExprGenerator implements ExprCodeGenerator {
     private final FieldChainExpr fieldChainExpr;
 
+    public FieldChainExprGenerator(FieldChainExpr fieldChainExpr) {
+        this.fieldChainExpr = fieldChainExpr;
+    }
+
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
-        val mv = asmUnit.getCurrentMethodVisitor();
+        final GenerateWithASM asmUnit = requireASM(unit);
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
         // 生成函数调用
-        var previousClass = "java/lang/Object";
+        String previousClass = "java/lang/Object";
         FieldChainExpr.ChainAction[] chainActions = fieldChainExpr.getChainActions();
-        for (val each : chainActions) {
+        for (final FieldChainExpr.ChainAction each : chainActions) {
             switch (each.getActionType()) {
                 case Class:
                     //无需操作，L25完成了任务

@@ -6,10 +6,6 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.unit.BDLUnit;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidStaticMethodException;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidValueTypeException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.ArrayUtils;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.val;
-import lombok.var;
 import org.objectweb.asm.Type;
 
 import java.util.*;
@@ -21,7 +17,6 @@ import java.util.*;
  * TODO: 2022/1/15 抽象化类型查找器
  */
 public class TypeLookup {
-    @Getter
     private final BDLUnit unit;
     /**
      * 记录所有导入过的类型，可以使用{@link #lookup}来将类放入
@@ -63,7 +58,7 @@ public class TypeLookup {
         if (!staticMethod.isStatic()) {
             throw new InvalidStaticMethodException(staticMethod);
         }
-        var tmp = staticMethodImported.get(staticMethod.getSimpleName());
+        List<MethodInfo> tmp = staticMethodImported.get(staticMethod.getSimpleName());
         if (tmp == null) {
             tmp = new ArrayList<>();
         }
@@ -78,15 +73,15 @@ public class TypeLookup {
      * @param argTypes   参数类型
      * @return 找到的所有静态方法的描述
      */
-    public MethodInfo[] findStaticMethodFuzzy(@NonNull String simpleName, ValueType... argTypes) {
-        val methods = staticMethodImported.get(simpleName);
+    public MethodInfo[] findStaticMethodFuzzy(String simpleName, ValueType... argTypes) {
+        final List<MethodInfo> methods = staticMethodImported.get(simpleName);
         if (methods != null) {
-            val givenTypes = new Type[argTypes.length];
-            for (var i = 0; i < givenTypes.length; i++) {
+            final Type[] givenTypes = new Type[argTypes.length];
+            for (int i = 0; i < givenTypes.length; i++) {
                 givenTypes[i] = this.lookup(argTypes[i]);
             }
-            val out = new ArrayList<MethodInfo>(1);
-            for (val each : methods) {
+            final ArrayList<MethodInfo> out = new ArrayList<>(1);
+            for (final MethodInfo each : methods) {
                 if (ArrayUtils.equals(each.getArgumentASMTypes(), givenTypes)) {
                     out.add(each);
                 }
@@ -104,9 +99,9 @@ public class TypeLookup {
      * @param argTypes 参数类型
      * @return 找到的所有静态方法的描述
      */
-    public MethodInfo findStaticMethodExact(@NonNull String fullName, ValueType... argTypes) {
-        val simpleName = fullName.contains("$") ? fullName.substring(0, fullName.indexOf('$')) : fullName;
-        for (val each : findStaticMethodFuzzy(simpleName, argTypes)) {
+    public MethodInfo findStaticMethodExact(String fullName, ValueType... argTypes) {
+        final String simpleName = fullName.contains("$") ? fullName.substring(0, fullName.indexOf('$')) : fullName;
+        for (final MethodInfo each : findStaticMethodFuzzy(simpleName, argTypes)) {
             if (each.getName().equals(fullName)) {
                 return each;
             }
@@ -130,11 +125,11 @@ public class TypeLookup {
      * @return ASM类型
      */
     public Type lookup(String typeName) {
-        var clazz = lookupBasic(typeName);
+        Type clazz = lookupBasic(typeName);
         if (clazz != null) return clazz;
         clazz = lookupBDL(typeName);
         if (clazz != null) return clazz;
-        if(typeName.endsWith("[]")){
+        if (typeName.endsWith("[]")) {
             typeName = "[L" + typeName.substring(0, typeName.length() - 2) + ";";
         }
         clazz = lookupOther(typeName);
@@ -162,7 +157,7 @@ public class TypeLookup {
             typeStore.put(valueType, res);
             return res;
         } else if (valueType.isArray()) {
-            res = lookupOther("[L"+valueType.getName()+";");
+            res = lookupOther("[L" + valueType.getName() + ";");
             typeStore.put(valueType, res);
             return res;
         } else if (valueType.isClass()) {
@@ -220,7 +215,7 @@ public class TypeLookup {
     }
 
     private Type lookupOther(String typeName) {
-        var clazz = findFromInternal(typeName);
+        ClassInfo clazz = findFromInternal(typeName);
         if (clazz != null) return clazz.toASMType();
         for (String each : packagesImported) {
             clazz = findFromInternal(each + "." + typeName);
@@ -233,9 +228,9 @@ public class TypeLookup {
         if (classPool.containsKey(className)) {
             return classPool.get(className);
         }
-        val lastDotPos = className.lastIndexOf('.');
+        final int lastDotPos = className.lastIndexOf('.');
         try {
-            var info = new InternalJavaClassInfo(Class.forName(className, false, classLoader));
+            InternalJavaClassInfo info = new InternalJavaClassInfo(Class.forName(className, false, classLoader));
             classPool.put(className, info);
             return info;
         } catch (ClassNotFoundException e) {
@@ -260,7 +255,7 @@ public class TypeLookup {
      * @return 类信息
      */
     public ClassInfo lookupClass(String typeName) {
-        var clazz = lookupBasicClass(typeName);
+        ClassInfo clazz = lookupBasicClass(typeName);
         if (clazz != null) return clazz;
         clazz = lookupBDLClass(typeName);
         if (clazz != null) return clazz;
@@ -337,12 +332,16 @@ public class TypeLookup {
     }
 
     private ClassInfo lookupOtherClass(String typeName) {
-        var clazz = findFromInternal(typeName);
+        ClassInfo clazz = findFromInternal(typeName);
         if (clazz != null) return clazz;
         for (String each : packagesImported) {
             clazz = findFromInternal(each + "." + typeName);
             if (clazz != null) return clazz;
         }
         return null;
+    }
+
+    public BDLUnit getUnit() {
+        return this.unit;
     }
 }

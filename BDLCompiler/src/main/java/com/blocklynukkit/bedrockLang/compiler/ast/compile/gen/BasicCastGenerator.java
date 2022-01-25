@@ -1,28 +1,30 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ExprCodeGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.GenerateWithASM;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import org.objectweb.asm.MethodVisitor;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
 /**
  * 基本类型转换生成器，转换操作栈上最顶层的一个值
  */
-@RequiredArgsConstructor
 public final class BasicCastGenerator implements ExprCodeGenerator {
     private final ValueType from;
     private final ValueType to;
 
+    public BasicCastGenerator(ValueType from, ValueType to) {
+        this.from = from;
+        this.to = to;
+    }
+
     @Override
     public ValueType generate(Unit unit) {
-        val asmUnit = requireASM(unit);
-        @NonNull
-        val mv = asmUnit.getCurrentMethodVisitor();
+        final GenerateWithASM asmUnit = requireASM(unit);
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
         if (from == BasicValueType.BYTE) {
             if (to == BasicValueType.LONG) {
                 mv.visitInsn(I2L);

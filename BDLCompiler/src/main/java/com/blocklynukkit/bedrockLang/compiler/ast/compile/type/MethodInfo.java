@@ -1,6 +1,5 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
-import lombok.val;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Modifier;
@@ -13,7 +12,7 @@ public abstract class MethodInfo {
      * @return 名称
      */
     public String getSimpleName() {
-        val name = getName();
+        final String name = getName();
         return name.contains("$") ? name.substring(0, name.indexOf('$')) : name;
     }
 

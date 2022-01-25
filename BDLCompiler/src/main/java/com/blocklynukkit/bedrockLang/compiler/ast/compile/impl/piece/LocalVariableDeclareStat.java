@@ -5,7 +5,6 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.LocalVariableGener
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.variable.LocalVariable;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidVariableTypeException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.NonNull;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.NullUtils.Ok;
 
@@ -15,7 +14,7 @@ public final class LocalVariableDeclareStat extends StatBase implements Declarat
     private Expr initExpr = null;
     private LocalVariable variable = null;
 
-    public LocalVariableDeclareStat(SourcePos sourcePos, Block parent, @NonNull String variableName) {
+    public LocalVariableDeclareStat(SourcePos sourcePos, Block parent, String variableName) {
         super(sourcePos, parent);
         this.variableName = variableName;
     }

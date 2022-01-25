@@ -1,17 +1,11 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.operator;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
-import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.operator.DivideExprGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.operator.ModExprGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidOperatorException;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidValueTypeException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.val;
 
-@Getter
-@Setter
 public final class ModExpr extends ExprBase {
     private Expr left;
     private Expr right;
@@ -22,8 +16,8 @@ public final class ModExpr extends ExprBase {
 
     @Override
     public ValueType getReturnType() {
-        val lt = left.getReturnType();
-        val rt = right.getReturnType();
+        final ValueType lt = left.getReturnType();
+        final ValueType rt = right.getReturnType();
         try {
             return ValueType.largerNumberType(lt, rt);
         } catch (InvalidValueTypeException e) {
@@ -34,5 +28,21 @@ public final class ModExpr extends ExprBase {
     @Override
     public ExprCodeGenerator getCodeGenerator() {
         return new ModExprGenerator(this);
+    }
+
+    public Expr getLeft() {
+        return this.left;
+    }
+
+    public Expr getRight() {
+        return this.right;
+    }
+
+    public void setLeft(Expr left) {
+        this.left = left;
+    }
+
+    public void setRight(Expr right) {
+        this.right = right;
     }
 }

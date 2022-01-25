@@ -1,27 +1,32 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.GenerateWithASM;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.Piece;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.StatCodeGenerator;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.Unit;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.DefineCommandBlock;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.PlainBlock;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReturnStat;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidReturnTypeException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 
-@RequiredArgsConstructor
 public final class PlainBlockCodeGenerator implements StatCodeGenerator {
     private final PlainBlock block;
 
+    public PlainBlockCodeGenerator(PlainBlock block) {
+        this.block = block;
+    }
+
     @Override
     public Void generate(Unit unit) {
-        val asmUnit = RequireUtils.requireASM(unit);
-        val parentCmd = block.getParentCommand();
-        val mv = asmUnit.getCurrentMethodVisitor();
+        final GenerateWithASM asmUnit = RequireUtils.requireASM(unit);
+        final DefineCommandBlock parentCmd = block.getParentCommand();
+        final MethodVisitor mv = asmUnit.getCurrentMethodVisitor();
 
-        for (val each : block.getCodePieces()) {
-            val tmpLabel = new Label();
+        for (final Piece each : block.getCodePieces()) {
+            final Label tmpLabel = new Label();
             mv.visitLabel(tmpLabel);
             mv.visitLineNumber(each.getSourcePos().getLine(), tmpLabel);
             if (each instanceof ReturnStat) {
