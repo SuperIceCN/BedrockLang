@@ -187,9 +187,9 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitSetVarExpr(SetVarExprContext ctx) {
-        final WriteVariableExpr expr = new WriteVariableExpr(pos(ctx), parent(ctx), ctx.varid().getText());
+        final WriteVariableExpr expr = new WriteVariableExpr(pos(ctx), parent(ctx), no$(ctx.varid().getText()));
         expr.setValueExpr((Expr) visit(ctx.expr(), expr).getPiece());
-        return super.visitSetVarExpr(ctx);
+        return of(expr);
     }
 
     @Override
@@ -237,6 +237,54 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     }
 
     @Override
+    public VisitResult<?, ?> visitLowerEqualExpr(LowerEqualExprContext ctx) {
+        final LowerEqualExpr expr = new LowerEqualExpr(pos(ctx), parent(ctx));
+        expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitGreaterEqualExpr(GreaterEqualExprContext ctx) {
+        final GreaterEqualExpr expr = new GreaterEqualExpr(pos(ctx), parent(ctx));
+        expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitGreaterExpr(GreaterExprContext ctx) {
+        final GreaterExpr expr = new GreaterExpr(pos(ctx), parent(ctx));
+        expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitLowerExpr(LowerExprContext ctx) {
+        final LowerExpr expr = new LowerExpr(pos(ctx), parent(ctx));
+        expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitNotEqualExpr(NotEqualExprContext ctx) {
+        final NotEqualExpr expr = new NotEqualExpr(pos(ctx), parent(ctx));
+        expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
+    public VisitResult<?, ?> visitEqualExpr(EqualExprContext ctx) {
+        final EqualExpr expr = new EqualExpr(pos(ctx), parent(ctx));
+        expr.setLeft((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setRight((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
     public VisitResult<?, ?> visitChainVirtualFieldExpr(ChainVirtualFieldExprContext ctx) {
         return of(new FieldChainExpr(pos(ctx), parent(ctx), ctx.getText()));
     }
@@ -258,7 +306,12 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         final Expr[] exprs = ctx.expr().stream().map(each -> (Expr) visit(each, ifElseStat).getPiece()).toArray(Expr[]::new);
         final Block[] blocks = ctx.block().stream().map(each -> {
             final PlainBlock block = new PlainBlock(pos(each), ifElseStat, ifElseStat.findVariableStoreBelongTo());
-            each.expr().forEach(exprContext -> block.addCodePiece(visit(exprContext, block).getPiece()));
+            each.expr().forEach(exprContext -> {
+                VisitResult<?, ?> tmp = visit(exprContext, block);
+                if (tmp != null) {
+                    block.addCodePiece(tmp.getPiece());
+                }
+            });
             return block;
         }).toArray(Block[]::new);
         ifElseStat.setExprs(exprs);
@@ -272,7 +325,10 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         whileStat.setCondition((Expr) visit(ctx.expr(), whileStat).getPiece());
         final PlainBlock block = new PlainBlock(pos(ctx.block()), whileStat, whileStat.findVariableStoreBelongTo());
         for (final ParseTree each : ctx.block().children) {
-            block.addCodePiece(visit(each, block).getPiece());
+            VisitResult<?, ?> tmp = visit(each, block);
+            if (tmp != null) {
+                block.addCodePiece(tmp.getPiece());
+            }
         }
         whileStat.setBlock(block);
         return of(whileStat);

@@ -52,6 +52,18 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitDivideExpr(BedrockLangParser.DivideExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code lowerEqualExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLowerEqualExpr(BedrockLangParser.LowerEqualExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lowerEqualExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLowerEqualExpr(BedrockLangParser.LowerEqualExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code bracketExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -99,6 +111,18 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMinusExpr(BedrockLangParser.MinusExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterEqualExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterEqualExpr(BedrockLangParser.GreaterEqualExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterEqualExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterEqualExpr(BedrockLangParser.GreaterEqualExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code remainExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
@@ -148,6 +172,30 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitSetVarExpr(BedrockLangParser.SetVarExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code greaterExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterExpr(BedrockLangParser.GreaterExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterExpr(BedrockLangParser.GreaterExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lowerExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLowerExpr(BedrockLangParser.LowerExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lowerExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLowerExpr(BedrockLangParser.LowerExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code literalExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -172,6 +220,18 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitChainVirtualFieldExpr(BedrockLangParser.ChainVirtualFieldExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code notEqualExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotEqualExpr(BedrockLangParser.NotEqualExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code notEqualExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotEqualExpr(BedrockLangParser.NotEqualExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code positiveExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree
@@ -195,6 +255,18 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code equalExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualExpr(BedrockLangParser.EqualExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code equalExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualExpr(BedrockLangParser.EqualExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code importSingleStatic}
 	 * labeled alternative in {@link BedrockLangParser#importStat}.

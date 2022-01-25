@@ -57,7 +57,8 @@ public final class DefineCommandBlock extends BlockBase implements Declaration<C
 
     @Override
     protected VariableRecord makeVariableRecord(Variable variable) {
-        return new VariableRecord(variable, VariableRecord.VariableType.LOCAL, Objects.requireNonNull(this.command.findLocalVariable(variable.getName())).leftInt());
+        return new VariableRecord(variable, VariableRecord.VariableType.LOCAL, Objects.requireNonNull(
+                Ok(this.command, declare()).findLocalVariable(variable.getName())).leftInt());
     }
 
     @Override

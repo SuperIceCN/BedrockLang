@@ -12,6 +12,12 @@ expr: command #commandExpr
     | expr MINUS expr #minusExpr
     | expr MULTIPLY expr #multiplyExpr
     | expr DIVIDE expr #divideExpr
+    | expr EQ expr #equalExpr
+    | expr NEQ expr #notEqualExpr
+    | expr GTR expr #greaterExpr
+    | expr GTREQ expr #greaterEqualExpr
+    | expr LWR expr #lowerExpr
+    | expr LWREQ expr #lowerEqualExpr
     | expr REMAIN expr #remainExpr
     | varid SET expr #setVarExpr
     | ID (DOT ID | DOT varid)* DOT varid #chainStaticFieldExpr
@@ -71,10 +77,10 @@ REMAIN: '%';
 NOT: '!';
 AND: '&';
 OR: '|';
-GTR: '>';
 GTREQ: '>=';
-LWR: '<';
+GTR: '>';
 LWREQ: '<=';
+LWR: '<';
 DOLLAR: '$';
 
 DEF: 'def';

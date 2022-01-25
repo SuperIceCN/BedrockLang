@@ -19,8 +19,8 @@ public class BedrockLangLexer extends Lexer {
 	public static final int
 		WS=1, COMMENT=2, MUTICOMMENT=3, COMMA=4, SEMICOLON=5, COLON=6, LB=7, RB=8, 
 		LA=9, RA=10, START=11, END=12, DOT=13, EQ=14, NEQ=15, SET=16, PLUS=17, 
-		MINUS=18, MULTIPLY=19, DIVIDE=20, REMAIN=21, NOT=22, AND=23, OR=24, GTR=25, 
-		GTREQ=26, LWR=27, LWREQ=28, DOLLAR=29, DEF=30, VAR=31, WHEN=32, RETURN=33, 
+		MINUS=18, MULTIPLY=19, DIVIDE=20, REMAIN=21, NOT=22, AND=23, OR=24, GTREQ=25, 
+		GTR=26, LWREQ=27, LWR=28, DOLLAR=29, DEF=30, VAR=31, WHEN=32, RETURN=33, 
 		IMPORT=34, FROM=35, AS=36, IF=37, ELSE=38, ELIF=39, WHILE=40, BREAK=41, 
 		CONTINUE=42, STRING=43, INT=44, DEC=45, BOOL=46, NULL=47, ID=48;
 	public static String[] channelNames = {
@@ -35,9 +35,9 @@ public class BedrockLangLexer extends Lexer {
 		return new String[] {
 			"WS", "COMMENT", "MUTICOMMENT", "COMMA", "SEMICOLON", "COLON", "LB", 
 			"RB", "LA", "RA", "START", "END", "DOT", "EQ", "NEQ", "SET", "PLUS", 
-			"MINUS", "MULTIPLY", "DIVIDE", "REMAIN", "NOT", "AND", "OR", "GTR", "GTREQ", 
-			"LWR", "LWREQ", "DOLLAR", "DEF", "VAR", "WHEN", "RETURN", "IMPORT", "FROM", 
-			"AS", "IF", "ELSE", "ELIF", "WHILE", "BREAK", "CONTINUE", "STRCHAR", 
+			"MINUS", "MULTIPLY", "DIVIDE", "REMAIN", "NOT", "AND", "OR", "GTREQ", 
+			"GTR", "LWREQ", "LWR", "DOLLAR", "DEF", "VAR", "WHEN", "RETURN", "IMPORT", 
+			"FROM", "AS", "IF", "ELSE", "ELIF", "WHILE", "BREAK", "CONTINUE", "STRCHAR", 
 			"INTEGER", "ESCAPECHAR", "STRING", "INT", "DEC", "BOOL", "NULL", "IDStart", 
 			"IDPart", "ID"
 		};
@@ -48,7 +48,7 @@ public class BedrockLangLexer extends Lexer {
 		return new String[] {
 			null, null, null, null, "','", null, "':'", "'('", "')'", "'['", "']'", 
 			"'{'", "'}'", "'.'", "'=='", "'!='", "'='", "'+'", "'-'", "'*'", "'/'", 
-			"'%'", "'!'", "'&'", "'|'", "'>'", "'>='", "'<'", "'<='", "'$'", "'def'", 
+			"'%'", "'!'", "'&'", "'|'", "'>='", "'>'", "'<='", "'<'", "'$'", "'def'", 
 			"'var'", "'when'", "'return'", "'import'", "'from'", "'as'", "'if'", 
 			"'else'", "'elif'", "'while'", "'break'", "'continue'", null, null, null, 
 			null, "'null'"
@@ -59,10 +59,10 @@ public class BedrockLangLexer extends Lexer {
 		return new String[] {
 			null, "WS", "COMMENT", "MUTICOMMENT", "COMMA", "SEMICOLON", "COLON", 
 			"LB", "RB", "LA", "RA", "START", "END", "DOT", "EQ", "NEQ", "SET", "PLUS", 
-			"MINUS", "MULTIPLY", "DIVIDE", "REMAIN", "NOT", "AND", "OR", "GTR", "GTREQ", 
-			"LWR", "LWREQ", "DOLLAR", "DEF", "VAR", "WHEN", "RETURN", "IMPORT", "FROM", 
-			"AS", "IF", "ELSE", "ELIF", "WHILE", "BREAK", "CONTINUE", "STRING", "INT", 
-			"DEC", "BOOL", "NULL", "ID"
+			"MINUS", "MULTIPLY", "DIVIDE", "REMAIN", "NOT", "AND", "OR", "GTREQ", 
+			"GTR", "LWREQ", "LWR", "DOLLAR", "DEF", "VAR", "WHEN", "RETURN", "IMPORT", 
+			"FROM", "AS", "IF", "ELSE", "ELIF", "WHILE", "BREAK", "CONTINUE", "STRING", 
+			"INT", "DEC", "BOOL", "NULL", "ID"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -136,8 +136,8 @@ public class BedrockLangLexer extends Lexer {
 		"\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\6\6\6\u008e\n\6\r\6\16\6\u008f\3\7\3\7"+
 		"\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\3\f\3\f\3\r\3\r\3\16\3\16\3\17\3\17"+
 		"\3\17\3\20\3\20\3\20\3\21\3\21\3\22\3\22\3\23\3\23\3\24\3\24\3\25\3\25"+
-		"\3\26\3\26\3\27\3\27\3\30\3\30\3\31\3\31\3\32\3\32\3\33\3\33\3\33\3\34"+
-		"\3\34\3\35\3\35\3\35\3\36\3\36\3\37\3\37\3\37\3\37\3 \3 \3 \3 \3!\3!\3"+
+		"\3\26\3\26\3\27\3\27\3\30\3\30\3\31\3\31\3\32\3\32\3\32\3\33\3\33\3\34"+
+		"\3\34\3\34\3\35\3\35\3\36\3\36\3\37\3\37\3\37\3\37\3 \3 \3 \3 \3!\3!\3"+
 		"!\3!\3!\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3#\3#\3#\3#\3#\3#\3#\3$\3$\3$\3$\3"+
 		"$\3%\3%\3%\3&\3&\3&\3\'\3\'\3\'\3\'\3\'\3(\3(\3(\3(\3(\3)\3)\3)\3)\3)"+
 		"\3)\3*\3*\3*\3*\3*\3*\3+\3+\3+\3+\3+\3+\3+\3+\3+\3,\3,\3,\5,\u010e\n,"+
@@ -168,7 +168,7 @@ public class BedrockLangLexer extends Lexer {
 		"\2\2\2\27\u009b\3\2\2\2\31\u009d\3\2\2\2\33\u009f\3\2\2\2\35\u00a1\3\2"+
 		"\2\2\37\u00a4\3\2\2\2!\u00a7\3\2\2\2#\u00a9\3\2\2\2%\u00ab\3\2\2\2\'\u00ad"+
 		"\3\2\2\2)\u00af\3\2\2\2+\u00b1\3\2\2\2-\u00b3\3\2\2\2/\u00b5\3\2\2\2\61"+
-		"\u00b7\3\2\2\2\63\u00b9\3\2\2\2\65\u00bb\3\2\2\2\67\u00be\3\2\2\29\u00c0"+
+		"\u00b7\3\2\2\2\63\u00b9\3\2\2\2\65\u00bc\3\2\2\2\67\u00be\3\2\2\29\u00c1"+
 		"\3\2\2\2;\u00c3\3\2\2\2=\u00c5\3\2\2\2?\u00c9\3\2\2\2A\u00cd\3\2\2\2C"+
 		"\u00d2\3\2\2\2E\u00d9\3\2\2\2G\u00e0\3\2\2\2I\u00e5\3\2\2\2K\u00e8\3\2"+
 		"\2\2M\u00eb\3\2\2\2O\u00f0\3\2\2\2Q\u00f5\3\2\2\2S\u00fb\3\2\2\2U\u0101"+
@@ -193,9 +193,9 @@ public class BedrockLangLexer extends Lexer {
 		"\7,\2\2\u00ae(\3\2\2\2\u00af\u00b0\7\61\2\2\u00b0*\3\2\2\2\u00b1\u00b2"+
 		"\7\'\2\2\u00b2,\3\2\2\2\u00b3\u00b4\7#\2\2\u00b4.\3\2\2\2\u00b5\u00b6"+
 		"\7(\2\2\u00b6\60\3\2\2\2\u00b7\u00b8\7~\2\2\u00b8\62\3\2\2\2\u00b9\u00ba"+
-		"\7@\2\2\u00ba\64\3\2\2\2\u00bb\u00bc\7@\2\2\u00bc\u00bd\7?\2\2\u00bd\66"+
-		"\3\2\2\2\u00be\u00bf\7>\2\2\u00bf8\3\2\2\2\u00c0\u00c1\7>\2\2\u00c1\u00c2"+
-		"\7?\2\2\u00c2:\3\2\2\2\u00c3\u00c4\7&\2\2\u00c4<\3\2\2\2\u00c5\u00c6\7"+
+		"\7@\2\2\u00ba\u00bb\7?\2\2\u00bb\64\3\2\2\2\u00bc\u00bd\7@\2\2\u00bd\66"+
+		"\3\2\2\2\u00be\u00bf\7>\2\2\u00bf\u00c0\7?\2\2\u00c08\3\2\2\2\u00c1\u00c2"+
+		"\7>\2\2\u00c2:\3\2\2\2\u00c3\u00c4\7&\2\2\u00c4<\3\2\2\2\u00c5\u00c6\7"+
 		"f\2\2\u00c6\u00c7\7g\2\2\u00c7\u00c8\7h\2\2\u00c8>\3\2\2\2\u00c9\u00ca"+
 		"\7x\2\2\u00ca\u00cb\7c\2\2\u00cb\u00cc\7t\2\2\u00cc@\3\2\2\2\u00cd\u00ce"+
 		"\7y\2\2\u00ce\u00cf\7j\2\2\u00cf\u00d0\7g\2\2\u00d0\u00d1\7p\2\2\u00d1"+

@@ -64,6 +64,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLowerEqualExpr(BedrockLangParser.LowerEqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLowerEqualExpr(BedrockLangParser.LowerEqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBracketExpr(BedrockLangParser.BracketExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -107,6 +119,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMinusExpr(BedrockLangParser.MinusExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGreaterEqualExpr(BedrockLangParser.GreaterEqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGreaterEqualExpr(BedrockLangParser.GreaterEqualExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -160,6 +184,30 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGreaterExpr(BedrockLangParser.GreaterExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGreaterExpr(BedrockLangParser.GreaterExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLowerExpr(BedrockLangParser.LowerExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLowerExpr(BedrockLangParser.LowerExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLiteralExpr(BedrockLangParser.LiteralExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -184,6 +232,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNotEqualExpr(BedrockLangParser.NotEqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotEqualExpr(BedrockLangParser.NotEqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPositiveExpr(BedrockLangParser.PositiveExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -203,6 +263,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqualExpr(BedrockLangParser.EqualExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualExpr(BedrockLangParser.EqualExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
