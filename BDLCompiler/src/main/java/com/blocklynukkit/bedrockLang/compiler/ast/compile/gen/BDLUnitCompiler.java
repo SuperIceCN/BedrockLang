@@ -22,7 +22,7 @@ public final class BDLUnitCompiler implements CompilerCodeGenerator {
                 , null
                 , "java/lang/Object"
                 , new String[0]);// TODO: 2021/12/28 父类、接口动态化
-        cw.visitSource(unit.getSourcePos().getSourceName(), null);
+        cw.visitSource(bdlUnit.getSourceName(), null);
 
         makeImport(bdlUnit);
         makeDefaultConstructor(bdlUnit);

@@ -8,8 +8,8 @@ import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 public final class Compiler {
-    private String sourceName;
-    private String sourceCode;
+    private final String sourceName;
+    private final String sourceCode;
 
     Compiler(String sourceName, String sourceCode) {
         this.sourceName = sourceName;

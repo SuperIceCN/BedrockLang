@@ -47,6 +47,10 @@ public class BDLUnit implements Unit, GenerateWithASM, Opcodes {
         return this.name;
     }
 
+    public String getSourceName() {
+        return sourceName;
+    }
+
     @Override
     public Map<String, Variable> getUnitVariables() {
         return this.variableMap;
