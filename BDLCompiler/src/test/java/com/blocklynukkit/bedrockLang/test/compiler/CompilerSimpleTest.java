@@ -17,16 +17,6 @@ public class CompilerSimpleTest {
     }
 
     @Test
-    public void test2() throws Exception {
-        final byte[] bytes = Compiler.builder().sourceName("fibonacci.bdl")
-                .sourceCode(getCode("fibonacci.bdl")).build().compile();
-        saveTo(bytes, new File("test/fibonacci.class"));
-        Class<?> cls = loadClass("fibonacci", bytes);
-        Method main = cls.getMethod("main");
-        main.invoke(cls);
-    }
-
-    @Test
     public void test2Performance() throws Exception {
         final byte[] bytes = Compiler.builder().sourceName("fibonacci.bdl")
                 .sourceCode(getCode("fibonacci.bdl")).build().compile();
