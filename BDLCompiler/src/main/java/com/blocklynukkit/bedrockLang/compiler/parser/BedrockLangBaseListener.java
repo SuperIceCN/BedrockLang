@@ -484,6 +484,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTypeid(BedrockLangParser.TypeidContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeid(BedrockLangParser.TypeidContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterId(BedrockLangParser.IdContext ctx) { }
 	/**
 	 * {@inheritDoc}

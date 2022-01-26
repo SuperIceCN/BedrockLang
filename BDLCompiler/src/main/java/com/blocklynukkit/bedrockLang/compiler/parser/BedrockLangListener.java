@@ -448,6 +448,16 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitBlock(BedrockLangParser.BlockContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BedrockLangParser#typeid}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeid(BedrockLangParser.TypeidContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BedrockLangParser#typeid}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeid(BedrockLangParser.TypeidContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BedrockLangParser#id}.
 	 * @param ctx the parse tree
 	 */

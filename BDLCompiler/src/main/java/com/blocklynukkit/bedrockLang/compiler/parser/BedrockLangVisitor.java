@@ -270,6 +270,12 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlock(BedrockLangParser.BlockContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link BedrockLangParser#typeid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeid(BedrockLangParser.TypeidContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link BedrockLangParser#id}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -76,7 +76,9 @@ public abstract class ValueType {
                 return BasicValueType.STRING;
             default:
                 if (clazz.endsWith("[]")) {
-                    return new ArrayValueType(clazz.substring(0, clazz.length() - 2));
+                    String clzName = clazz.substring(0, clazz.length() - 2);
+                    if (clzName.equals("string")) clzName = "java.lang.String";
+                    return new ArrayValueType(clzName);
                 } else {
                     return new ClassValueType(clazz);
                 }

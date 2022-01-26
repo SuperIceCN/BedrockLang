@@ -1,0 +1,5 @@
+def main $args:string[] {
+	if true {
+		System.$out.println "Hello world!";
+	}
+}

@@ -69,4 +69,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main");
         main.invoke(cls);
     }
+
+    @Test
+    public void test6() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("arrayCmd.bdl")
+                .sourceCode(getCode("arrayCmd.bdl")).build().compile();
+        saveTo(bytes, new File("test/arrayCmd.class"));
+        Class<?> cls = loadClass("arrayCmd", bytes);
+        Method main = cls.getMethod("main", String[].class);
+        main.invoke(cls, (Object) new String[0]);
+    }
 }

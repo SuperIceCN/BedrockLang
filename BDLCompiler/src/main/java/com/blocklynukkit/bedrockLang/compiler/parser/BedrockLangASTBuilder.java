@@ -64,7 +64,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
                 throw new GlobalVariableCannotInitException(pos(ctx));
             }
             return of(new UnitGlobalVariableDeclareStat(no$(varDeclare.VAR().getText()),
-                    ValueType.from(varDeclare.ID().getText()), pos(ctx), bdlUnit));
+                    ValueType.from(varDeclare.typeid().getText()), pos(ctx), bdlUnit));
         }
     }
 
@@ -95,7 +95,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
                         .map(tree -> {
                             if (tree instanceof DefineSignatureVariableContext) {
                                 final DefineSignatureVariableContext varCtx = (DefineSignatureVariableContext) tree;
-                                return new VariableCmdArg(no$(varCtx.varid().getText()), ValueType.from(varCtx.ID().getText()), pos(varCtx));
+                                return new VariableCmdArg(no$(varCtx.varid().getText()), ValueType.from(varCtx.typeid().getText()), pos(varCtx));
                             } else {
                                 final DefineSignatureWordSingleContext wordCtx = (DefineSignatureWordSingleContext) tree;
                                 return new WordCmdArg(wordCtx.ID().getText(), pos(wordCtx));
@@ -117,7 +117,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         if (ctx.expr() != null) {
             stat.setInitExpr((Expr) visit(ctx.expr(), stat).getPiece());
         }
-        stat.setType(ValueType.from(ctx.ID().getText()));
+        stat.setType(ValueType.from(ctx.typeid().getText()));
         return of(stat);
     }
 

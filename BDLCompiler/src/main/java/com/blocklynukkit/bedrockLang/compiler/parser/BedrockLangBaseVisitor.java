@@ -290,6 +290,13 @@ public class BedrockLangBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitTypeid(BedrockLangParser.TypeidContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitId(BedrockLangParser.IdContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
