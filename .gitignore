@@ -5,3 +5,4 @@
 *.iml
 /BDLauncher/BDLauncher.iml
 /BDLauncher/target/
+/BDLauncher/Cargo.lock

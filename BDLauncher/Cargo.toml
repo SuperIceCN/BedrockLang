@@ -10,6 +10,10 @@ clap = "3.0.12"
 subprocess = "0.2.8"
 path-absolutize = "3.0.11"
 
+[[bin]]
+name = "bdl"
+path = "src/main.rs"
+
 [profile.release]
 lto = "fat"
 panic = "abort"
