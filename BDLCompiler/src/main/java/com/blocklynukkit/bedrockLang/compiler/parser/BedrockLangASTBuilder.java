@@ -205,13 +205,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         if (ctx.INT() != null) {
             try {
                 final int value = Integer.parseInt(ctx.INT().getText());
-                BasicValueType valueType = BasicValueType.INT;
-                if (value <= Byte.MAX_VALUE && value >= Byte.MIN_VALUE) {
-                    valueType = BasicValueType.BYTE;
-                } else if (value <= Short.MAX_VALUE && value >= Short.MIN_VALUE) {
-                    valueType = BasicValueType.SHORT;
-                }
-                return of(new LiteralExpr(pos(ctx), parent(ctx), value, valueType));
+                return of(new LiteralExpr(pos(ctx), parent(ctx), value, BasicValueType.INT));
             } catch (NumberFormatException e) {
                 return of(new LiteralExpr(pos(ctx), parent(ctx), Long.parseLong(ctx.INT().getText()), BasicValueType.LONG));
             }

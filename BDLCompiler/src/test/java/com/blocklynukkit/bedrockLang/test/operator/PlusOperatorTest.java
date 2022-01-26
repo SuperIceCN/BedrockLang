@@ -73,7 +73,7 @@ public class PlusOperatorTest {
         final BDLUnit unit = new BDLUnit("testPlusByte", "testPlusByte.bdl");
         SourcePos.defaultSourceName = "testPlusByte";
 
-        final DefineCommandBlock add = new DefineCommandBlock(auto(), unit, "getByte", ValueType.from("byte"));
+        final DefineCommandBlock add = new DefineCommandBlock(auto(), unit, "getByte", ValueType.from("int"));
 
         final ReturnStat returnStat = new ReturnStat(auto(), add);
         final PlusExpr plusExpr = new PlusExpr(auto(), returnStat);
@@ -90,7 +90,7 @@ public class PlusOperatorTest {
         saveTo(bytes, new File("test/testPlusByte.class"));
         final Class<?> cls = loadClass("testPlusByte", bytes);
         final Method method = cls.getMethod("getByte");
-        Assertions.assertEquals(method.invoke(method), (byte) 77);
+        Assertions.assertEquals(method.invoke(method), 77);
     }
 
     @Test

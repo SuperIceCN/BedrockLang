@@ -14,7 +14,7 @@ public final class LiteralExpr extends ExprBase {
     public LiteralExpr(SourcePos sourcePos, Piece parent, Object value, ValueType valueType) {
         super(sourcePos, parent);
         this.value = value;
-        this.valueType = ValueType.fromObj(value);
+        this.valueType = valueType;
         if (!valueType.isBasic()) {
             throw new IllegalArgumentException("Only basic types are allowed!");
         }

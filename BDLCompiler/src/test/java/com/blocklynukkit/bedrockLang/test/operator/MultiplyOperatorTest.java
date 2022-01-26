@@ -48,7 +48,7 @@ public class MultiplyOperatorTest {
         final BDLUnit unit = new BDLUnit("testMultiplyByte", "testMultiplyByte.bdl");
         SourcePos.defaultSourceName = "testMultiplyByte";
 
-        final DefineCommandBlock add = new DefineCommandBlock(auto(), unit, "getByte", ValueType.from("byte"));
+        final DefineCommandBlock add = new DefineCommandBlock(auto(), unit, "getByte", ValueType.from("int"));
 
         final ReturnStat returnStat = new ReturnStat(auto(), add);
         final MultiplyExpr MultiplyExpr = new MultiplyExpr(auto(), returnStat);
@@ -65,7 +65,7 @@ public class MultiplyOperatorTest {
         saveTo(bytes, new File("test/testMultiplyByte.class"));
         final Class<?> cls = loadClass("testMultiplyByte", bytes);
         final Method method = cls.getMethod("getByte");
-        Assertions.assertEquals(method.invoke(method), (byte)(((byte)11) * ((byte)66)));
+        Assertions.assertEquals(method.invoke(method), ((byte)11) * ((byte)66));
     }
 
     @Test
