@@ -59,4 +59,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main");
         main.invoke(cls);
     }
+
+    @Test
+    public void test5() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("ifWithIf.bdl")
+                .sourceCode(getCode("ifWithIf.bdl")).build().compile();
+        saveTo(bytes, new File("test/ifWithIf.class"));
+        Class<?> cls = loadClass("ifWithIf", bytes);
+        Method main = cls.getMethod("main");
+        main.invoke(cls);
+    }
 }

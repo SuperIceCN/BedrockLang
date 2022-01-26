@@ -306,7 +306,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
         final Expr[] exprs = ctx.expr().stream().map(each -> (Expr) visit(each, ifElseStat).getPiece()).toArray(Expr[]::new);
         final Block[] blocks = ctx.block().stream().map(each -> {
             final PlainBlock block = new PlainBlock(pos(each), ifElseStat, ifElseStat.findVariableStoreBelongTo());
-            each.expr().forEach(exprContext -> {
+            each.children.forEach(exprContext -> {
                 VisitResult<?, ?> tmp = visit(exprContext, block);
                 if (tmp != null) {
                     block.addCodePiece(tmp.getPiece());
