@@ -4,27 +4,41 @@ use clap::{App, arg};
 use std::path::Path;
 use std::process::exit;
 use subprocess::{Exec, Redirection};
+use path_absolutize::*;
 
 #[cfg(target_os = "macos")]
 static CP_SPLIT: &str = ":";
+#[cfg(target_os = "macos")]
+static EXE_SUFFIX: &str = ".exe";
 #[cfg(target_os = "linux")]
 static CP_SPLIT: &str = ":";
+#[cfg(target_os = "linux")]
+static EXE_SUFFIX: &str = ".exe";
 #[cfg(target_os = "windows")]
 static CP_SPLIT: &str = ";";
+#[cfg(target_os = "windows")]
+static EXE_SUFFIX: &str = ".exe";
 
 fn main() {
     let matches = App::new("BDLauncher")
         .version("0.0.1")
         .author("Superice666")
         .about("BedrockLang launcher.")
-        .arg(arg!([FILE] "Execute a file.").required(false))
         .subcommand(App::new("compile").alias("cp")
             .about("Compile a bedrockLang source code file.")
             .arg(arg!([SOURCE_FILE] "The path or filename of the source file.").required(true))
-            .arg(arg!(-tj -toJar "Whether to package the outputs as a jar.").required(false))
-            .arg(arg!(-o -output "Set the main file name of the output file. No ext name.").required(false))
-            .arg(arg!(-cp -classpath "Set the classpath. Usually used for include the dependencies.").required(false)))
+            .arg(arg!(-j --toJar "Whether to package the outputs as a jar.").required(false))
+            .arg(arg!(-o --output <FILE> "Set the main file name of the output file. No ext name.").required(false))
+            .arg(arg!(--classpath <CLASSPATH> "Set the classpath. Usually used for include the dependencies.").required(false)))
         .get_matches();
+
+    let java: String;
+    if let Some(tmp) = find_java_path() {
+        java = tmp;
+    } else {
+        eprintln!("Java not found.");
+        exit(-1);
+    }
 
     if let Some(sub_matches) = matches.subcommand_matches("compile") {
         let mut classpath = String::from("./compiler/*");
@@ -38,7 +52,7 @@ fn main() {
             exit(-1);
         }
         if let Some(file_name) = sub_matches.value_of("SOURCE_FILE") {
-            let mut process = Exec::cmd("java").arg("-cp").arg(classpath)
+            let mut process = Exec::cmd(java.as_str()).arg("-cp").arg(classpath)
                 .arg("com.blocklynukkit.bedrockLang.compiler.app.Launcher")
                 .arg("mode").arg("COMPILE").arg("file").arg(file_name);
             if sub_matches.is_present("toJar") {
@@ -57,8 +71,32 @@ fn main() {
             exit(-1);
         }
     }
+}
 
-    if let Some(file_name) = matches.value_of("FILE") {
-        println!("File name is: {}", file_name);
+fn find_java_path() -> Option<String> {
+    if let Some(tmp) = check_java_exist(&(String::from("./jdk/bin/java") + EXE_SUFFIX)) {
+        return Some(tmp);
+    }
+    if let Some(tmp) = check_java_exist(&(String::from("./jre/bin/java") + EXE_SUFFIX)) {
+        return Some(tmp);
+    }
+    if let Some(home) = option_env!("JAVA_HOME") {
+        if let Some(tmp) = check_java_exist(&(String::from(home) + "/bin/java" + EXE_SUFFIX)) {
+            return Some(tmp);
+        }
+    }
+    None
+}
+
+fn check_java_exist(path_str: &String) -> Option<String> {
+    let path = Path::new(path_str);
+    if path.exists() {
+        let tmp = path.absolutize();
+        match tmp {
+            Ok(y) => Some(String::from(y.as_os_str().to_str().unwrap())),
+            Err(_) => None
+        }
+    } else {
+        None
     }
 }

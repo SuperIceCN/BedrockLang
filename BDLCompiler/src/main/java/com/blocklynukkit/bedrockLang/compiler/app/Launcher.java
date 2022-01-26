@@ -20,7 +20,6 @@ public final class Launcher {
         String output = null;
         final List<String> arguments = new ArrayList<>(0);
 
-
         for (int i = 0, argsLength = args.length; i < argsLength; i++) {
             final String each = args[i];
             switch (each) {

@@ -8,3 +8,8 @@ edition = "2018"
 [dependencies]
 clap = "3.0.12"
 subprocess = "0.2.8"
+path-absolutize = "3.0.11"
+
+[profile.release]
+lto = "fat"
+panic = "abort"
