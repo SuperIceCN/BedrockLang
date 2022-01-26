@@ -47,12 +47,20 @@ public final class Launcher {
                         final Class<?> clazz = classLoader.loadNewClass(new File(file).toPath());
                         try {
                             final Method main = clazz.getMethod("main");
-                            System.out.println(main.invoke(clazz));
+                            if(main.getReturnType().getName().equals("void")){
+                                main.invoke(clazz);
+                            }else {
+                                System.out.println(main.invoke(clazz));
+                            }
                         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                             final Method main;
                             try {
                                 main = clazz.getMethod("main", String[].class);
-                                System.out.println(main.invoke(clazz, (Object[]) arguments.toArray(new String[0])));
+                                if(main.getReturnType().getName().equals("void")){
+                                    main.invoke(clazz, (Object) null);
+                                }else {
+                                    System.out.println(main.invoke(clazz, (Object[]) arguments.toArray(new String[0])));
+                                }
                             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
                                 System.err.println("No main function found.");
                             }
