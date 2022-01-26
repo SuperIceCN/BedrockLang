@@ -17,7 +17,7 @@ public final class TestUtils {
         try {
             Files.write(file.toPath(), bytes, StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.SYNC);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("文件写入错误：" + e.getMessage());
         }
     }
 
