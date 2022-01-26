@@ -9,11 +9,11 @@ use path_absolutize::*;
 #[cfg(target_os = "macos")]
 static CP_SPLIT: &str = ":";
 #[cfg(target_os = "macos")]
-static EXE_SUFFIX: &str = ".exe";
+static EXE_SUFFIX: &str = "";
 #[cfg(target_os = "linux")]
 static CP_SPLIT: &str = ":";
 #[cfg(target_os = "linux")]
-static EXE_SUFFIX: &str = ".exe";
+static EXE_SUFFIX: &str = "";
 #[cfg(target_os = "windows")]
 static CP_SPLIT: &str = ";";
 #[cfg(target_os = "windows")]
