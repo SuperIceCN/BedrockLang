@@ -10,6 +10,10 @@ import java.util.Objects;
 
 public final class TestUtils {
     public static void saveTo(byte[] bytes, File file) {
+        if (file.isDirectory()) {
+            //noinspection ResultOfMethodCallIgnored
+            file.getParentFile().mkdirs();
+        }
         try {
             Files.write(file.toPath(), bytes, StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.SYNC);
         } catch (IOException e) {
