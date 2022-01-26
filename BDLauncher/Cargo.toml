@@ -7,3 +7,4 @@ edition = "2018"
 
 [dependencies]
 clap = "3.0.12"
+subprocess = "0.2.8"
