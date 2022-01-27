@@ -86,6 +86,27 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
     }
 
     @Override
+    public MethodInfo[] getConstructor() {
+        return Arrays.stream(clazz.getConstructors()).map(InternalJavaConstructorInfo::new).toArray(MethodInfo[]::new);
+    }
+
+    @Override
+    public MethodInfo getConstructor(ClassInfo... argTypes) {
+        return Arrays.stream(getConstructor()).filter(methodInfo -> {
+            final ClassInfo[] args = methodInfo.getArgumentClassTypes();
+            if (argTypes.length != args.length) {
+                return false;
+            }
+            for (int i = 0; i < args.length; i++) {
+                if (!argTypes[i].canCastFrom(args[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }).findFirst().orElse(null);
+    }
+
+    @Override
     public FieldInfo getField(String name) {
         try {
             return new InternalJavaFieldInfo(clazz.getField(name));

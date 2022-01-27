@@ -116,6 +116,16 @@ public final class BDLClassInfo extends ClassInfo {
     }
 
     @Override
+    public MethodInfo[] getConstructor() {
+        return new MethodInfo[]{new BDLConstructorInfo(this)};
+    }
+
+    @Override
+    public MethodInfo getConstructor(ClassInfo... argTypes) {
+        return new BDLConstructorInfo(this);
+    }
+
+    @Override
     public FieldInfo getField(String name) {
         return new BDLFieldInfo((UnitGlobalVariable) bdlUnit.getUnitVariables().get(name), bdlUnit.getTypeLookup());
     }

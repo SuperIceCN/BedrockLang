@@ -9,6 +9,7 @@ public abstract class MethodInfo {
 
     /**
      * 获取$前的名称
+     *
      * @return 名称
      */
     public String getSimpleName() {
@@ -54,5 +55,9 @@ public abstract class MethodInfo {
 
     public boolean isSynchronized() {
         return Modifier.isSynchronized(getModifier());
+    }
+
+    public boolean isConstructor() {
+        return "<init>".equals(getName());
     }
 }

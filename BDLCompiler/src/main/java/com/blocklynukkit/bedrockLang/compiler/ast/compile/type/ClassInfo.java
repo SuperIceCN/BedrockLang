@@ -25,6 +25,10 @@ public abstract class ClassInfo implements Comparable<ClassInfo> {
 
     public abstract MethodInfo getMethod(String methodName, ClassInfo... argTypes);
 
+    public abstract MethodInfo[] getConstructor();
+
+    public abstract MethodInfo getConstructor(ClassInfo... argTypes);
+
     public abstract FieldInfo getField(String name);
 
     public abstract Type toASMType();
