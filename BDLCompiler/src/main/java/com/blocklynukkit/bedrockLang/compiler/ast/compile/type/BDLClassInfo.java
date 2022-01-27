@@ -80,7 +80,7 @@ public final class BDLClassInfo extends ClassInfo {
                     if (ArrayUtils.equals(Arrays.stream(cmd.getArgs()).filter(CmdArg::hasValueType)
                             .map(CmdArg::getValueType)
                             .map(vt -> bdlUnit.getTypeLookup().lookupClass(vt))
-                            .toArray(ClassInfo[]::new), argTypes, (a, b) -> a.compareTo(b) <= 0)) {
+                            .toArray(ClassInfo[]::new), argTypes, (a, b) -> b.canCastTo(a))) {
                         list.add(new BDLMethodInfo(cmd, bdlUnit.getTypeLookup()));
                     }
                 }
@@ -107,7 +107,7 @@ public final class BDLClassInfo extends ClassInfo {
                 if (ArrayUtils.equals(Arrays.stream(cmd.getArgs()).filter(CmdArg::hasValueType)
                         .map(CmdArg::getValueType)
                         .map(vt -> bdlUnit.getTypeLookup().lookupClass(vt))
-                        .toArray(ClassInfo[]::new), argTypes, (a, b) -> a.compareTo(b) <= 0)) {
+                        .toArray(ClassInfo[]::new), argTypes, (a, b) -> b.canCastTo(a))) {
                     return new BDLMethodInfo(cmd, bdlUnit.getTypeLookup());
                 }
             }

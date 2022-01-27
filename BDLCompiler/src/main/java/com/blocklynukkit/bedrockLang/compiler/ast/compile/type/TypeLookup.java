@@ -82,7 +82,7 @@ public class TypeLookup {
             }
             final ArrayList<MethodInfo> out = new ArrayList<>(1);
             for (final MethodInfo each : methods) {
-                if (ArrayUtils.equals(each.getArgumentClassTypes(), givenTypes, (a, b) -> a.compareTo(b) <= 0)) {
+                if (ArrayUtils.equals(each.getArgumentClassTypes(), givenTypes, (a, b) -> b.canCastTo(a))) {
                     out.add(each);
                 }
             }
