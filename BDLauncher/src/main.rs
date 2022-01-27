@@ -58,7 +58,7 @@ fn main() {
             exit(-1);
         }
         if let Some(file_name) = sub_matches.value_of("SOURCE_FILE") {
-            let mut process = Exec::cmd(java.as_str()).arg("-Xshareclasses").arg("-cp").arg(classpath)
+            let mut process = Exec::cmd(java.as_str()).arg("-cp").arg(classpath)
                 .arg("com.blocklynukkit.bedrockLang.compiler.app.Launcher")
                 .arg("mode").arg("COMPILE").arg("file").arg(file_name);
             if sub_matches.is_present("toJar") {
@@ -78,7 +78,7 @@ fn main() {
         }
     } else if let Some(sub_matches) = matches.subcommand_matches("run") {
         if let Some(file_name) = sub_matches.value_of("FILE") {
-            let mut process = Exec::cmd(java.as_str()).arg("-Xshareclasses");
+            let mut process = Exec::cmd(java.as_str());
             if file_name.ends_with(".jar") {
                 if let Some(classpath) = sub_matches.value_of("classpath") {
                     process = process.arg("-cp").arg(classpath);
@@ -103,7 +103,7 @@ fn main() {
                     eprintln!("BedrockLang compiler not found.");
                     exit(-1);
                 }
-                process = Exec::cmd(java.as_str()).arg("-Xshareclasses").arg("-cp").arg(classpath)
+                process = Exec::cmd(java.as_str()).arg("-cp").arg(classpath)
                     .arg("com.blocklynukkit.bedrockLang.compiler.app.Launcher")
                     .arg("mode").arg("RUN").arg("file").arg(file_name);
                 let res = process.stdout(Redirection::Merge).stderr(Redirection::Merge).join();
