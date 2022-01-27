@@ -69,4 +69,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main", String[].class);
         main.invoke(cls, (Object) new String[0]);
     }
+
+    @Test
+    public void test7() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("manyFunction.bdl")
+                .sourceCode(getCode("manyFunction.bdl")).build().compile();
+        saveTo(bytes, new File("test/manyFunction.class"));
+        Class<?> cls = loadClass("manyFunction", bytes);
+        Method main = cls.getMethod("main", String[].class);
+        main.invoke(cls, (Object) new String[0]);
+    }
 }

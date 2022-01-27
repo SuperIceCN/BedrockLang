@@ -50,7 +50,9 @@ public final class MethodCallExpr extends ExprBase {
                 }
             }
             final MethodInfo res = unit.getTypeLookup().findStaticMethodExact(sb.toString(),
-                    Arrays.stream(this.args).map(Expr::getReturnType).toArray(ValueType[]::new));
+                    Arrays.stream(this.args)
+                            .map(Expr::getReturnType)
+                            .toArray(ValueType[]::new));
             if (res != null) {
                 method = res;
             } else {

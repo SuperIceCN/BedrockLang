@@ -347,34 +347,46 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
 
     @Override
     public VisitResult<?, ?> visitCommand(CommandContext ctx) {
-        final Expr[] argExprs = new Expr[ctx.children.size() - 1];
+        final List<Expr> argExprs = new ArrayList<>(ctx.children.size() - 1);
         final List<ParseTree> children = new ArrayList<>(ctx.children);
         children.remove(0);
 
         final CommandIdContext commandIdCtx = ctx.commandId();
         if (commandIdCtx instanceof CallCommandContext) {
             final CallCommandContext callCommandContext = (CallCommandContext) commandIdCtx;
-            final MethodCallExpr expr = new MethodCallExpr(pos(callCommandContext), parent(ctx), callCommandContext.getText());
-            for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
-                argExprs[i] = (Expr) visit(children.get(i), expr).getPiece();
+            final StringBuilder sb = new StringBuilder();
+            for (final ParseTree child : children) {
+                if (child instanceof TerminalNode) {
+                    if (sb.length() == 0) {
+                        sb.append("$").append(child.getText());
+                    } else {
+                        sb.append("_").append(child.getText());
+                    }
+                }
             }
-            expr.setArgs(argExprs);
+            final MethodCallExpr expr = new MethodCallExpr(pos(callCommandContext), parent(ctx), callCommandContext.getText() + sb);
+            for (final ParseTree child : children) {
+                if (child instanceof ExprContext) {
+                    argExprs.add((Expr) visit(child, expr).getPiece());
+                }
+            }
+            expr.setArgs(argExprs.toArray(new Expr[0]));
             return of(expr);
         } else if (commandIdCtx instanceof InvokeCommandContext) {
             final InvokeCommandContext invokeCommandContext = (InvokeCommandContext) commandIdCtx;
             final MethodInvokeExpr expr = new MethodInvokeExpr(pos(invokeCommandContext), parent(ctx), invokeCommandContext.getText());
-            for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
-                argExprs[i] = (Expr) visit(children.get(i), expr).getPiece();
+            for (final ParseTree child : children) {
+                argExprs.add((Expr) visit(child, expr).getPiece());
             }
-            expr.setArgs(argExprs);
+            expr.setArgs(argExprs.toArray(new Expr[0]));
             return of(expr);
         } else {
             final VirtualCommandContext virtualCommandContext = (VirtualCommandContext) commandIdCtx;
             final MethodInvokeExpr expr = new MethodInvokeExpr(pos(virtualCommandContext), parent(ctx), virtualCommandContext.getText());
-            for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
-                argExprs[i] = (Expr) visit(children.get(i), expr).getPiece();
+            for (ParseTree child : children) {
+                argExprs.add((Expr) visit(child, expr).getPiece());
             }
-            expr.setArgs(argExprs);
+            expr.setArgs(argExprs.toArray(argExprs.toArray(new Expr[0])));
             return of(expr);
         }
     }

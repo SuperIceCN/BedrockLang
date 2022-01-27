@@ -1,0 +1,12 @@
+def main $args:string[] {
+	say "hi";
+	say error "oh no";
+}
+
+def say $message:string {
+	System.$out.println $message;
+}
+
+def say error $message:string {
+	System.$err.println $message;
+}
