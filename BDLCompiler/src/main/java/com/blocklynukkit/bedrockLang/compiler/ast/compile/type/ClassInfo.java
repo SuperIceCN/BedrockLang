@@ -39,7 +39,7 @@ public abstract class ClassInfo implements Comparable<ClassInfo> {
 
     public abstract ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass);
 
-    public abstract boolean canCastFrom(ClassInfo classInfo);
+    public abstract boolean canCastTo(ClassInfo classInfo);
 
     public boolean isInterface() {
         return Modifier.isInterface(getModifier());
@@ -68,7 +68,7 @@ public abstract class ClassInfo implements Comparable<ClassInfo> {
     @Override
     public int compareTo(ClassInfo o) {
         return this.getFullName().equals(o.getFullName()) ? 0 : (
-                canCastFrom(o) ? -1 : 1
+                canCastTo(o) ? -1 : 1
         );
     }
 }

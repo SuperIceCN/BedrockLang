@@ -1,0 +1,7 @@
+def main {
+    var $sb = StringBuilder.new;
+    $sb.append 2233;
+    $sb.append " ❤ ";
+    $sb.append "bilibili";
+    System.$out.println $sb;
+}

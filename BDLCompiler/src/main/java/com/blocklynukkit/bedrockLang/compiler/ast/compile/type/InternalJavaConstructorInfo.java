@@ -1,6 +1,5 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.util.CommonClassInfo;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Constructor;
@@ -25,7 +24,7 @@ public final class InternalJavaConstructorInfo extends MethodInfo {
 
     @Override
     public ClassInfo getReturnClassType() {
-        return CommonClassInfo.void_;
+        return new InternalJavaClassInfo(constructor.getDeclaringClass());
     }
 
     @Override
@@ -35,7 +34,7 @@ public final class InternalJavaConstructorInfo extends MethodInfo {
 
     @Override
     public Type getReturnASMType() {
-        return Type.VOID_TYPE;
+        return Type.getType(constructor.getDeclaringClass());
     }
 
     @Override

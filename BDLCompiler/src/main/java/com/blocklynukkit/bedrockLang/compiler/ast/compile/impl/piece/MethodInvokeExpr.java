@@ -48,6 +48,7 @@ public final class MethodInvokeExpr extends ExprBase {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void init() {
         final String[] tokens = commandName.split("\\.");
         final ChainAction[] actions = new ChainAction[tokens.length];
@@ -82,12 +83,18 @@ public final class MethodInvokeExpr extends ExprBase {
             } else if (i == tokens.length - 1) { //最后一层，肯定是方法调用
                 MethodInfo methodInfo;
                 if (i == 1) { // 不计最外层一共只有一层
-                    methodInfo = findMethod(lookup, actions[0].getClassInfo(), each);
-                    final ClassInfo returnClassInfo = methodInfo.getReturnClassType();
-                    if (clazzOrVar) {
-                        actions[1] = new ChainAction(ActionType.StaticMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
-                    } else {
-                        actions[1] = new ChainAction(ActionType.VirtualMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
+                    if("new".equals(each)){ // 调用构造函数
+                        methodInfo = actions[0].getClassInfo().getConstructor(Arrays.stream(this.args)
+                                .map(expr -> lookup.lookupClass(expr.getReturnType())).toArray(ClassInfo[]::new));
+                        actions[1] = new ChainAction(ActionType.New, "<init>", actions[0].getClassInfo()).setMethodDescriptor(constructorDescriptor(methodInfo));
+                    }else { // 其他方法调用
+                        methodInfo = findMethod(lookup, actions[0].getClassInfo(), each);
+                        final ClassInfo returnClassInfo = methodInfo.getReturnClassType();
+                        if (clazzOrVar) {
+                            actions[1] = new ChainAction(ActionType.StaticMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
+                        } else {
+                            actions[1] = new ChainAction(ActionType.VirtualMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
+                        }
                     }
                 } else { // 不止一层，说明最后一个肯定是对象成员函数
                     methodInfo = findMethod(lookup, actions[i - 1].getClassInfo(), each);
@@ -242,7 +249,7 @@ public final class MethodInvokeExpr extends ExprBase {
     }
 
     public enum ActionType {
-        Class, Var, StaticField, VirtualField, StaticMethod, VirtualMethod
+        Class, Var, StaticField, VirtualField, StaticMethod, VirtualMethod, New
     }
 
     private MethodInfo findMethod(TypeLookup lookup, ClassInfo previous, String methodName) {
@@ -274,5 +281,14 @@ public final class MethodInvokeExpr extends ExprBase {
             throw new MethodNotFoundException(this.getSourcePos(), methodName);
         }
         return methodInfo;
+    }
+
+    private String constructorDescriptor(MethodInfo constructor) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('(');
+        for (Type parameter : constructor.getArgumentASMTypes()) {
+            stringBuilder.append(parameter.getDescriptor());
+        }
+        return stringBuilder.append(")V").toString();
     }
 }

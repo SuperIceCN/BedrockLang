@@ -34,6 +34,24 @@ public class InvokeTest {
         saveTo(bytes, new File("test/testParseMethodInvoke.class"));
     }
 
+    @Test
+    public void testParseNewInvoke() {
+        final BDLUnit unit = new BDLUnit("testParseNewInvoke", "testParseNewInvoke.bdl");
+        SourcePos.defaultSourceName = "testParseNewInvoke";
+
+        final ImportStat importStat = ImportStat.ofPackage(auto(), unit, "java.lang");
+        unit.addCodePiece(importStat);
+
+        final DefineCommandBlock testCmd = new DefineCommandBlock(auto(), unit, "test", ValueType.from("void"));
+        final MethodInvokeExpr methodInvoke = new MethodInvokeExpr(auto(), testCmd, "String.new");
+        methodInvoke.setArgs(new Expr[]{new LiteralExpr(auto(), methodInvoke, "hi", ValueType.from("string"))});
+        testCmd.addCodePiece(methodInvoke);
+        unit.addCodePiece(testCmd);
+
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testParseNewInvoke.class"));
+    }
+
     public static void test(int a) {
         int x;
         if(a > 33){

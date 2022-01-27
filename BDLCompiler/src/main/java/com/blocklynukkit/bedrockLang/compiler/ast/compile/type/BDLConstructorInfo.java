@@ -1,6 +1,5 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.type;
 
-import com.blocklynukkit.bedrockLang.compiler.ast.util.CommonClassInfo;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Modifier;
@@ -24,7 +23,7 @@ public final class BDLConstructorInfo extends MethodInfo {
 
     @Override
     public ClassInfo getReturnClassType() {
-        return CommonClassInfo.void_;
+        return bdlClassInfo;
     }
 
     @Override
@@ -34,7 +33,7 @@ public final class BDLConstructorInfo extends MethodInfo {
 
     @Override
     public Type getReturnASMType() {
-        return Type.VOID_TYPE;
+        return bdlClassInfo.toASMType();
     }
 
     @Override

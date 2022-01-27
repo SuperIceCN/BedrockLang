@@ -5,6 +5,7 @@ import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.MethodInvok
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariableExpr;
 import org.objectweb.asm.MethodVisitor;
 
+import static com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.MethodInvokeExpr.ActionType.New;
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
 public final class MethodInvokeExprGenerator implements ExprCodeGenerator {
@@ -22,16 +23,24 @@ public final class MethodInvokeExprGenerator implements ExprCodeGenerator {
         String previousClass = "java/lang/Object";
         MethodInvokeExpr.ChainAction[] chainActions = methodInvokeExpr.getChainActions();
         for (int i = 0, chainActionsLength = chainActions.length; i < chainActionsLength; i++) {
-            if (i == chainActionsLength - 1) {
-                // 生成所有参数的字节码
-                for (final Expr each : methodInvokeExpr.getArgs()) {
-                    each.getCodeGenerator().generate(unit);
+            final MethodInvokeExpr.ChainAction each = chainActions[i];
+            if (i == chainActionsLength - 1 && each.getActionType() != New) {
+                // 生成所有参数的字节码，new新建对象要延后生成
+                for (final Expr expr : methodInvokeExpr.getArgs()) {
+                    expr.getCodeGenerator().generate(unit);
                 }
             }
-            final MethodInvokeExpr.ChainAction each = chainActions[i];
             switch (each.getActionType()) {
                 case Class:
                     //无需操作，L25完成了任务
+                    break;
+                case New:
+                    mv.visitTypeInsn(NEW, each.getClassInfo().getQualifiedName());
+                    mv.visitInsn(DUP);
+                    for (final Expr expr : methodInvokeExpr.getArgs()) {
+                        expr.getCodeGenerator().generate(unit);
+                    }
+                    mv.visitMethodInsn(INVOKESPECIAL, each.getClassInfo().getQualifiedName(), "<init>", each.getMethodDescriptor(), false);
                     break;
                 case Var:
                     new ReadVariableExpr(methodInvokeExpr.getSourcePos(), methodInvokeExpr, each.getContent()).getCodeGenerator().generate(unit);

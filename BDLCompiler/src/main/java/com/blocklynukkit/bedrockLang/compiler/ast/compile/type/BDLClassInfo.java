@@ -157,7 +157,7 @@ public final class BDLClassInfo extends ClassInfo {
     }
 
     @Override
-    public boolean canCastFrom(ClassInfo classInfo) {
+    public boolean canCastTo(ClassInfo classInfo) {
         return classInfo.getFullName().equals(this.getFullName());
     }
 

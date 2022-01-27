@@ -55,7 +55,7 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
                 return false;
             }
             for (int i = 0; i < args.length; i++) {
-                if (!argTypes[i].canCastFrom(args[i])) {
+                if (!argTypes[i].canCastTo(args[i])) {
                     return false;
                 }
             }
@@ -77,7 +77,7 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
                 return false;
             }
             for (int i = 0; i < args.length; i++) {
-                if (!argTypes[i].canCastFrom(args[i])) {
+                if (!argTypes[i].canCastTo(args[i])) {
                     return false;
                 }
             }
@@ -98,7 +98,7 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
                 return false;
             }
             for (int i = 0; i < args.length; i++) {
-                if (!argTypes[i].canCastFrom(args[i])) {
+                if (!argTypes[i].canCastTo(args[i])) {
                     return false;
                 }
             }
@@ -158,9 +158,9 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
     }
 
     @Override
-    public boolean canCastFrom(ClassInfo classInfo) {
+    public boolean canCastTo(ClassInfo classInfo) {
         if (classInfo instanceof ToJavaClass) {
-            return clazz.isAssignableFrom(((ToJavaClass) classInfo).getJavaClass());
+            return ((ToJavaClass) classInfo).getJavaClass().isAssignableFrom(clazz);
         }
         Class<?> superClass = clazz;
         while (superClass != null) {
