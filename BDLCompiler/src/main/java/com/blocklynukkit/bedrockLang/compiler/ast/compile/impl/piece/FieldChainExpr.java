@@ -103,7 +103,7 @@ public final class FieldChainExpr extends ExprBase {
                     clazzOrVar = false;
                 } else {
                     if (i == 1) { // 第一层
-                        final MethodInfo methodInfo = findMethodWithoutArg(lookup, actions[0].getClassInfo(), each);
+                        final MethodInfo methodInfo = findMethodWithoutArg(actions[0].getClassInfo(), each);
                         final ClassInfo returnClassInfo = methodInfo.getReturnClassType();
                         if (clazzOrVar) {
                             actions[1] = new ChainAction(ActionType.StaticMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
@@ -111,7 +111,7 @@ public final class FieldChainExpr extends ExprBase {
                             actions[1] = new ChainAction(ActionType.VirtualMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
                         }
                     } else { // 不止一层，说明肯定是对象成员函数
-                        final MethodInfo methodInfo = findMethodWithoutArg(lookup, actions[i - 1].getClassInfo(), each);
+                        final MethodInfo methodInfo = findMethodWithoutArg(actions[i - 1].getClassInfo(), each);
                         final ClassInfo returnClassInfo = methodInfo.getReturnClassType();
                         actions[i] = new ChainAction(ActionType.VirtualMethod, each, returnClassInfo).setMethodDescriptor(Type.getMethodDescriptor(methodInfo.getReturnASMType(), methodInfo.getArgumentASMTypes()));
                     }
@@ -224,9 +224,9 @@ public final class FieldChainExpr extends ExprBase {
         Class, Var, StaticField, VirtualField, StaticMethod, VirtualMethod
     }
 
-    private MethodInfo findMethodWithoutArg(TypeLookup lookup, ClassInfo previous, String methodName) {
+    private MethodInfo findMethodWithoutArg(ClassInfo previous, String methodName) {
         //生成函数名
-        final MethodInfo methodInfo = previous.getMethod(methodName, new Type[0]);
+        final MethodInfo methodInfo = previous.getMethod(methodName, new ClassInfo[0]);
         if (methodInfo == null) {
             throw new MethodNotFoundException(this.getSourcePos(), methodName);
         }

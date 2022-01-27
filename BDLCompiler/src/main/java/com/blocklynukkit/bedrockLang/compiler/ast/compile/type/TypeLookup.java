@@ -76,13 +76,13 @@ public class TypeLookup {
     public MethodInfo[] findStaticMethodFuzzy(String simpleName, ValueType... argTypes) {
         final List<MethodInfo> methods = staticMethodImported.get(simpleName);
         if (methods != null) {
-            final Type[] givenTypes = new Type[argTypes.length];
+            final ClassInfo[] givenTypes = new ClassInfo[argTypes.length];
             for (int i = 0; i < givenTypes.length; i++) {
-                givenTypes[i] = this.lookup(argTypes[i]);
+                givenTypes[i] = this.lookupClass(argTypes[i]);
             }
             final ArrayList<MethodInfo> out = new ArrayList<>(1);
             for (final MethodInfo each : methods) {
-                if (ArrayUtils.equals(each.getArgumentASMTypes(), givenTypes)) {
+                if (ArrayUtils.equals(each.getArgumentClassTypes(), givenTypes, (a, b) -> a.compareTo(b) <= 0)) {
                     out.add(each);
                 }
             }

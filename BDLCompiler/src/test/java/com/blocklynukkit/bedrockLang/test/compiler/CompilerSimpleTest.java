@@ -79,4 +79,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main", String[].class);
         main.invoke(cls, (Object) new String[0]);
     }
+
+    @Test
+    public void test8() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("importArrays.bdl")
+                .sourceCode(getCode("importArrays.bdl")).build().compile();
+        saveTo(bytes, new File("test/importArrays.class"));
+        Class<?> cls = loadClass("importArrays", bytes);
+        Method main = cls.getMethod("main", String[].class);
+        main.invoke(cls, (Object) new String[0]);
+    }
 }

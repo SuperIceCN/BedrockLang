@@ -259,7 +259,7 @@ public final class MethodInvokeExpr extends ExprBase {
                 }
             }
         }
-        final Type[] tmp = Arrays.stream(this.args).map(expr -> lookup.lookup(expr.getReturnType())).toArray(Type[]::new);
+        final ClassInfo[] tmp = Arrays.stream(this.args).map(expr -> lookup.lookupClass(expr.getReturnType())).toArray(ClassInfo[]::new);
         final MethodInfo methodInfo = previous.getMethod(sb.toString(), tmp);
         if (methodInfo == null) {
             throw new MethodNotFoundException(this.getSourcePos(), methodName);
@@ -269,7 +269,7 @@ public final class MethodInvokeExpr extends ExprBase {
 
     private MethodInfo findMethodWithoutArg(ClassInfo previous, String methodName) {
         //生成函数名
-        final MethodInfo methodInfo = previous.getMethod(methodName, new Type[0]);
+        final MethodInfo methodInfo = previous.getMethod(methodName, new ClassInfo[0]);
         if (methodInfo == null) {
             throw new MethodNotFoundException(this.getSourcePos(), methodName);
         }

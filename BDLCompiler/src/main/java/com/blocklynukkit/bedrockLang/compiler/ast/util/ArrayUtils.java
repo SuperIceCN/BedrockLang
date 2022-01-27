@@ -20,10 +20,10 @@ public final class ArrayUtils {
         return -1;
     }
 
-    public static <T> boolean equals(T[] a, T[] b) {
+    public static <T> boolean equals(T[] a, T[] b, Equator<T> equator) {
         if (a.length == b.length) {
             for (int i = 0; i < a.length; i++) {
-                if (!a[i].equals(b[i])) {
+                if (!equator.equal(a[i], b[i])) {
                     return false;
                 }
             }
@@ -31,5 +31,9 @@ public final class ArrayUtils {
         } else {
             return false;
         }
+    }
+
+    public interface Equator<V> {
+        boolean equal(V a, V b);
     }
 }

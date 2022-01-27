@@ -4,7 +4,7 @@ import org.objectweb.asm.Type;
 
 import java.util.Arrays;
 
-public final class InternalJavaClassInfo extends ClassInfo {
+public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClass {
     private final Class<?> clazz;
 
     public InternalJavaClassInfo(Class<?> clazz) {
@@ -48,14 +48,14 @@ public final class InternalJavaClassInfo extends ClassInfo {
     }
 
     @Override
-    public MethodInfo[] getMethodFuzzy(String methodName, Type... argTypes) {
+    public MethodInfo[] getMethodFuzzy(String methodName, ClassInfo... argTypes) {
         return Arrays.stream(getMethodFuzzy(methodName)).filter(methodInfo -> {
-            final Type[] args = methodInfo.getArgumentASMTypes();
+            final ClassInfo[] args = methodInfo.getArgumentClassTypes();
             if (argTypes.length != args.length) {
                 return false;
             }
             for (int i = 0; i < args.length; i++) {
-                if (!argTypes[i].equals(args[i])) {
+                if (!argTypes[i].canCastFrom(args[i])) {
                     return false;
                 }
             }
@@ -70,14 +70,14 @@ public final class InternalJavaClassInfo extends ClassInfo {
     }
 
     @Override
-    public MethodInfo getMethod(String methodName, Type... argTypes) {
+    public MethodInfo getMethod(String methodName, ClassInfo... argTypes) {
         return Arrays.stream(getMethod(methodName)).filter(methodInfo -> {
-            final Type[] args = methodInfo.getArgumentASMTypes();
+            final ClassInfo[] args = methodInfo.getArgumentClassTypes();
             if (argTypes.length != args.length) {
                 return false;
             }
             for (int i = 0; i < args.length; i++) {
-                if (!argTypes[i].equals(args[i])) {
+                if (!argTypes[i].canCastFrom(args[i])) {
                     return false;
                 }
             }
@@ -138,6 +138,9 @@ public final class InternalJavaClassInfo extends ClassInfo {
 
     @Override
     public boolean canCastFrom(ClassInfo classInfo) {
+        if (classInfo instanceof ToJavaClass) {
+            return clazz.isAssignableFrom(((ToJavaClass) classInfo).getJavaClass());
+        }
         Class<?> superClass = clazz;
         while (superClass != null) {
             if (superClass.getName().equals(classInfo.getFullName())) {
@@ -155,5 +158,10 @@ public final class InternalJavaClassInfo extends ClassInfo {
 
     private static String before$(String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
+    }
+
+    @Override
+    public Class<?> getJavaClass() {
+        return clazz;
     }
 }

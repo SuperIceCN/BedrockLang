@@ -72,15 +72,15 @@ public final class BDLClassInfo extends ClassInfo {
     }
 
     @Override
-    public MethodInfo[] getMethodFuzzy(String methodName, Type... argTypes) {
+    public MethodInfo[] getMethodFuzzy(String methodName, ClassInfo... argTypes) {
         final ArrayList<MethodInfo> list = new ArrayList<>();
         for (final Map.Entry<String, List<Command>> each : bdlUnit.getUnitCommands().entrySet()) {
             if (before$(each.getKey()).equals(methodName)) {
                 for (final Command cmd : each.getValue()) {
-                    if(ArrayUtils.equals(Arrays.stream(cmd.getArgs()).filter(CmdArg::hasValueType)
+                    if (ArrayUtils.equals(Arrays.stream(cmd.getArgs()).filter(CmdArg::hasValueType)
                             .map(CmdArg::getValueType)
-                            .map(vt -> bdlUnit.getTypeLookup().lookup(vt))
-                            .toArray(Type[]::new), argTypes)){
+                            .map(vt -> bdlUnit.getTypeLookup().lookupClass(vt))
+                            .toArray(ClassInfo[]::new), argTypes, (a, b) -> a.compareTo(b) <= 0)) {
                         list.add(new BDLMethodInfo(cmd, bdlUnit.getTypeLookup()));
                     }
                 }
@@ -101,13 +101,13 @@ public final class BDLClassInfo extends ClassInfo {
     }
 
     @Override
-    public MethodInfo getMethod(String methodName, Type... argTypes) {
+    public MethodInfo getMethod(String methodName, ClassInfo... argTypes) {
         if (bdlUnit.getUnitCommands().containsKey(methodName)) {
             for (final Command cmd : bdlUnit.getUnitCommands().get(methodName)) {
                 if (ArrayUtils.equals(Arrays.stream(cmd.getArgs()).filter(CmdArg::hasValueType)
                         .map(CmdArg::getValueType)
-                        .map(vt -> bdlUnit.getTypeLookup().lookup(vt))
-                        .toArray(Type[]::new), argTypes)) {
+                        .map(vt -> bdlUnit.getTypeLookup().lookupClass(vt))
+                        .toArray(ClassInfo[]::new), argTypes, (a, b) -> a.compareTo(b) <= 0)) {
                     return new BDLMethodInfo(cmd, bdlUnit.getTypeLookup());
                 }
             }
@@ -151,7 +151,7 @@ public final class BDLClassInfo extends ClassInfo {
         return classInfo.getFullName().equals(this.getFullName());
     }
 
-    private static String before$( String str) {
+    private static String before$(String str) {
         return str.contains("$") ? str.substring(0, str.indexOf('$')) : str;
     }
 }

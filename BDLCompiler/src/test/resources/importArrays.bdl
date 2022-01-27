@@ -1,0 +1,9 @@
+import toString from java.util.Arrays;
+
+def main $args:string[] {
+	say (toString $args);
+}
+
+def say $message:string {
+	System.$out.println $message;
+}

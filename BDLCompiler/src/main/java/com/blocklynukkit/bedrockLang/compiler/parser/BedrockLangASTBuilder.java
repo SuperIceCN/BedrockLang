@@ -47,7 +47,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
                 bdlUnit.addCodePiece(visitGlobalVarDeclareStat((DeclareVarStatContext) each).getPiece());
             } else if (each instanceof DefineCmdStatContext) {
                 bdlUnit.addCodePiece(visitDefineCmdStat((DefineCmdStatContext) each).getPiece());
-            } else {
+            } else if (each instanceof ParserRuleContext) {
                 // TODO: 2022/1/24 支持更多语法
                 throw new NotImplementedException(pos((ParserRuleContext) each), "Unimplemented grammar. ");
             }

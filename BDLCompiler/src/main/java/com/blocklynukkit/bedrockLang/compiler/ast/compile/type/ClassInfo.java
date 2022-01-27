@@ -4,7 +4,7 @@ import org.objectweb.asm.Type;
 
 import java.lang.reflect.Modifier;
 
-public abstract class ClassInfo {
+public abstract class ClassInfo implements Comparable<ClassInfo> {
     public abstract String getQualifiedName();
 
     public abstract String getSimpleName();
@@ -19,11 +19,11 @@ public abstract class ClassInfo {
 
     public abstract MethodInfo[] getMethodFuzzy(String methodName);
 
-    public abstract MethodInfo[] getMethodFuzzy(String methodName, Type... argTypes);
+    public abstract MethodInfo[] getMethodFuzzy(String methodName, ClassInfo... argTypes);
 
     public abstract MethodInfo[] getMethod(String methodName);
 
-    public abstract MethodInfo getMethod(String methodName, Type... argTypes);
+    public abstract MethodInfo getMethod(String methodName, ClassInfo... argTypes);
 
     public abstract FieldInfo getField(String name);
 
@@ -59,5 +59,12 @@ public abstract class ClassInfo {
 
     public boolean isPublic() {
         return Modifier.isPublic(getModifier());
+    }
+
+    @Override
+    public int compareTo(ClassInfo o) {
+        return this.getFullName().equals(o.getFullName()) ? 0 : (
+                canCastFrom(o) ? -1 : 1
+        );
     }
 }
