@@ -107,6 +107,10 @@ public class CompilerSimpleTest {
         saveTo(bytes, new File("test/swing/simpleWindow.class"));
         Class<?> cls = loadClass("simpleWindow", bytes);
         Method main = cls.getMethod("main", String[].class);
-        main.invoke(cls, (Object) new String[0]);
+        try {
+            main.invoke(cls, (Object) new String[0]);
+        } catch (Exception ignore) {
+
+        }
     }
 }
