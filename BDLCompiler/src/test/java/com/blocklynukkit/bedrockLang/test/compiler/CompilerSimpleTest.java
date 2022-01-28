@@ -99,4 +99,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main");
         main.invoke(cls);
     }
+
+    @Test
+    public void testSwing1() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("simpleWindow.bdl")
+                .sourceCode(getCode("swing/simpleWindow.bdl")).build().compile();
+        saveTo(bytes, new File("test/swing/simpleWindow.class"));
+        Class<?> cls = loadClass("simpleWindow", bytes);
+        Method main = cls.getMethod("main", String[].class);
+        main.invoke(cls, (Object) new String[0]);
+    }
 }

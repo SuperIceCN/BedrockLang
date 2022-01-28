@@ -38,11 +38,11 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     public VisitResult<BDLUnit, byte[]> visitProgram(ProgramContext ctx) {
         for (final ParseTree each : ctx.children) {
             if (each instanceof ImportSingleStaticContext) {
-                bdlUnit.addCodePiece(visitImportSingleStatic((ImportSingleStaticContext) each).getPiece());
+                visitImportSingleStatic((ImportSingleStaticContext) each).getPiece().getCodeGenerator().generate(bdlUnit);
             } else if (each instanceof ImportAllStaticContext) {
-                bdlUnit.addCodePiece(visitImportAllStatic((ImportAllStaticContext) each).getPiece());
+                visitImportAllStatic((ImportAllStaticContext) each).getPiece().getCodeGenerator().generate(bdlUnit);
             } else if (each instanceof ImportClassContext) {
-                bdlUnit.addCodePiece(visitImportClass((ImportClassContext) each).getPiece());
+                visitImportClass((ImportClassContext) each).getPiece().getCodeGenerator().generate(bdlUnit);
             } else if (each instanceof DeclareVarStatContext) {
                 bdlUnit.addCodePiece(visitGlobalVarDeclareStat((DeclareVarStatContext) each).getPiece());
             } else if (each instanceof DefineCmdStatContext) {

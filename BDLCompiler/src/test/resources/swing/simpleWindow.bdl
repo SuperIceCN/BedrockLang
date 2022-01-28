@@ -1,0 +1,11 @@
+import javax.swing;
+
+def main $args:string[] {
+    JFrame.setDefaultLookAndFeelDecorated true;
+    var $frame = JFrame.new "BedrockLang";
+    $frame.setDefaultCloseOperation 3;
+    var $label = JLabel.new "This window comes from BDL!";
+    $frame.getContentPane.add $label;
+    $frame.pack;
+    $frame.setVisible true;
+}
