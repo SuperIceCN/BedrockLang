@@ -1,5 +1,7 @@
 extern crate clap;
 
+use std::fs;
+use std::io::Cursor;
 use clap::{App, arg};
 use std::path::Path;
 use std::process::exit;
@@ -25,6 +27,7 @@ fn main() {
         .version("0.0.1")
         .author("Superice666")
         .about("BedrockLang launcher.")
+        .arg(arg!(-f --fix <OPTION> "Fix the targeted option.").required(false))
         .subcommand(App::new("compile").alias("cp")
             .about("Compile a bedrockLang source code file.")
             .arg(arg!([SOURCE_FILE] "The path or filename of the source file.").required(true))
@@ -38,12 +41,34 @@ fn main() {
             .arg(arg!([ARGS]... "The arguments to be passed to your application.").required(false)))
         .get_matches();
 
-    let java: String;
-    if let Some(tmp) = find_java_path() {
-        java = tmp;
-    } else {
-        eprintln!("Java not found.");
-        exit(-1);
+    // java路径
+    let mut java: String = String::from("java");
+
+    //检查修复
+    if let Some(fix) = matches.value_of("fix") {
+        if fix == "java" {
+            if let Some(tmp) = find_java_path() {
+                java = tmp;
+                println!("Java already installed at {}", java);
+                exit(0);
+            } else {
+                let result = install_java();
+                match result {
+                    Ok(java_path) => java = java_path,
+                    Err(e) => {
+                        eprintln!("{}", e);
+                        exit(1);
+                    }
+                }
+            }
+        }
+    } else { //如果无需修复就寻找路径
+        if let Some(tmp) = find_java_path() {
+            java = tmp;
+        } else {
+            eprintln!("Java not found. Consider bdl --fix java");
+            exit(-1);
+        }
     }
 
     if let Some(sub_matches) = matches.subcommand_matches("compile") {
@@ -126,6 +151,16 @@ fn find_java_path() -> Option<String> {
     if let Some(tmp) = check_java_exist(&(String::from("./jre/bin/java") + EXE_SUFFIX)) {
         return Some(tmp);
     }
+    let result = fs::read_dir("./jre");
+    if let Ok(read_dir) = result {
+        for path in read_dir {
+            if let Ok(dir_entry) = path {
+                if let Some(tmp) = check_java_exist(&(String::from(dir_entry.path().to_str().unwrap()) + "/bin/java" + EXE_SUFFIX)) {
+                    return Some(tmp);
+                }
+            }
+        }
+    }
     if let Some(home) = option_env!("JAVA_HOME") {
         if let Some(tmp) = check_java_exist(&(String::from(home) + "/bin/java" + EXE_SUFFIX)) {
             return Some(tmp);
@@ -144,5 +179,35 @@ fn check_java_exist(path_str: &String) -> Option<String> {
         }
     } else {
         None
+    }
+}
+
+fn install_java() -> Result<String, String> {
+    let response_result = tinyget::get("https://mirrors.tuna.tsinghua.edu.cn/AdoptOpenJDK/8/jre/x64/windows/OpenJDK8U-jre_x64_windows_hotspot_8u312b07.zip")
+        .with_header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+        .with_header("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36")
+        .with_header("accept-encoding", "gzip, deflate, br").send();
+    if let Err(e) = response_result {
+        return Err(String::from(format!("Network error: {}", e)));
+    }
+    let response = response_result.unwrap();
+    let mut archive = zip::ZipArchive::new(Cursor::new(response.as_bytes())).unwrap();
+
+    let output_path = Path::new("./jre");
+    if !output_path.exists() {
+        let result = fs::create_dir_all(output_path);
+        if let Err(e) = result {
+            return Err(String::from(format!("File io error: {:?}", e)));
+        }
+    }
+
+    let extract_result = archive.extract(output_path);
+    if let Err(e) = extract_result {
+        return Err(String::from(format!("Zip extract io error: {:?}", e)));
+    }
+
+    match find_java_path() {
+        Some(java_path) => Ok(java_path),
+        None => Err(String::from("Failed to install java."))
     }
 }
