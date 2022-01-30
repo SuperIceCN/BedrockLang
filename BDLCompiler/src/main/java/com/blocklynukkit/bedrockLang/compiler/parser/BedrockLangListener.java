@@ -148,6 +148,18 @@ public interface BedrockLangListener extends ParseTreeListener {
 	 */
 	void exitPlusExpr(BedrockLangParser.PlusExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code getArrayElementExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGetArrayElementExpr(BedrockLangParser.GetArrayElementExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code getArrayElementExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGetArrayElementExpr(BedrockLangParser.GetArrayElementExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code varExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree

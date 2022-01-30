@@ -15,6 +15,15 @@ public final class ArrayValueType extends ValueType {
         return name;
     }
 
+    /**
+     * 将数组类型转为其原始类型
+     *
+     * @return 原始类型（构成数组的类型）
+     */
+    public ValueType toSingleType() {
+        return ValueType.from(this.name);
+    }
+
     @Override
     public ValueTrait getTrait() {
         return ValueTrait.Array;

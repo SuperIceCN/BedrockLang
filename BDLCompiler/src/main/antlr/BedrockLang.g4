@@ -23,6 +23,7 @@ expr: command #commandExpr
     | ID (DOT ID | DOT varid)* DOT varid #chainStaticFieldExpr
     | varid (DOT ID | DOT varid)* DOT varid #chainVirtualFieldExpr
     | LEN expr #getLengthExpr
+    | expr LA expr RA #getArrayElementExpr
     ;
 
 importStat: IMPORT (ID COMMA?)+ FROM id #importSingleStatic

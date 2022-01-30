@@ -93,6 +93,13 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPlusExpr(BedrockLangParser.PlusExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code getArrayElementExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGetArrayElementExpr(BedrockLangParser.GetArrayElementExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code varExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree

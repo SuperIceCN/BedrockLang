@@ -160,6 +160,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGetArrayElementExpr(BedrockLangParser.GetArrayElementExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGetArrayElementExpr(BedrockLangParser.GetArrayElementExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVarExpr(BedrockLangParser.VarExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
