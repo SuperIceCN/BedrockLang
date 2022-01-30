@@ -1,6 +1,7 @@
 package com.blocklynukkit.bedrockLang.compiler.ast.compile.gen;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.ReadVariableExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.WriteVariableExpr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
 import org.objectweb.asm.MethodVisitor;
@@ -8,7 +9,7 @@ import org.objectweb.asm.MethodVisitor;
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.RequireUtils.requireASM;
 
 public final class WriteVariableExprGenerator implements ExprCodeGenerator {
-    private final WriteVariableExpr expr;
+    final WriteVariableExpr expr;
 
     public WriteVariableExprGenerator(WriteVariableExpr expr) {
         this.expr = expr;
@@ -18,9 +19,13 @@ public final class WriteVariableExprGenerator implements ExprCodeGenerator {
     public ValueType generate(Unit unit) {
         final GenerateWithASM asmUnit = requireASM(unit);
         //先生成值的表达式
-        expr.getValueExpr().getCodeGenerator().generate(unit);
+        final Expr valueExpr = expr.getValueExpr();
+        valueExpr.getCodeGenerator().generate(unit);
+        if (valueExpr instanceof WriteVariableExpr) { // 允许连续赋值
+            new ReadVariableExpr(expr.getSourcePos(), expr, ((WriteVariableExpr) valueExpr).getVarName()).getCodeGenerator().generate(unit);
+        }
         //转换基本值的类型
-        if(expr.getReturnType().isBasic()){
+        if (expr.getReturnType().isBasic()) {
             new BasicCastGenerator(expr.getValueExpr().getReturnType(), expr.getReturnType()).generate(unit);
         }
         //此时值应该位于栈顶

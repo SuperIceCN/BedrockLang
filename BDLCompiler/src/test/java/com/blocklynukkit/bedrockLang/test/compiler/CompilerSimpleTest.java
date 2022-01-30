@@ -123,4 +123,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main", String[].class);
         main.invoke(cls, (Object) new String[]{"I'm", "BDL"});
     }
+
+    @Test
+    public void test11() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("chainSetVar.bdl")
+                .sourceCode(getCode("chainSetVar.bdl")).build().compile();
+        saveTo(bytes, new File("test/chainSetVar.class"));
+        Class<?> cls = loadClass("chainSetVar", bytes);
+        Method main = cls.getMethod("main");
+        main.invoke(cls);
+    }
 }

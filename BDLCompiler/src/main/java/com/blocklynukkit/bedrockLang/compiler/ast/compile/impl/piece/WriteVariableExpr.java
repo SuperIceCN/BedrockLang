@@ -45,6 +45,10 @@ public final class WriteVariableExpr extends ExprBase {
         return valueExpr;
     }
 
+    public String getVarName() {
+        return varName;
+    }
+
     @Override
     public ExprCodeGenerator getCodeGenerator() {
         return new WriteVariableExprGenerator(this);
