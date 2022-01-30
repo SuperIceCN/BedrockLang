@@ -201,6 +201,13 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     }
 
     @Override
+    public VisitResult<?, ?> visitGetLengthExpr(GetLengthExprContext ctx) {
+        final LengthExpr expr = new LengthExpr(pos(ctx), parent(ctx));
+        expr.setExpr((Expr) visit(ctx.expr(), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
     public VisitResult<?, ?> visitLiteralExpr(LiteralExprContext ctx) {
         if (ctx.INT() != null) {
             try {

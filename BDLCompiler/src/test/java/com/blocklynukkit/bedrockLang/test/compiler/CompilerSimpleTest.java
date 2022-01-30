@@ -113,4 +113,14 @@ public class CompilerSimpleTest {
 
         }
     }
+
+    @Test
+    public void test10() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("mainArgsLength.bdl")
+                .sourceCode(getCode("mainArgsLength.bdl")).build().compile();
+        saveTo(bytes, new File("test/mainArgsLength.class"));
+        Class<?> cls = loadClass("mainArgsLength", bytes);
+        Method main = cls.getMethod("main", String[].class);
+        main.invoke(cls, (Object) new String[]{"I'm", "BDL"});
+    }
 }
