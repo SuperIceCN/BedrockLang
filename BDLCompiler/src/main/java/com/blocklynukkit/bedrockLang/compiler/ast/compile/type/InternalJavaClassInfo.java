@@ -127,6 +127,9 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
 
     @Override
     public boolean hasImplementInterface(ClassInfo interfaceClass) {
+        if (this.getFullName().equals(interfaceClass.getFullName())) {
+            return true;
+        }
         if (interfaceClass.isInterface()) {
             Class<?> superClass = clazz;
             while (superClass != null) {
@@ -143,6 +146,9 @@ public final class InternalJavaClassInfo extends ClassInfo implements ToJavaClas
 
     @Override
     public ClassInfo matchClassImplementedInterface(ClassInfo interfaceClass) {
+        if (this.getFullName().equals(interfaceClass.getFullName())) {
+            return this;
+        }
         if (interfaceClass.isInterface()) {
             Class<?> superClass = clazz;
             while (superClass != null) {

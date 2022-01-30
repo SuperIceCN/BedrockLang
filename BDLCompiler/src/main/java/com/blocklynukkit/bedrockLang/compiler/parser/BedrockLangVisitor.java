@@ -156,6 +156,13 @@ public interface BedrockLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitChainStaticFieldExpr(BedrockLangParser.ChainStaticFieldExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code getLengthExpr}
+	 * labeled alternative in {@link BedrockLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGetLengthExpr(BedrockLangParser.GetLengthExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code equalExpr}
 	 * labeled alternative in {@link BedrockLangParser#expr}.
 	 * @param ctx the parse tree

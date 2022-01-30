@@ -268,6 +268,18 @@ public class BedrockLangBaseListener implements BedrockLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGetLengthExpr(BedrockLangParser.GetLengthExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGetLengthExpr(BedrockLangParser.GetLengthExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEqualExpr(BedrockLangParser.EqualExprContext ctx) { }
 	/**
 	 * {@inheritDoc}

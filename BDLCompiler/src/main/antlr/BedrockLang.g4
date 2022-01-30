@@ -22,6 +22,7 @@ expr: command #commandExpr
     | varid SET expr #setVarExpr
     | ID (DOT ID | DOT varid)* DOT varid #chainStaticFieldExpr
     | varid (DOT ID | DOT varid)* DOT varid #chainVirtualFieldExpr
+    | LEN expr #getLengthExpr
     ;
 
 importStat: IMPORT (ID COMMA?)+ FROM id #importSingleStatic
@@ -83,6 +84,7 @@ GTR: '>';
 LWREQ: '<=';
 LWR: '<';
 DOLLAR: '$';
+LEN: '#';
 
 DEF: 'def';
 VAR: 'var';
