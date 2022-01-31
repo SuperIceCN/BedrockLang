@@ -3,6 +3,7 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.ArrayValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.BasicValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.ClassValueType;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.type.TypeLookup;
 import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidValueTypeException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.ArrayUtils;
 import org.objectweb.asm.Type;
@@ -47,6 +48,27 @@ public abstract class ValueType {
     }
 
     /**
+     * 转为具有完整类名的ValueType<br/>
+     * e.g. string => java.lang.String<br/>
+     * Integer => java.lang.Integer<br/>
+     *
+     * @param lookup 用于查找简单类名对应的完整类名的查找器
+     * @return 具有完整类名的ValueType
+     */
+    public ValueType toFull(TypeLookup lookup) {
+        if (this.isBasic()) {
+            if (this.getName().equals("string")) {
+                return BasicValueType.STRING;
+            }
+            return this;
+        } else if (this.isArray()) {
+            return new ArrayValueType(((ArrayValueType) this).toSingleType().toFull(lookup).getName());
+        } else {
+            return ValueType.from(lookup.lookupClass(this).getFullName());
+        }
+    }
+
+    /**
      * 根据名称创建类型描述符
      *
      * @param clazz 类名，可以为基本类，数组类（类名+[]），其他Java类的全名（包名+类名）
@@ -73,6 +95,7 @@ public abstract class ValueType {
             case "char":
                 return BasicValueType.CHAR;
             case "string":
+            case "java.lang.String":
                 return BasicValueType.STRING;
             default:
                 if (clazz.endsWith("[]")) {
