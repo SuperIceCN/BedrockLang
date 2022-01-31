@@ -8,7 +8,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
 
 /**
- * 拆装箱字节码生成帮助接口
+ * 拆装箱字节码生成帮助接口，仅供CodeGenerator实现后方便生成时调用
  */
 public interface BoxHelper {
 
