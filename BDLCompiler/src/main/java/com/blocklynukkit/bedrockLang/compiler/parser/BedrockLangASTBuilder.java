@@ -186,6 +186,14 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     }
 
     @Override
+    public VisitResult<?, ?> visitGetArrayElementExpr(GetArrayElementExprContext ctx) {
+        final GetArrayElementExpr expr = new GetArrayElementExpr(pos(ctx), parent(ctx));
+        expr.setArrayExpr((Expr) visit(ctx.expr(0), expr).getPiece());
+        expr.setIndexExpr((Expr) visit(ctx.expr(1), expr).getPiece());
+        return of(expr);
+    }
+
+    @Override
     public VisitResult<?, ?> visitSetVarExpr(SetVarExprContext ctx) {
         final WriteVariableExpr expr = new WriteVariableExpr(pos(ctx), parent(ctx), no$(ctx.varid().getText()));
         expr.setValueExpr((Expr) visit(ctx.expr(), expr).getPiece());
