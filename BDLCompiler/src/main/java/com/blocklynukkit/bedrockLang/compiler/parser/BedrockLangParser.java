@@ -637,8 +637,14 @@ public class BedrockLangParser extends Parser {
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public TerminalNode LA() { return getToken(BedrockLangParser.LA, 0); }
-		public TerminalNode RA() { return getToken(BedrockLangParser.RA, 0); }
+		public List<TerminalNode> LA() { return getTokens(BedrockLangParser.LA); }
+		public TerminalNode LA(int i) {
+			return getToken(BedrockLangParser.LA, i);
+		}
+		public List<TerminalNode> RA() { return getTokens(BedrockLangParser.RA); }
+		public TerminalNode RA(int i) {
+			return getToken(BedrockLangParser.RA, i);
+		}
 		public SetVarExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -884,7 +890,7 @@ public class BedrockLangParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(126);
+			setState(129);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
@@ -965,10 +971,11 @@ public class BedrockLangParser extends Parser {
 				_prevctx = _localctx;
 				setState(89);
 				varid();
-				setState(94);
+				setState(96);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==LA) {
+				while (_la==LA) {
+					{
 					{
 					setState(90);
 					match(LA);
@@ -977,11 +984,14 @@ public class BedrockLangParser extends Parser {
 					setState(92);
 					match(RA);
 					}
+					}
+					setState(98);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
 				}
-
-				setState(96);
+				setState(99);
 				match(SET);
-				setState(97);
+				setState(100);
 				expr(5);
 				}
 				break;
@@ -990,43 +1000,43 @@ public class BedrockLangParser extends Parser {
 				_localctx = new ChainStaticFieldExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(99);
+				setState(102);
 				match(ID);
-				setState(106);
+				setState(109);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
-						setState(104);
+						setState(107);
 						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 						case 1:
 							{
-							setState(100);
+							setState(103);
 							match(DOT);
-							setState(101);
+							setState(104);
 							match(ID);
 							}
 							break;
 						case 2:
 							{
-							setState(102);
+							setState(105);
 							match(DOT);
-							setState(103);
+							setState(106);
 							varid();
 							}
 							break;
 						}
 						} 
 					}
-					setState(108);
+					setState(111);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 				}
-				setState(109);
+				setState(112);
 				match(DOT);
-				setState(110);
+				setState(113);
 				varid();
 				}
 				break;
@@ -1035,43 +1045,43 @@ public class BedrockLangParser extends Parser {
 				_localctx = new ChainVirtualFieldExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(111);
+				setState(114);
 				varid();
-				setState(118);
+				setState(121);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
-						setState(116);
+						setState(119);
 						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 						case 1:
 							{
-							setState(112);
+							setState(115);
 							match(DOT);
-							setState(113);
+							setState(116);
 							match(ID);
 							}
 							break;
 						case 2:
 							{
-							setState(114);
+							setState(117);
 							match(DOT);
-							setState(115);
+							setState(118);
 							varid();
 							}
 							break;
 						}
 						} 
 					}
-					setState(120);
+					setState(123);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 				}
-				setState(121);
+				setState(124);
 				match(DOT);
-				setState(122);
+				setState(125);
 				varid();
 				}
 				break;
@@ -1080,15 +1090,15 @@ public class BedrockLangParser extends Parser {
 				_localctx = new GetLengthExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(124);
+				setState(127);
 				match(LEN);
-				setState(125);
+				setState(128);
 				expr(2);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(168);
+			setState(171);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1096,18 +1106,18 @@ public class BedrockLangParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(166);
+					setState(169);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 					case 1:
 						{
 						_localctx = new PlusExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(128);
+						setState(131);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
-						setState(129);
+						setState(132);
 						match(PLUS);
-						setState(130);
+						setState(133);
 						expr(17);
 						}
 						break;
@@ -1115,11 +1125,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new MinusExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(131);
+						setState(134);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
-						setState(132);
+						setState(135);
 						match(MINUS);
-						setState(133);
+						setState(136);
 						expr(16);
 						}
 						break;
@@ -1127,11 +1137,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new MultiplyExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(134);
+						setState(137);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
-						setState(135);
+						setState(138);
 						match(MULTIPLY);
-						setState(136);
+						setState(139);
 						expr(15);
 						}
 						break;
@@ -1139,11 +1149,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new DivideExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(137);
+						setState(140);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(138);
+						setState(141);
 						match(DIVIDE);
-						setState(139);
+						setState(142);
 						expr(14);
 						}
 						break;
@@ -1151,11 +1161,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new EqualExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(140);
+						setState(143);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(141);
+						setState(144);
 						match(EQ);
-						setState(142);
+						setState(145);
 						expr(13);
 						}
 						break;
@@ -1163,11 +1173,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new NotEqualExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(143);
+						setState(146);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(144);
+						setState(147);
 						match(NEQ);
-						setState(145);
+						setState(148);
 						expr(12);
 						}
 						break;
@@ -1175,11 +1185,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new GreaterExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(146);
+						setState(149);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(147);
+						setState(150);
 						match(GTR);
-						setState(148);
+						setState(151);
 						expr(11);
 						}
 						break;
@@ -1187,11 +1197,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new GreaterEqualExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(149);
+						setState(152);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(150);
+						setState(153);
 						match(GTREQ);
-						setState(151);
+						setState(154);
 						expr(10);
 						}
 						break;
@@ -1199,11 +1209,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new LowerExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(152);
+						setState(155);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(153);
+						setState(156);
 						match(LWR);
-						setState(154);
+						setState(157);
 						expr(9);
 						}
 						break;
@@ -1211,11 +1221,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new LowerEqualExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(155);
+						setState(158);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(156);
+						setState(159);
 						match(LWREQ);
-						setState(157);
+						setState(160);
 						expr(8);
 						}
 						break;
@@ -1223,11 +1233,11 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new RemainExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(158);
+						setState(161);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(159);
+						setState(162);
 						match(REMAIN);
-						setState(160);
+						setState(163);
 						expr(7);
 						}
 						break;
@@ -1235,20 +1245,20 @@ public class BedrockLangParser extends Parser {
 						{
 						_localctx = new GetArrayElementExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(161);
-						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-						setState(162);
-						match(LA);
-						setState(163);
-						expr(0);
 						setState(164);
+						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+						setState(165);
+						match(LA);
+						setState(166);
+						expr(0);
+						setState(167);
 						match(RA);
 						}
 						break;
 					}
 					} 
 				}
-				setState(170);
+				setState(173);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			}
@@ -1353,42 +1363,42 @@ public class BedrockLangParser extends Parser {
 		enterRule(_localctx, 6, RULE_importStat);
 		int _la;
 		try {
-			setState(188);
+			setState(191);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				_localctx = new ImportSingleStaticContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(171);
+				setState(174);
 				match(IMPORT);
-				setState(176); 
+				setState(179); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(172);
+					setState(175);
 					match(ID);
-					setState(174);
+					setState(177);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==COMMA) {
 						{
-						setState(173);
+						setState(176);
 						match(COMMA);
 						}
 					}
 
 					}
 					}
-					setState(178); 
+					setState(181); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==ID );
-				setState(180);
+				setState(183);
 				match(FROM);
-				setState(181);
+				setState(184);
 				id();
 				}
 				break;
@@ -1396,13 +1406,13 @@ public class BedrockLangParser extends Parser {
 				_localctx = new ImportAllStaticContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(182);
-				match(IMPORT);
-				setState(183);
-				match(MULTIPLY);
-				setState(184);
-				match(FROM);
 				setState(185);
+				match(IMPORT);
+				setState(186);
+				match(MULTIPLY);
+				setState(187);
+				match(FROM);
+				setState(188);
 				id();
 				}
 				break;
@@ -1410,9 +1420,9 @@ public class BedrockLangParser extends Parser {
 				_localctx = new ImportClassContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(186);
+				setState(189);
 				match(IMPORT);
-				setState(187);
+				setState(190);
 				id();
 				}
 				break;
@@ -1460,11 +1470,11 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(190);
+			setState(193);
 			match(WHEN);
-			setState(191);
+			setState(194);
 			match(ID);
-			setState(192);
+			setState(195);
 			block();
 			}
 		}
@@ -1524,38 +1534,38 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(194);
+			setState(197);
 			match(IF);
-			setState(195);
+			setState(198);
 			expr(0);
-			setState(196);
+			setState(199);
 			block();
-			setState(203);
+			setState(206);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==ELIF) {
 				{
 				{
-				setState(197);
+				setState(200);
 				match(ELIF);
-				setState(198);
+				setState(201);
 				expr(0);
-				setState(199);
+				setState(202);
 				block();
 				}
 				}
-				setState(205);
+				setState(208);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(208);
+			setState(211);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==ELSE) {
 				{
-				setState(206);
+				setState(209);
 				match(ELSE);
-				setState(207);
+				setState(210);
 				block();
 				}
 			}
@@ -1610,25 +1620,25 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(210);
+			setState(213);
 			match(WHILE);
-			setState(214);
+			setState(217);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==LA) {
 				{
-				setState(211);
+				setState(214);
 				match(LA);
-				setState(212);
+				setState(215);
 				match(ID);
-				setState(213);
+				setState(216);
 				match(RA);
 				}
 			}
 
-			setState(216);
+			setState(219);
 			expr(0);
-			setState(217);
+			setState(220);
 			block();
 			}
 		}
@@ -1676,11 +1686,11 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(219);
+			setState(222);
 			match(DEF);
-			setState(220);
+			setState(223);
 			defineSignature();
-			setState(221);
+			setState(224);
 			block();
 			}
 		}
@@ -1739,37 +1749,37 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(223);
-			match(ID);
 			setState(226);
+			match(ID);
+			setState(229);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==COLON) {
 				{
-				setState(224);
+				setState(227);
 				match(COLON);
-				setState(225);
+				setState(228);
 				match(ID);
 				}
 			}
 
-			setState(232);
+			setState(235);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==DOLLAR || _la==ID) {
 				{
-				setState(230);
+				setState(233);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case ID:
 					{
-					setState(228);
+					setState(231);
 					defineSignatureWordSingle();
 					}
 					break;
 				case DOLLAR:
 					{
-					setState(229);
+					setState(232);
 					defineSignatureVariable();
 					}
 					break;
@@ -1777,7 +1787,7 @@ public class BedrockLangParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(234);
+				setState(237);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1821,7 +1831,7 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(235);
+			setState(238);
 			match(ID);
 			}
 		}
@@ -1869,11 +1879,11 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(237);
+			setState(240);
 			varid();
-			setState(238);
+			setState(241);
 			match(COLON);
-			setState(239);
+			setState(242);
 			typeid();
 			}
 		}
@@ -1957,29 +1967,29 @@ public class BedrockLangParser extends Parser {
 		enterRule(_localctx, 22, RULE_declareVarStat);
 		int _la;
 		try {
-			setState(254);
+			setState(257);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				_localctx = new HasTypeVarDeclareContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(241);
-				match(VAR);
-				setState(242);
-				varid();
-				setState(243);
-				match(COLON);
 				setState(244);
-				typeid();
+				match(VAR);
+				setState(245);
+				varid();
+				setState(246);
+				match(COLON);
 				setState(247);
+				typeid();
+				setState(250);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==SET) {
 					{
-					setState(245);
+					setState(248);
 					match(SET);
-					setState(246);
+					setState(249);
 					expr(0);
 					}
 				}
@@ -1990,13 +2000,13 @@ public class BedrockLangParser extends Parser {
 				_localctx = new InferTypeVarDeclareContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(249);
-				match(VAR);
-				setState(250);
-				varid();
-				setState(251);
-				match(SET);
 				setState(252);
+				match(VAR);
+				setState(253);
+				varid();
+				setState(254);
+				match(SET);
+				setState(255);
 				expr(0);
 				}
 				break;
@@ -2043,9 +2053,9 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(256);
+			setState(259);
 			match(RETURN);
-			setState(257);
+			setState(260);
 			expr(0);
 			}
 		}
@@ -2089,14 +2099,14 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(259);
+			setState(262);
 			match(BREAK);
-			setState(261);
+			setState(264);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==ID) {
 				{
-				setState(260);
+				setState(263);
 				match(ID);
 				}
 			}
@@ -2143,14 +2153,14 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(263);
+			setState(266);
 			match(CONTINUE);
-			setState(265);
+			setState(268);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==ID) {
 				{
-				setState(264);
+				setState(267);
 				match(ID);
 				}
 			}
@@ -2208,33 +2218,33 @@ public class BedrockLangParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(267);
+			setState(270);
 			commandId();
-			setState(272);
+			setState(275);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					setState(270);
+					setState(273);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
 					case 1:
 						{
-						setState(268);
+						setState(271);
 						match(ID);
 						}
 						break;
 					case 2:
 						{
-						setState(269);
+						setState(272);
 						expr(0);
 						}
 						break;
 					}
 					} 
 				}
-				setState(274);
+				setState(277);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
 			}
@@ -2296,14 +2306,14 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(275);
+			setState(278);
 			match(START);
-			setState(282);
+			setState(285);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LB) | (1L << PLUS) | (1L << MINUS) | (1L << DOLLAR) | (1L << LEN) | (1L << VAR) | (1L << RETURN) | (1L << IF) | (1L << WHILE) | (1L << BREAK) | (1L << CONTINUE) | (1L << STRING) | (1L << INT) | (1L << DEC) | (1L << BOOL) | (1L << NULL) | (1L << ID))) != 0)) {
 				{
-				setState(280);
+				setState(283);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case LB:
@@ -2318,9 +2328,9 @@ public class BedrockLangParser extends Parser {
 				case NULL:
 				case ID:
 					{
-					setState(276);
+					setState(279);
 					expr(0);
-					setState(277);
+					setState(280);
 					match(SEMICOLON);
 					}
 					break;
@@ -2331,7 +2341,7 @@ public class BedrockLangParser extends Parser {
 				case BREAK:
 				case CONTINUE:
 					{
-					setState(279);
+					setState(282);
 					stat();
 					}
 					break;
@@ -2339,11 +2349,11 @@ public class BedrockLangParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(284);
+				setState(287);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(285);
+			setState(288);
 			match(END);
 			}
 		}
@@ -2388,16 +2398,16 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(287);
-			match(ID);
 			setState(290);
+			match(ID);
+			setState(293);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==LA) {
 				{
-				setState(288);
+				setState(291);
 				match(LA);
-				setState(289);
+				setState(292);
 				match(RA);
 				}
 			}
@@ -2456,37 +2466,37 @@ public class BedrockLangParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(292);
+			setState(295);
 			match(ID);
-			setState(299);
+			setState(302);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,32,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					setState(297);
+					setState(300);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,31,_ctx) ) {
 					case 1:
 						{
-						setState(293);
+						setState(296);
 						match(DOT);
-						setState(294);
+						setState(297);
 						match(ID);
 						}
 						break;
 					case 2:
 						{
-						setState(295);
+						setState(298);
 						match(DOT);
-						setState(296);
+						setState(299);
 						varid();
 						}
 						break;
 					}
 					} 
 				}
-				setState(301);
+				setState(304);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,32,_ctx);
 			}
@@ -2533,9 +2543,9 @@ public class BedrockLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(302);
+			setState(305);
 			match(DOLLAR);
-			setState(303);
+			setState(306);
 			id();
 			}
 		}
@@ -2644,50 +2654,50 @@ public class BedrockLangParser extends Parser {
 		enterRule(_localctx, 40, RULE_commandId);
 		try {
 			int _alt;
-			setState(331);
+			setState(334);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,37,_ctx) ) {
 			case 1:
 				_localctx = new InvokeCommandContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(305);
+				setState(308);
 				match(ID);
-				setState(312);
+				setState(315);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,34,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
-						setState(310);
+						setState(313);
 						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,33,_ctx) ) {
 						case 1:
 							{
-							setState(306);
+							setState(309);
 							match(DOT);
-							setState(307);
+							setState(310);
 							match(ID);
 							}
 							break;
 						case 2:
 							{
-							setState(308);
+							setState(311);
 							match(DOT);
-							setState(309);
+							setState(312);
 							varid();
 							}
 							break;
 						}
 						} 
 					}
-					setState(314);
+					setState(317);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,34,_ctx);
 				}
-				setState(315);
+				setState(318);
 				match(DOT);
-				setState(316);
+				setState(319);
 				match(ID);
 				}
 				break;
@@ -2695,7 +2705,7 @@ public class BedrockLangParser extends Parser {
 				_localctx = new CallCommandContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(317);
+				setState(320);
 				match(ID);
 				}
 				break;
@@ -2703,43 +2713,43 @@ public class BedrockLangParser extends Parser {
 				_localctx = new VirtualCommandContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(318);
+				setState(321);
 				varid();
-				setState(325);
+				setState(328);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,36,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
-						setState(323);
+						setState(326);
 						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,35,_ctx) ) {
 						case 1:
 							{
-							setState(319);
+							setState(322);
 							match(DOT);
-							setState(320);
+							setState(323);
 							match(ID);
 							}
 							break;
 						case 2:
 							{
-							setState(321);
+							setState(324);
 							match(DOT);
-							setState(322);
+							setState(325);
 							varid();
 							}
 							break;
 						}
 						} 
 					}
-					setState(327);
+					setState(330);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,36,_ctx);
 				}
-				setState(328);
+				setState(331);
 				match(DOT);
-				setState(329);
+				setState(332);
 				match(ID);
 				}
 				break;
@@ -2794,126 +2804,127 @@ public class BedrockLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\63\u0150\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\63\u0153\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\3\2\3\2\5\2/\n\2\7\2\61\n\2\f"+
 		"\2\16\2\64\13\2\3\2\3\2\3\2\3\2\3\2\7\2;\n\2\f\2\16\2>\13\2\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3N\n\3\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4a\n\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4k\n\4\f\4\16\4n\13\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\7\4w\n\4\f\4\16\4z\13\4\3\4\3\4\3\4\3\4\3\4\5\4\u0081\n\4\3\4"+
+		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4a\n\4\f\4\16"+
+		"\4d\13\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4n\n\4\f\4\16\4q\13\4\3\4\3"+
+		"\4\3\4\3\4\3\4\3\4\3\4\7\4z\n\4\f\4\16\4}\13\4\3\4\3\4\3\4\3\4\3\4\5\4"+
+		"\u0084\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
 		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\7\4\u00a9\n\4\f\4\16\4\u00ac\13\4\3\5\3\5\3\5\5\5\u00b1\n\5\6"+
-		"\5\u00b3\n\5\r\5\16\5\u00b4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\u00bf"+
-		"\n\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\7\7\u00cc\n\7\f\7\16"+
-		"\7\u00cf\13\7\3\7\3\7\5\7\u00d3\n\7\3\b\3\b\3\b\3\b\5\b\u00d9\n\b\3\b"+
-		"\3\b\3\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\5\n\u00e5\n\n\3\n\3\n\7\n\u00e9\n"+
-		"\n\f\n\16\n\u00ec\13\n\3\13\3\13\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3"+
-		"\r\5\r\u00fa\n\r\3\r\3\r\3\r\3\r\3\r\5\r\u0101\n\r\3\16\3\16\3\16\3\17"+
-		"\3\17\5\17\u0108\n\17\3\20\3\20\5\20\u010c\n\20\3\21\3\21\3\21\7\21\u0111"+
-		"\n\21\f\21\16\21\u0114\13\21\3\22\3\22\3\22\3\22\3\22\7\22\u011b\n\22"+
-		"\f\22\16\22\u011e\13\22\3\22\3\22\3\23\3\23\3\23\5\23\u0125\n\23\3\24"+
-		"\3\24\3\24\3\24\3\24\7\24\u012c\n\24\f\24\16\24\u012f\13\24\3\25\3\25"+
-		"\3\25\3\26\3\26\3\26\3\26\3\26\7\26\u0139\n\26\f\26\16\26\u013c\13\26"+
-		"\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\7\26\u0146\n\26\f\26\16\26\u0149"+
-		"\13\26\3\26\3\26\3\26\5\26\u014e\n\26\3\26\2\3\6\27\2\4\6\b\n\f\16\20"+
-		"\22\24\26\30\32\34\36 \"$&(*\2\3\3\2.\62\2\u0179\2\62\3\2\2\2\4M\3\2\2"+
-		"\2\6\u0080\3\2\2\2\b\u00be\3\2\2\2\n\u00c0\3\2\2\2\f\u00c4\3\2\2\2\16"+
-		"\u00d4\3\2\2\2\20\u00dd\3\2\2\2\22\u00e1\3\2\2\2\24\u00ed\3\2\2\2\26\u00ef"+
-		"\3\2\2\2\30\u0100\3\2\2\2\32\u0102\3\2\2\2\34\u0105\3\2\2\2\36\u0109\3"+
-		"\2\2\2 \u010d\3\2\2\2\"\u0115\3\2\2\2$\u0121\3\2\2\2&\u0126\3\2\2\2(\u0130"+
-		"\3\2\2\2*\u014d\3\2\2\2,.\5\b\5\2-/\7\7\2\2.-\3\2\2\2./\3\2\2\2/\61\3"+
-		"\2\2\2\60,\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63<\3\2\2"+
-		"\2\64\62\3\2\2\2\65\66\5\30\r\2\66\67\7\7\2\2\67;\3\2\2\28;\5\20\t\29"+
-		";\5\n\6\2:\65\3\2\2\2:8\3\2\2\2:9\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2"+
-		"\2=\3\3\2\2\2><\3\2\2\2?N\5\f\7\2@N\5\16\b\2AB\5\30\r\2BC\7\7\2\2CN\3"+
-		"\2\2\2DE\5\32\16\2EF\7\7\2\2FN\3\2\2\2GH\5\34\17\2HI\7\7\2\2IN\3\2\2\2"+
-		"JK\5\36\20\2KL\7\7\2\2LN\3\2\2\2M?\3\2\2\2M@\3\2\2\2MA\3\2\2\2MD\3\2\2"+
-		"\2MG\3\2\2\2MJ\3\2\2\2N\5\3\2\2\2OP\b\4\1\2P\u0081\5 \21\2Q\u0081\t\2"+
-		"\2\2R\u0081\5(\25\2ST\7\t\2\2TU\5\6\4\2UV\7\n\2\2V\u0081\3\2\2\2WX\7\23"+
-		"\2\2X\u0081\5\6\4\24YZ\7\24\2\2Z\u0081\5\6\4\23[`\5(\25\2\\]\7\13\2\2"+
-		"]^\5\6\4\2^_\7\f\2\2_a\3\2\2\2`\\\3\2\2\2`a\3\2\2\2ab\3\2\2\2bc\7\22\2"+
-		"\2cd\5\6\4\7d\u0081\3\2\2\2el\7\63\2\2fg\7\17\2\2gk\7\63\2\2hi\7\17\2"+
-		"\2ik\5(\25\2jf\3\2\2\2jh\3\2\2\2kn\3\2\2\2lj\3\2\2\2lm\3\2\2\2mo\3\2\2"+
-		"\2nl\3\2\2\2op\7\17\2\2p\u0081\5(\25\2qx\5(\25\2rs\7\17\2\2sw\7\63\2\2"+
-		"tu\7\17\2\2uw\5(\25\2vr\3\2\2\2vt\3\2\2\2wz\3\2\2\2xv\3\2\2\2xy\3\2\2"+
-		"\2y{\3\2\2\2zx\3\2\2\2{|\7\17\2\2|}\5(\25\2}\u0081\3\2\2\2~\177\7 \2\2"+
-		"\177\u0081\5\6\4\4\u0080O\3\2\2\2\u0080Q\3\2\2\2\u0080R\3\2\2\2\u0080"+
-		"S\3\2\2\2\u0080W\3\2\2\2\u0080Y\3\2\2\2\u0080[\3\2\2\2\u0080e\3\2\2\2"+
-		"\u0080q\3\2\2\2\u0080~\3\2\2\2\u0081\u00aa\3\2\2\2\u0082\u0083\f\22\2"+
-		"\2\u0083\u0084\7\23\2\2\u0084\u00a9\5\6\4\23\u0085\u0086\f\21\2\2\u0086"+
-		"\u0087\7\24\2\2\u0087\u00a9\5\6\4\22\u0088\u0089\f\20\2\2\u0089\u008a"+
-		"\7\25\2\2\u008a\u00a9\5\6\4\21\u008b\u008c\f\17\2\2\u008c\u008d\7\26\2"+
-		"\2\u008d\u00a9\5\6\4\20\u008e\u008f\f\16\2\2\u008f\u0090\7\20\2\2\u0090"+
-		"\u00a9\5\6\4\17\u0091\u0092\f\r\2\2\u0092\u0093\7\21\2\2\u0093\u00a9\5"+
-		"\6\4\16\u0094\u0095\f\f\2\2\u0095\u0096\7\34\2\2\u0096\u00a9\5\6\4\r\u0097"+
-		"\u0098\f\13\2\2\u0098\u0099\7\33\2\2\u0099\u00a9\5\6\4\f\u009a\u009b\f"+
-		"\n\2\2\u009b\u009c\7\36\2\2\u009c\u00a9\5\6\4\13\u009d\u009e\f\t\2\2\u009e"+
-		"\u009f\7\35\2\2\u009f\u00a9\5\6\4\n\u00a0\u00a1\f\b\2\2\u00a1\u00a2\7"+
-		"\27\2\2\u00a2\u00a9\5\6\4\t\u00a3\u00a4\f\3\2\2\u00a4\u00a5\7\13\2\2\u00a5"+
-		"\u00a6\5\6\4\2\u00a6\u00a7\7\f\2\2\u00a7\u00a9\3\2\2\2\u00a8\u0082\3\2"+
-		"\2\2\u00a8\u0085\3\2\2\2\u00a8\u0088\3\2\2\2\u00a8\u008b\3\2\2\2\u00a8"+
-		"\u008e\3\2\2\2\u00a8\u0091\3\2\2\2\u00a8\u0094\3\2\2\2\u00a8\u0097\3\2"+
-		"\2\2\u00a8\u009a\3\2\2\2\u00a8\u009d\3\2\2\2\u00a8\u00a0\3\2\2\2\u00a8"+
-		"\u00a3\3\2\2\2\u00a9\u00ac\3\2\2\2\u00aa\u00a8\3\2\2\2\u00aa\u00ab\3\2"+
-		"\2\2\u00ab\7\3\2\2\2\u00ac\u00aa\3\2\2\2\u00ad\u00b2\7%\2\2\u00ae\u00b0"+
-		"\7\63\2\2\u00af\u00b1\7\6\2\2\u00b0\u00af\3\2\2\2\u00b0\u00b1\3\2\2\2"+
-		"\u00b1\u00b3\3\2\2\2\u00b2\u00ae\3\2\2\2\u00b3\u00b4\3\2\2\2\u00b4\u00b2"+
-		"\3\2\2\2\u00b4\u00b5\3\2\2\2\u00b5\u00b6\3\2\2\2\u00b6\u00b7\7&\2\2\u00b7"+
-		"\u00bf\5&\24\2\u00b8\u00b9\7%\2\2\u00b9\u00ba\7\25\2\2\u00ba\u00bb\7&"+
-		"\2\2\u00bb\u00bf\5&\24\2\u00bc\u00bd\7%\2\2\u00bd\u00bf\5&\24\2\u00be"+
-		"\u00ad\3\2\2\2\u00be\u00b8\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf\t\3\2\2\2"+
-		"\u00c0\u00c1\7#\2\2\u00c1\u00c2\7\63\2\2\u00c2\u00c3\5\"\22\2\u00c3\13"+
-		"\3\2\2\2\u00c4\u00c5\7(\2\2\u00c5\u00c6\5\6\4\2\u00c6\u00cd\5\"\22\2\u00c7"+
-		"\u00c8\7*\2\2\u00c8\u00c9\5\6\4\2\u00c9\u00ca\5\"\22\2\u00ca\u00cc\3\2"+
-		"\2\2\u00cb\u00c7\3\2\2\2\u00cc\u00cf\3\2\2\2\u00cd\u00cb\3\2\2\2\u00cd"+
-		"\u00ce\3\2\2\2\u00ce\u00d2\3\2\2\2\u00cf\u00cd\3\2\2\2\u00d0\u00d1\7)"+
-		"\2\2\u00d1\u00d3\5\"\22\2\u00d2\u00d0\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3"+
-		"\r\3\2\2\2\u00d4\u00d8\7+\2\2\u00d5\u00d6\7\13\2\2\u00d6\u00d7\7\63\2"+
-		"\2\u00d7\u00d9\7\f\2\2\u00d8\u00d5\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9\u00da"+
-		"\3\2\2\2\u00da\u00db\5\6\4\2\u00db\u00dc\5\"\22\2\u00dc\17\3\2\2\2\u00dd"+
-		"\u00de\7!\2\2\u00de\u00df\5\22\n\2\u00df\u00e0\5\"\22\2\u00e0\21\3\2\2"+
-		"\2\u00e1\u00e4\7\63\2\2\u00e2\u00e3\7\b\2\2\u00e3\u00e5\7\63\2\2\u00e4"+
-		"\u00e2\3\2\2\2\u00e4\u00e5\3\2\2\2\u00e5\u00ea\3\2\2\2\u00e6\u00e9\5\24"+
-		"\13\2\u00e7\u00e9\5\26\f\2\u00e8\u00e6\3\2\2\2\u00e8\u00e7\3\2\2\2\u00e9"+
-		"\u00ec\3\2\2\2\u00ea\u00e8\3\2\2\2\u00ea\u00eb\3\2\2\2\u00eb\23\3\2\2"+
-		"\2\u00ec\u00ea\3\2\2\2\u00ed\u00ee\7\63\2\2\u00ee\25\3\2\2\2\u00ef\u00f0"+
-		"\5(\25\2\u00f0\u00f1\7\b\2\2\u00f1\u00f2\5$\23\2\u00f2\27\3\2\2\2\u00f3"+
-		"\u00f4\7\"\2\2\u00f4\u00f5\5(\25\2\u00f5\u00f6\7\b\2\2\u00f6\u00f9\5$"+
-		"\23\2\u00f7\u00f8\7\22\2\2\u00f8\u00fa\5\6\4\2\u00f9\u00f7\3\2\2\2\u00f9"+
-		"\u00fa\3\2\2\2\u00fa\u0101\3\2\2\2\u00fb\u00fc\7\"\2\2\u00fc\u00fd\5("+
-		"\25\2\u00fd\u00fe\7\22\2\2\u00fe\u00ff\5\6\4\2\u00ff\u0101\3\2\2\2\u0100"+
-		"\u00f3\3\2\2\2\u0100\u00fb\3\2\2\2\u0101\31\3\2\2\2\u0102\u0103\7$\2\2"+
-		"\u0103\u0104\5\6\4\2\u0104\33\3\2\2\2\u0105\u0107\7,\2\2\u0106\u0108\7"+
-		"\63\2\2\u0107\u0106\3\2\2\2\u0107\u0108\3\2\2\2\u0108\35\3\2\2\2\u0109"+
-		"\u010b\7-\2\2\u010a\u010c\7\63\2\2\u010b\u010a\3\2\2\2\u010b\u010c\3\2"+
-		"\2\2\u010c\37\3\2\2\2\u010d\u0112\5*\26\2\u010e\u0111\7\63\2\2\u010f\u0111"+
-		"\5\6\4\2\u0110\u010e\3\2\2\2\u0110\u010f\3\2\2\2\u0111\u0114\3\2\2\2\u0112"+
-		"\u0110\3\2\2\2\u0112\u0113\3\2\2\2\u0113!\3\2\2\2\u0114\u0112\3\2\2\2"+
-		"\u0115\u011c\7\r\2\2\u0116\u0117\5\6\4\2\u0117\u0118\7\7\2\2\u0118\u011b"+
-		"\3\2\2\2\u0119\u011b\5\4\3\2\u011a\u0116\3\2\2\2\u011a\u0119\3\2\2\2\u011b"+
-		"\u011e\3\2\2\2\u011c\u011a\3\2\2\2\u011c\u011d\3\2\2\2\u011d\u011f\3\2"+
-		"\2\2\u011e\u011c\3\2\2\2\u011f\u0120\7\16\2\2\u0120#\3\2\2\2\u0121\u0124"+
-		"\7\63\2\2\u0122\u0123\7\13\2\2\u0123\u0125\7\f\2\2\u0124\u0122\3\2\2\2"+
-		"\u0124\u0125\3\2\2\2\u0125%\3\2\2\2\u0126\u012d\7\63\2\2\u0127\u0128\7"+
-		"\17\2\2\u0128\u012c\7\63\2\2\u0129\u012a\7\17\2\2\u012a\u012c\5(\25\2"+
-		"\u012b\u0127\3\2\2\2\u012b\u0129\3\2\2\2\u012c\u012f\3\2\2\2\u012d\u012b"+
-		"\3\2\2\2\u012d\u012e\3\2\2\2\u012e\'\3\2\2\2\u012f\u012d\3\2\2\2\u0130"+
-		"\u0131\7\37\2\2\u0131\u0132\5&\24\2\u0132)\3\2\2\2\u0133\u013a\7\63\2"+
-		"\2\u0134\u0135\7\17\2\2\u0135\u0139\7\63\2\2\u0136\u0137\7\17\2\2\u0137"+
-		"\u0139\5(\25\2\u0138\u0134\3\2\2\2\u0138\u0136\3\2\2\2\u0139\u013c\3\2"+
-		"\2\2\u013a\u0138\3\2\2\2\u013a\u013b\3\2\2\2\u013b\u013d\3\2\2\2\u013c"+
-		"\u013a\3\2\2\2\u013d\u013e\7\17\2\2\u013e\u014e\7\63\2\2\u013f\u014e\7"+
-		"\63\2\2\u0140\u0147\5(\25\2\u0141\u0142\7\17\2\2\u0142\u0146\7\63\2\2"+
-		"\u0143\u0144\7\17\2\2\u0144\u0146\5(\25\2\u0145\u0141\3\2\2\2\u0145\u0143"+
-		"\3\2\2\2\u0146\u0149\3\2\2\2\u0147\u0145\3\2\2\2\u0147\u0148\3\2\2\2\u0148"+
-		"\u014a\3\2\2\2\u0149\u0147\3\2\2\2\u014a\u014b\7\17\2\2\u014b\u014c\7"+
-		"\63\2\2\u014c\u014e\3\2\2\2\u014d\u0133\3\2\2\2\u014d\u013f\3\2\2\2\u014d"+
-		"\u0140\3\2\2\2\u014e+\3\2\2\2(.\62:<M`jlvx\u0080\u00a8\u00aa\u00b0\u00b4"+
-		"\u00be\u00cd\u00d2\u00d8\u00e4\u00e8\u00ea\u00f9\u0100\u0107\u010b\u0110"+
-		"\u0112\u011a\u011c\u0124\u012b\u012d\u0138\u013a\u0145\u0147\u014d";
+		"\4\3\4\3\4\3\4\3\4\3\4\7\4\u00ac\n\4\f\4\16\4\u00af\13\4\3\5\3\5\3\5\5"+
+		"\5\u00b4\n\5\6\5\u00b6\n\5\r\5\16\5\u00b7\3\5\3\5\3\5\3\5\3\5\3\5\3\5"+
+		"\3\5\5\5\u00c2\n\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\7\7\u00cf"+
+		"\n\7\f\7\16\7\u00d2\13\7\3\7\3\7\5\7\u00d6\n\7\3\b\3\b\3\b\3\b\5\b\u00dc"+
+		"\n\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\n\3\n\3\n\5\n\u00e8\n\n\3\n\3\n\7\n"+
+		"\u00ec\n\n\f\n\16\n\u00ef\13\n\3\13\3\13\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3"+
+		"\r\3\r\3\r\5\r\u00fd\n\r\3\r\3\r\3\r\3\r\3\r\5\r\u0104\n\r\3\16\3\16\3"+
+		"\16\3\17\3\17\5\17\u010b\n\17\3\20\3\20\5\20\u010f\n\20\3\21\3\21\3\21"+
+		"\7\21\u0114\n\21\f\21\16\21\u0117\13\21\3\22\3\22\3\22\3\22\3\22\7\22"+
+		"\u011e\n\22\f\22\16\22\u0121\13\22\3\22\3\22\3\23\3\23\3\23\5\23\u0128"+
+		"\n\23\3\24\3\24\3\24\3\24\3\24\7\24\u012f\n\24\f\24\16\24\u0132\13\24"+
+		"\3\25\3\25\3\25\3\26\3\26\3\26\3\26\3\26\7\26\u013c\n\26\f\26\16\26\u013f"+
+		"\13\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\7\26\u0149\n\26\f\26\16"+
+		"\26\u014c\13\26\3\26\3\26\3\26\5\26\u0151\n\26\3\26\2\3\6\27\2\4\6\b\n"+
+		"\f\16\20\22\24\26\30\32\34\36 \"$&(*\2\3\3\2.\62\2\u017c\2\62\3\2\2\2"+
+		"\4M\3\2\2\2\6\u0083\3\2\2\2\b\u00c1\3\2\2\2\n\u00c3\3\2\2\2\f\u00c7\3"+
+		"\2\2\2\16\u00d7\3\2\2\2\20\u00e0\3\2\2\2\22\u00e4\3\2\2\2\24\u00f0\3\2"+
+		"\2\2\26\u00f2\3\2\2\2\30\u0103\3\2\2\2\32\u0105\3\2\2\2\34\u0108\3\2\2"+
+		"\2\36\u010c\3\2\2\2 \u0110\3\2\2\2\"\u0118\3\2\2\2$\u0124\3\2\2\2&\u0129"+
+		"\3\2\2\2(\u0133\3\2\2\2*\u0150\3\2\2\2,.\5\b\5\2-/\7\7\2\2.-\3\2\2\2."+
+		"/\3\2\2\2/\61\3\2\2\2\60,\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63\3"+
+		"\2\2\2\63<\3\2\2\2\64\62\3\2\2\2\65\66\5\30\r\2\66\67\7\7\2\2\67;\3\2"+
+		"\2\28;\5\20\t\29;\5\n\6\2:\65\3\2\2\2:8\3\2\2\2:9\3\2\2\2;>\3\2\2\2<:"+
+		"\3\2\2\2<=\3\2\2\2=\3\3\2\2\2><\3\2\2\2?N\5\f\7\2@N\5\16\b\2AB\5\30\r"+
+		"\2BC\7\7\2\2CN\3\2\2\2DE\5\32\16\2EF\7\7\2\2FN\3\2\2\2GH\5\34\17\2HI\7"+
+		"\7\2\2IN\3\2\2\2JK\5\36\20\2KL\7\7\2\2LN\3\2\2\2M?\3\2\2\2M@\3\2\2\2M"+
+		"A\3\2\2\2MD\3\2\2\2MG\3\2\2\2MJ\3\2\2\2N\5\3\2\2\2OP\b\4\1\2P\u0084\5"+
+		" \21\2Q\u0084\t\2\2\2R\u0084\5(\25\2ST\7\t\2\2TU\5\6\4\2UV\7\n\2\2V\u0084"+
+		"\3\2\2\2WX\7\23\2\2X\u0084\5\6\4\24YZ\7\24\2\2Z\u0084\5\6\4\23[b\5(\25"+
+		"\2\\]\7\13\2\2]^\5\6\4\2^_\7\f\2\2_a\3\2\2\2`\\\3\2\2\2ad\3\2\2\2b`\3"+
+		"\2\2\2bc\3\2\2\2ce\3\2\2\2db\3\2\2\2ef\7\22\2\2fg\5\6\4\7g\u0084\3\2\2"+
+		"\2ho\7\63\2\2ij\7\17\2\2jn\7\63\2\2kl\7\17\2\2ln\5(\25\2mi\3\2\2\2mk\3"+
+		"\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2pr\3\2\2\2qo\3\2\2\2rs\7\17\2\2s\u0084"+
+		"\5(\25\2t{\5(\25\2uv\7\17\2\2vz\7\63\2\2wx\7\17\2\2xz\5(\25\2yu\3\2\2"+
+		"\2yw\3\2\2\2z}\3\2\2\2{y\3\2\2\2{|\3\2\2\2|~\3\2\2\2}{\3\2\2\2~\177\7"+
+		"\17\2\2\177\u0080\5(\25\2\u0080\u0084\3\2\2\2\u0081\u0082\7 \2\2\u0082"+
+		"\u0084\5\6\4\4\u0083O\3\2\2\2\u0083Q\3\2\2\2\u0083R\3\2\2\2\u0083S\3\2"+
+		"\2\2\u0083W\3\2\2\2\u0083Y\3\2\2\2\u0083[\3\2\2\2\u0083h\3\2\2\2\u0083"+
+		"t\3\2\2\2\u0083\u0081\3\2\2\2\u0084\u00ad\3\2\2\2\u0085\u0086\f\22\2\2"+
+		"\u0086\u0087\7\23\2\2\u0087\u00ac\5\6\4\23\u0088\u0089\f\21\2\2\u0089"+
+		"\u008a\7\24\2\2\u008a\u00ac\5\6\4\22\u008b\u008c\f\20\2\2\u008c\u008d"+
+		"\7\25\2\2\u008d\u00ac\5\6\4\21\u008e\u008f\f\17\2\2\u008f\u0090\7\26\2"+
+		"\2\u0090\u00ac\5\6\4\20\u0091\u0092\f\16\2\2\u0092\u0093\7\20\2\2\u0093"+
+		"\u00ac\5\6\4\17\u0094\u0095\f\r\2\2\u0095\u0096\7\21\2\2\u0096\u00ac\5"+
+		"\6\4\16\u0097\u0098\f\f\2\2\u0098\u0099\7\34\2\2\u0099\u00ac\5\6\4\r\u009a"+
+		"\u009b\f\13\2\2\u009b\u009c\7\33\2\2\u009c\u00ac\5\6\4\f\u009d\u009e\f"+
+		"\n\2\2\u009e\u009f\7\36\2\2\u009f\u00ac\5\6\4\13\u00a0\u00a1\f\t\2\2\u00a1"+
+		"\u00a2\7\35\2\2\u00a2\u00ac\5\6\4\n\u00a3\u00a4\f\b\2\2\u00a4\u00a5\7"+
+		"\27\2\2\u00a5\u00ac\5\6\4\t\u00a6\u00a7\f\3\2\2\u00a7\u00a8\7\13\2\2\u00a8"+
+		"\u00a9\5\6\4\2\u00a9\u00aa\7\f\2\2\u00aa\u00ac\3\2\2\2\u00ab\u0085\3\2"+
+		"\2\2\u00ab\u0088\3\2\2\2\u00ab\u008b\3\2\2\2\u00ab\u008e\3\2\2\2\u00ab"+
+		"\u0091\3\2\2\2\u00ab\u0094\3\2\2\2\u00ab\u0097\3\2\2\2\u00ab\u009a\3\2"+
+		"\2\2\u00ab\u009d\3\2\2\2\u00ab\u00a0\3\2\2\2\u00ab\u00a3\3\2\2\2\u00ab"+
+		"\u00a6\3\2\2\2\u00ac\u00af\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2"+
+		"\2\2\u00ae\7\3\2\2\2\u00af\u00ad\3\2\2\2\u00b0\u00b5\7%\2\2\u00b1\u00b3"+
+		"\7\63\2\2\u00b2\u00b4\7\6\2\2\u00b3\u00b2\3\2\2\2\u00b3\u00b4\3\2\2\2"+
+		"\u00b4\u00b6\3\2\2\2\u00b5\u00b1\3\2\2\2\u00b6\u00b7\3\2\2\2\u00b7\u00b5"+
+		"\3\2\2\2\u00b7\u00b8\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00ba\7&\2\2\u00ba"+
+		"\u00c2\5&\24\2\u00bb\u00bc\7%\2\2\u00bc\u00bd\7\25\2\2\u00bd\u00be\7&"+
+		"\2\2\u00be\u00c2\5&\24\2\u00bf\u00c0\7%\2\2\u00c0\u00c2\5&\24\2\u00c1"+
+		"\u00b0\3\2\2\2\u00c1\u00bb\3\2\2\2\u00c1\u00bf\3\2\2\2\u00c2\t\3\2\2\2"+
+		"\u00c3\u00c4\7#\2\2\u00c4\u00c5\7\63\2\2\u00c5\u00c6\5\"\22\2\u00c6\13"+
+		"\3\2\2\2\u00c7\u00c8\7(\2\2\u00c8\u00c9\5\6\4\2\u00c9\u00d0\5\"\22\2\u00ca"+
+		"\u00cb\7*\2\2\u00cb\u00cc\5\6\4\2\u00cc\u00cd\5\"\22\2\u00cd\u00cf\3\2"+
+		"\2\2\u00ce\u00ca\3\2\2\2\u00cf\u00d2\3\2\2\2\u00d0\u00ce\3\2\2\2\u00d0"+
+		"\u00d1\3\2\2\2\u00d1\u00d5\3\2\2\2\u00d2\u00d0\3\2\2\2\u00d3\u00d4\7)"+
+		"\2\2\u00d4\u00d6\5\"\22\2\u00d5\u00d3\3\2\2\2\u00d5\u00d6\3\2\2\2\u00d6"+
+		"\r\3\2\2\2\u00d7\u00db\7+\2\2\u00d8\u00d9\7\13\2\2\u00d9\u00da\7\63\2"+
+		"\2\u00da\u00dc\7\f\2\2\u00db\u00d8\3\2\2\2\u00db\u00dc\3\2\2\2\u00dc\u00dd"+
+		"\3\2\2\2\u00dd\u00de\5\6\4\2\u00de\u00df\5\"\22\2\u00df\17\3\2\2\2\u00e0"+
+		"\u00e1\7!\2\2\u00e1\u00e2\5\22\n\2\u00e2\u00e3\5\"\22\2\u00e3\21\3\2\2"+
+		"\2\u00e4\u00e7\7\63\2\2\u00e5\u00e6\7\b\2\2\u00e6\u00e8\7\63\2\2\u00e7"+
+		"\u00e5\3\2\2\2\u00e7\u00e8\3\2\2\2\u00e8\u00ed\3\2\2\2\u00e9\u00ec\5\24"+
+		"\13\2\u00ea\u00ec\5\26\f\2\u00eb\u00e9\3\2\2\2\u00eb\u00ea\3\2\2\2\u00ec"+
+		"\u00ef\3\2\2\2\u00ed\u00eb\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\23\3\2\2"+
+		"\2\u00ef\u00ed\3\2\2\2\u00f0\u00f1\7\63\2\2\u00f1\25\3\2\2\2\u00f2\u00f3"+
+		"\5(\25\2\u00f3\u00f4\7\b\2\2\u00f4\u00f5\5$\23\2\u00f5\27\3\2\2\2\u00f6"+
+		"\u00f7\7\"\2\2\u00f7\u00f8\5(\25\2\u00f8\u00f9\7\b\2\2\u00f9\u00fc\5$"+
+		"\23\2\u00fa\u00fb\7\22\2\2\u00fb\u00fd\5\6\4\2\u00fc\u00fa\3\2\2\2\u00fc"+
+		"\u00fd\3\2\2\2\u00fd\u0104\3\2\2\2\u00fe\u00ff\7\"\2\2\u00ff\u0100\5("+
+		"\25\2\u0100\u0101\7\22\2\2\u0101\u0102\5\6\4\2\u0102\u0104\3\2\2\2\u0103"+
+		"\u00f6\3\2\2\2\u0103\u00fe\3\2\2\2\u0104\31\3\2\2\2\u0105\u0106\7$\2\2"+
+		"\u0106\u0107\5\6\4\2\u0107\33\3\2\2\2\u0108\u010a\7,\2\2\u0109\u010b\7"+
+		"\63\2\2\u010a\u0109\3\2\2\2\u010a\u010b\3\2\2\2\u010b\35\3\2\2\2\u010c"+
+		"\u010e\7-\2\2\u010d\u010f\7\63\2\2\u010e\u010d\3\2\2\2\u010e\u010f\3\2"+
+		"\2\2\u010f\37\3\2\2\2\u0110\u0115\5*\26\2\u0111\u0114\7\63\2\2\u0112\u0114"+
+		"\5\6\4\2\u0113\u0111\3\2\2\2\u0113\u0112\3\2\2\2\u0114\u0117\3\2\2\2\u0115"+
+		"\u0113\3\2\2\2\u0115\u0116\3\2\2\2\u0116!\3\2\2\2\u0117\u0115\3\2\2\2"+
+		"\u0118\u011f\7\r\2\2\u0119\u011a\5\6\4\2\u011a\u011b\7\7\2\2\u011b\u011e"+
+		"\3\2\2\2\u011c\u011e\5\4\3\2\u011d\u0119\3\2\2\2\u011d\u011c\3\2\2\2\u011e"+
+		"\u0121\3\2\2\2\u011f\u011d\3\2\2\2\u011f\u0120\3\2\2\2\u0120\u0122\3\2"+
+		"\2\2\u0121\u011f\3\2\2\2\u0122\u0123\7\16\2\2\u0123#\3\2\2\2\u0124\u0127"+
+		"\7\63\2\2\u0125\u0126\7\13\2\2\u0126\u0128\7\f\2\2\u0127\u0125\3\2\2\2"+
+		"\u0127\u0128\3\2\2\2\u0128%\3\2\2\2\u0129\u0130\7\63\2\2\u012a\u012b\7"+
+		"\17\2\2\u012b\u012f\7\63\2\2\u012c\u012d\7\17\2\2\u012d\u012f\5(\25\2"+
+		"\u012e\u012a\3\2\2\2\u012e\u012c\3\2\2\2\u012f\u0132\3\2\2\2\u0130\u012e"+
+		"\3\2\2\2\u0130\u0131\3\2\2\2\u0131\'\3\2\2\2\u0132\u0130\3\2\2\2\u0133"+
+		"\u0134\7\37\2\2\u0134\u0135\5&\24\2\u0135)\3\2\2\2\u0136\u013d\7\63\2"+
+		"\2\u0137\u0138\7\17\2\2\u0138\u013c\7\63\2\2\u0139\u013a\7\17\2\2\u013a"+
+		"\u013c\5(\25\2\u013b\u0137\3\2\2\2\u013b\u0139\3\2\2\2\u013c\u013f\3\2"+
+		"\2\2\u013d\u013b\3\2\2\2\u013d\u013e\3\2\2\2\u013e\u0140\3\2\2\2\u013f"+
+		"\u013d\3\2\2\2\u0140\u0141\7\17\2\2\u0141\u0151\7\63\2\2\u0142\u0151\7"+
+		"\63\2\2\u0143\u014a\5(\25\2\u0144\u0145\7\17\2\2\u0145\u0149\7\63\2\2"+
+		"\u0146\u0147\7\17\2\2\u0147\u0149\5(\25\2\u0148\u0144\3\2\2\2\u0148\u0146"+
+		"\3\2\2\2\u0149\u014c\3\2\2\2\u014a\u0148\3\2\2\2\u014a\u014b\3\2\2\2\u014b"+
+		"\u014d\3\2\2\2\u014c\u014a\3\2\2\2\u014d\u014e\7\17\2\2\u014e\u014f\7"+
+		"\63\2\2\u014f\u0151\3\2\2\2\u0150\u0136\3\2\2\2\u0150\u0142\3\2\2\2\u0150"+
+		"\u0143\3\2\2\2\u0151+\3\2\2\2(.\62:<Mbmoy{\u0083\u00ab\u00ad\u00b3\u00b7"+
+		"\u00c1\u00d0\u00d5\u00db\u00e7\u00eb\u00ed\u00fc\u0103\u010a\u010e\u0113"+
+		"\u0115\u011d\u011f\u0127\u012e\u0130\u013b\u013d\u0148\u014a\u0150";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

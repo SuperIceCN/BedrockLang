@@ -19,7 +19,7 @@ expr: command #commandExpr
     | expr LWR expr #lowerExpr
     | expr LWREQ expr #lowerEqualExpr
     | expr REMAIN expr #remainExpr
-    | varid (LA expr RA)? SET expr #setVarExpr
+    | varid (LA expr RA)* SET expr #setVarExpr
     | ID (DOT ID | DOT varid)* DOT varid #chainStaticFieldExpr
     | varid (DOT ID | DOT varid)* DOT varid #chainVirtualFieldExpr
     | LEN expr #getLengthExpr

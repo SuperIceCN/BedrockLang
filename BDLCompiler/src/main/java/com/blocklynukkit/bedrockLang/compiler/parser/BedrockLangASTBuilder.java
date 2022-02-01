@@ -197,7 +197,7 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     public VisitResult<?, ?> visitSetVarExpr(SetVarExprContext ctx) {
         final List<ExprContext> exprContexts = ctx.expr();
         final WriteVariableExpr expr = new WriteVariableExpr(pos(ctx), parent(ctx), no$(ctx.varid().getText()));
-        expr.setValueExpr((Expr) visit(exprContexts.size() == 1 ? ctx.expr(0) : ctx.expr(1), expr).getPiece());
+        expr.setValueExpr((Expr) visit(exprContexts.get(exprContexts.size() - 1), expr).getPiece());
         return of(expr);
     }
 

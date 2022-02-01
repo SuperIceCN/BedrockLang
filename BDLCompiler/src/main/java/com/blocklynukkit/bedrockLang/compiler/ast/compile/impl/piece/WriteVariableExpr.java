@@ -2,6 +2,8 @@ package com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece;
 
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.*;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.gen.WriteVariableExprGenerator;
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.type.ArrayValueType;
+import com.blocklynukkit.bedrockLang.compiler.ast.exception.InvalidClassException;
 import com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos;
 
 public final class WriteVariableExpr extends ExprBase {
@@ -9,6 +11,7 @@ public final class WriteVariableExpr extends ExprBase {
     private final String varName;
     private VariableStore variableStore;
     private VariableRecord variable;
+    private Expr[] indexExprs = null; //当为数组元素赋值时此表达式不为null
 
     private Expr valueExpr;
 
@@ -34,10 +37,29 @@ public final class WriteVariableExpr extends ExprBase {
         return variable;
     }
 
+    public Expr[] getIndexExpr() {
+        return indexExprs;
+    }
+
+    public void setIndexExpr(Expr[] indexExprs) {
+        this.indexExprs = indexExprs;
+    }
+
     @Override
     public ValueType getReturnType() {
         init();
-        return variable.getVariable().getType();
+        ValueType valueType = variable.getVariable().getType();
+        if (isForArray()) {
+            if (valueType.isArray()) {
+                while (valueType.isArray()) {
+                    valueType = ((ArrayValueType) valueType).toSingleType();
+                }
+                return valueType;
+            }
+            throw new InvalidClassException(this.getSourcePos(), "set array elements", "array");
+        } else {
+            return valueType;
+        }
     }
 
     public Expr getValueExpr() {
@@ -47,6 +69,10 @@ public final class WriteVariableExpr extends ExprBase {
 
     public String getVarName() {
         return varName;
+    }
+
+    public boolean isForArray() {
+        return this.indexExprs != null && this.indexExprs.length != 0;
     }
 
     @Override

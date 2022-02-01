@@ -1,5 +1,6 @@
 package com.blocklynukkit.bedrockLang.test;
 
+import com.blocklynukkit.bedrockLang.compiler.ast.compile.Expr;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.ValueType;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.command.VariableCmdArg;
 import com.blocklynukkit.bedrockLang.compiler.ast.compile.impl.piece.*;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import static com.blocklynukkit.bedrockLang.compiler.ast.util.SourcePos.auto;
 import static com.blocklynukkit.bedrockLang.test.TestUtils.loadClass;
@@ -129,5 +131,28 @@ public class VariableTest {
         final Class<?> cls = loadClass("testWriteLocalInt", bytes);
         final Method method = cls.getMethod("writeLocalInt", int.class);
         Assertions.assertEquals(6699, method.invoke(cls, 3));
+    }
+
+    @Test
+    public void testLocalArrayWrite() throws Exception {
+        final BDLUnit unit = new BDLUnit("testLocalArrayWrite", "testLocalArrayWrite.bdl");
+        SourcePos.defaultSourceName = "testLocalArrayWrite";
+
+        final DefineCommandBlock cmd = new DefineCommandBlock(auto(), unit, "test", ValueType.from("string[]")
+                , new VariableCmdArg("a", ValueType.from("string[]"), auto()));
+        final WriteVariableExpr writeVariableExpr = new WriteVariableExpr(auto(), cmd, "a");
+        writeVariableExpr.setIndexExpr(new Expr[]{new LiteralExpr(auto(), writeVariableExpr, 0, ValueType.from("int"))});
+        writeVariableExpr.setValueExpr(new LiteralExpr(auto(), writeVariableExpr, "BDL", ValueType.from("string")));
+        cmd.addCodePiece(writeVariableExpr);
+        final ReturnStat returnStat = new ReturnStat(auto(), cmd);
+        returnStat.setExpr(new ReadVariableExpr(auto(), returnStat, "a"));
+        cmd.addCodePiece(returnStat);
+
+        unit.addCodePiece(cmd);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testLocalArrayWrite.class"));
+        final Class<?> cls = loadClass("testLocalArrayWrite", bytes);
+        final Method method = cls.getMethod("test", String[].class);
+        Assertions.assertEquals("[BDL]", Arrays.toString((String[]) method.invoke(cls, (Object) new String[]{""})));
     }
 }
