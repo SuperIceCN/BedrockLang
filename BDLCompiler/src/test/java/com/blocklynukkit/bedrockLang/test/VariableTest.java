@@ -155,4 +155,54 @@ public class VariableTest {
         final Method method = cls.getMethod("test", String[].class);
         Assertions.assertEquals("[BDL]", Arrays.toString((String[]) method.invoke(cls, (Object) new String[]{""})));
     }
+
+    @Test
+    public void testLocalArrayWrite2() throws Exception {
+        final BDLUnit unit = new BDLUnit("testLocalArrayWrite2", "testLocalArrayWrite2.bdl");
+        SourcePos.defaultSourceName = "testLocalArrayWrite2";
+
+        final DefineCommandBlock cmd = new DefineCommandBlock(auto(), unit, "test", ValueType.from("int[]")
+                , new VariableCmdArg("a", ValueType.from("int[]"), auto()));
+        final WriteVariableExpr writeVariableExpr = new WriteVariableExpr(auto(), cmd, "a");
+        writeVariableExpr.setIndexExpr(new Expr[]{new LiteralExpr(auto(), writeVariableExpr, 0, ValueType.from("int"))});
+        writeVariableExpr.setValueExpr(new LiteralExpr(auto(), writeVariableExpr, 6699, ValueType.from("int")));
+        cmd.addCodePiece(writeVariableExpr);
+        final ReturnStat returnStat = new ReturnStat(auto(), cmd);
+        returnStat.setExpr(new ReadVariableExpr(auto(), returnStat, "a"));
+        cmd.addCodePiece(returnStat);
+
+        unit.addCodePiece(cmd);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testLocalArrayWrite2.class"));
+        final Class<?> cls = loadClass("testLocalArrayWrite2", bytes);
+        final Method method = cls.getMethod("test", int[].class);
+        //noinspection RedundantCast
+        Assertions.assertEquals("[6699]", Arrays.toString((int[]) method.invoke(cls, (Object) new int[]{2233})));
+    }
+
+    @Test
+    public void testLocalArrayWrite3() throws Exception {
+        final BDLUnit unit = new BDLUnit("testLocalArrayWrite3", "testLocalArrayWrite3.bdl");
+        SourcePos.defaultSourceName = "testLocalArrayWrite3";
+
+        final DefineCommandBlock cmd = new DefineCommandBlock(auto(), unit, "test", ValueType.from("int[][]")
+                , new VariableCmdArg("a", ValueType.from("int[][]"), auto()));
+        final WriteVariableExpr writeVariableExpr = new WriteVariableExpr(auto(), cmd, "a");
+        writeVariableExpr.setIndexExpr(new Expr[]{
+                new LiteralExpr(auto(), writeVariableExpr, 0, ValueType.from("int")),
+                new LiteralExpr(auto(), writeVariableExpr, 0, ValueType.from("int"))
+        });
+        writeVariableExpr.setValueExpr(new LiteralExpr(auto(), writeVariableExpr, 6699, ValueType.from("int")));
+        cmd.addCodePiece(writeVariableExpr);
+        final ReturnStat returnStat = new ReturnStat(auto(), cmd);
+        returnStat.setExpr(new ReadVariableExpr(auto(), returnStat, "a"));
+        cmd.addCodePiece(returnStat);
+
+        unit.addCodePiece(cmd);
+        final byte[] bytes = unit.getCodeGenerator().generate(unit);
+        saveTo(bytes, new File("test/testLocalArrayWrite3.class"));
+        final Class<?> cls = loadClass("testLocalArrayWrite3", bytes);
+        final Method method = cls.getMethod("test", int[][].class);
+        Assertions.assertEquals("[6699]", Arrays.toString(((int[][]) method.invoke(cls, (Object) new int[][]{{2233}}))[0]));
+    }
 }
