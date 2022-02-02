@@ -88,8 +88,8 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     @Override
     public VisitResult<DefineCommandBlock, Void> visitDefineCmdStat(DefineCmdStatContext ctx) {
         final DefineSignatureContext defSig = ctx.defineSignature();
-        final ValueType returnType = ValueType.from(defSig.ID().size() > 1 ? defSig.ID(1).getText() : "void");
-        final DefineCommandBlock defineCommandBlock = new DefineCommandBlock(pos(ctx), bdlUnit, defSig.ID(0).getText(), returnType,
+        final ValueType returnType = ValueType.from(defSig.typeid() != null ? defSig.typeid().getText() : "void");
+        final DefineCommandBlock defineCommandBlock = new DefineCommandBlock(pos(ctx), bdlUnit, defSig.ID().getText(), returnType,
                 defSig.children.stream()
                         .filter(tree -> tree instanceof DefineSignatureVariableContext || tree instanceof DefineSignatureWordSingleContext)
                         .map(tree -> {
@@ -197,6 +197,11 @@ public class BedrockLangASTBuilder extends BedrockLangBaseVisitor<VisitResult<?,
     public VisitResult<?, ?> visitSetVarExpr(SetVarExprContext ctx) {
         final List<ExprContext> exprContexts = ctx.expr();
         final WriteVariableExpr expr = new WriteVariableExpr(pos(ctx), parent(ctx), no$(ctx.varid().getText()));
+        final Expr[] indexExprs = new Expr[exprContexts.size() - 1];
+        for (int i = 0, length = exprContexts.size() - 1; i < length; i++) {
+            indexExprs[i] = (Expr) visit(exprContexts.get(i), expr).getPiece();
+        }
+        expr.setIndexExpr(indexExprs);
         expr.setValueExpr((Expr) visit(exprContexts.get(exprContexts.size() - 1), expr).getPiece());
         return of(expr);
     }

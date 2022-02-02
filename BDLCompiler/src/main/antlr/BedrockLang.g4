@@ -34,7 +34,7 @@ whenStat: WHEN ID block;
 ifElseStat: IF expr block (ELIF expr block)* (ELSE block)?;
 whileStat: WHILE (LA ID RA)? expr block;
 defineCmdStat: DEF defineSignature block;
-defineSignature: ID (COLON ID)? (defineSignatureWordSingle | defineSignatureVariable)*;
+defineSignature: ID (COLON typeid)? (defineSignatureWordSingle | defineSignatureVariable)*;
 defineSignatureWordSingle: ID;
 defineSignatureVariable: varid COLON typeid;
 declareVarStat: VAR varid COLON typeid (SET expr)? #hasTypeVarDeclare
@@ -47,7 +47,7 @@ continueStat: CONTINUE ID?;
 command: commandId (ID | expr)*;
 block: START (expr SEMICOLON | stat)* END;
 
-typeid: ID (LA RA)?;
+typeid: ID (LA RA)*;
 id: ID (DOT ID | DOT varid)*;
 varid: DOLLAR id;
 commandId: ID (DOT ID | DOT varid)* DOT ID #invokeCommand

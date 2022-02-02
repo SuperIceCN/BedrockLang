@@ -1,0 +1,7 @@
+def test:int[][] $input:int[][] {
+    $input[0][0] = 22;
+    $input[0][1] = 33;
+    $input[1][0] = 66;
+    $input[1][1] = 99;
+    return $input;
+}

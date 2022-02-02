@@ -143,4 +143,14 @@ public class CompilerSimpleTest {
         Method main = cls.getMethod("main", String[].class);
         main.invoke(cls, (Object) new String[]{"I'm", "BDL"});
     }
+
+    @Test
+    public void test13() throws Exception {
+        final byte[] bytes = Compiler.builder().sourceName("writeArray.bdl")
+                .sourceCode(getCode("writeArray.bdl")).build().compile();
+        saveTo(bytes, new File("test/writeArray.class"));
+        Class<?> cls = loadClass("writeArray", bytes);
+        Method main = cls.getMethod("test", int[][].class);
+        main.invoke(cls, (Object) new int[][]{{0, 0}, {0, 0}});
+    }
 }
